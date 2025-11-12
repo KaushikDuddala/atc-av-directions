@@ -48,7 +48,7 @@ export default function Home() {
         <div className="border-b border-border px-6 py-6 flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold mb-2">Directions Control</h1>
-            <p className="text-muted-foreground">Synchronized lighting and effects directions</p>
+            <p className="text-muted-foreground">lighting directions synced with audio</p>
           </div>
           <Button variant="outline" size="icon" onClick={() => setIsDark(!isDark)} className="rounded-full">
             {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
