@@ -4,9 +4,10 @@ import { useState, useEffect } from "react"
 import { audioGroups } from "@/lib/data"
 import type { AudioGroup } from "@/lib/types"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { DirectionsDisplay } from "@/components/directions-display"
 import { AudioPlayer } from "@/components/audio-player"
 import { GroupInfo } from "@/components/group-info"
-import { LightingSection } from "@/components/lighting-section"
+import { CountdownTimer } from "@/components/countdown-timer"
 import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -80,13 +81,15 @@ export default function Home() {
               <AudioPlayer group={selectedGroup} onTimeUpdate={setCurrentTime} />
             </div>
 
+            {/* Countdown Timer */}
+            <div className="mb-8">
+              <CountdownTimer group={selectedGroup} currentTime={currentTime} />
+            </div>
+
             {/* Directions Display */}
             <div className="space-y-4">
               <h2 className="text-lg font-semibold">Directions</h2>
-              <div className="space-y-4">
-                <LightingSection label="Floodlight" type="floodlight" group={selectedGroup} currentTime={currentTime} />
-                <LightingSection label="Overhead" type="overhead" group={selectedGroup} currentTime={currentTime} />
-              </div>
+              <DirectionsDisplay group={selectedGroup} currentTime={currentTime} />
             </div>
           </div>
 

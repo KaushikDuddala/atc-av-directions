@@ -48,14 +48,41 @@ export function AudioPlayer({
     }
   }, [onTimeUpdate])
 
-  const togglePlayPause = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause()
-      } else {
-        audioRef.current.play()
+  // When group changes, reset player state and ensure the new source is loaded
+  useEffect(() => {
+    const audio = audioRef.current
+    setIsPlaying(false)
+    setCurrentTime(0)
+    setDuration(0)
+    if (audio) {
+      // Ensure the new src is picked up by the element
+      try {
+        audio.load()
+      } catch (e) {
+        // ignore load errors
       }
-      setIsPlaying(!isPlaying)
+    }
+  }, [group])
+
+  const togglePlayPause = () => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    if (isPlaying) {
+      audio.pause()
+      setIsPlaying(false)
+      return
+    }
+
+    // play() returns a promise in modern browsers; handle rejections (e.g., autoplay policy)
+    const playPromise = audio.play()
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => setIsPlaying(true))
+        .catch((err) => {
+          console.warn("Audio play failed:", err)
+          setIsPlaying(false)
+        })
     }
   }
 
@@ -77,7 +104,13 @@ export function AudioPlayer({
 
   return (
     <div className="w-full space-y-4">
-      <audio ref={audioRef} src={group.audioUrl} />
+      {/* prefer explicit audioUrl, fallback to info.audioLink; ensure absolute/public path is used */}
+      <audio
+        ref={audioRef}
+        src={group.audioUrl || group.info?.audioLink || ""}
+        preload="metadata"
+        playsInline
+      />
 
       <div className="space-y-2">
         <div

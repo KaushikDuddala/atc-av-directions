@@ -10,7 +10,7 @@ export function DirectionColumn({
   if (!direction) {
     return (
       <div className="flex flex-col gap-3 p-4 rounded-lg border border-border bg-muted">
-        <h3 className="text-lg font-semibold text-muted-foreground">{label}</h3>
+        <h3 className="text-lg font-bold text-foreground">{label}</h3>
         <p className="text-sm text-muted-foreground">--:--</p>
       </div>
     )
@@ -42,13 +42,21 @@ export function DirectionColumn({
             </div>
           </div>
 
-          <div>
-            <p className="text-sm font-semibold text-foreground mb-1">Overhead</p>
             <div>
-              <p className="text-sm text-foreground">{direction.overhead.percent}%</p>
-              <p className="text-sm text-muted-foreground">{direction.overhead.notes}</p>
+                <p className="text-sm font-semibold text-foreground mb-1">Overhead</p>
+                <div className="w-full h-2 bg-gray-300 rounded mb-2">
+                  <div
+                  className="h-full bg-blue-700 rounded"
+                  style={{ width: `${direction.overhead.percent}%` }}
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="flex-1">
+                  <p className="text-xl font-bold text-foreground">{direction.overhead.percent}%</p>
+                  <p className="text-sm font-semibold text-muted-foreground">{direction.overhead.notes}</p>
+                  </div>
+                </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
