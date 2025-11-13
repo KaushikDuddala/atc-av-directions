@@ -53,7 +53,7 @@ export function DirectionColumn({
                 <div className="flex items-center gap-2">
                   <div className="flex-1">
                   <p className="text-xl font-bold text-foreground">{direction.overhead.percent}%</p>
-                  <p className="text-sm font-semibold text-muted-foreground">{direction.overhead.notes}</p>
+                  <p className="text-xl font-bold text-foreground">{direction.overhead.notes}</p>
                   </div>
                 </div>
             </div>
