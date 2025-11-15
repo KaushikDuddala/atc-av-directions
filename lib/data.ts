@@ -883,7 +883,7 @@ directions: [
   id: "ctrl",
   name: "CTRL",
   audioUrl: "/music/Final Audio from Sri Kowtha.MP3",
-  duration: 403000, // 6 minutes 43 seconds (approximate based on last cue)
+  duration: 403000, // 6 minutes 43 seconds
   info: {
     startTime: "TBD",
     endTime: "TBD",
@@ -897,7 +897,7 @@ directions: [
   directions: [
     {
       timestamp: 0, // 0:00 - 0:26
-      floodlight: { percent: 0, color: "#000000", notes: "Continue previous" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 100, notes: "Flicker (on and off)" }
     },
     {
@@ -912,7 +912,7 @@ directions: [
     },
     {
       timestamp: 43000, // 0:43 - 0:44
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red and white (on the beat/lyric)" },
+      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red and white (on the 'Venom' beat/lyric)" },
       overhead: { percent: 0, notes: "Off" }
     },
     {
@@ -922,12 +922,12 @@ directions: [
     },
     {
       timestamp: 56000, // 0:56 - 1:08
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 100, notes: "Flicker (on and off)" }
     },
     {
       timestamp: 70000, // 1:10 - 1:14
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 0, notes: "Fade out" }
     },
     {
@@ -967,17 +967,17 @@ directions: [
     },
     {
       timestamp: 135000, // 2:15 - 2:17
-      floodlight: { percent: 100, color: "#00FF00", notes: "Continue green" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 0, notes: "Fade out to off" }
     },
     {
       timestamp: 138000, // 2:18 - 2:44
-      floodlight: { percent: 100, color: "#00FF00", notes: "Continue green" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 100, notes: "Flicker (on and off)" }
     },
     {
       timestamp: 165000, // 2:45 - 2:48
-      floodlight: { percent: 100, color: "#00FF00", notes: "Continue green" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 0, notes: "Off" }
     },
     {
@@ -1027,12 +1027,12 @@ directions: [
     },
     {
       timestamp: 237000, // 3:57 - 4:00
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 0, notes: "Fade out to off" }
     },
     {
       timestamp: 241000, // 4:01 - 4:18
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 100, notes: "Flicker (on and off)" }
     },
     {
@@ -1057,22 +1057,22 @@ directions: [
     },
     {
       timestamp: 315000, // 5:15
-      floodlight: { percent: 100, color: "#00FFFF", notes: "Continue cyan" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 0, notes: "Off immediately" }
     },
     {
       timestamp: 316000, // 5:16 - 5:32
-      floodlight: { percent: 100, color: "#00FFFF", notes: "Continue cyan" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 100, notes: "Flicker (on and off)" }
     },
     {
       timestamp: 332000, // 5:32 - 5:37
-      floodlight: { percent: 100, color: "#00FFFF", notes: "Continue cyan" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 100, notes: "Fade in" }
     },
     {
       timestamp: 338000, // 5:38
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red on the sound effect" },
+      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red on the lion 'rawr' noise" },
       overhead: { percent: 0, notes: "Off" }
     },
     {
@@ -1097,7 +1097,7 @@ directions: [
     },
     {
       timestamp: 373000, // 6:13 - 6:14
-      floodlight: { percent: 100, color: "#CC5500", notes: "Flicker the burnt orange on the beat" },
+      floodlight: { percent: 100, color: "#CC5500", notes: "Flicker the burnt orange on the 'aint nobody f with my clique'" },
       overhead: { percent: 20, notes: "Lower to 20%" }
     },
     {
@@ -1112,12 +1112,12 @@ directions: [
     },
     {
       timestamp: 393000, // 6:33 - 6:43
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 100, notes: "Flicker (on and off)" }
     },
     {
       timestamp: 404000, // 6:44 - end
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
+      floodlight: { percent: 0, color: "#000000", notes: "Off" },
       overhead: { percent: 0, notes: "Off" }
     }
   ]
@@ -1513,7 +1513,7 @@ directions: [
 {
   id: "vibe_hteam",
   name: "Vibe H-Team",
-  audioUrl: "/music/ATC Vibe Audio (1).MP3",
+  audioUrl: "/music/ATC Vibe Audio (2).MP3",
   duration: 362000, // 6 minutes 2 seconds
   info: {
     startTime: "TBD",
@@ -1806,5 +1806,50 @@ directions: [
     }
   ]
 },
-
+{
+  id: "atc_jcods",
+  name: "ATC JCODS",
+  audioUrl: "/music/Kung Fu Fighting Lyrics.mp3",
+  duration: 210000, // 3 minutes (estimated)
+  info: {
+    startTime: "TBD",
+    endTime: "TBD",
+    leaders: ["JCODS"],
+    members: [],
+    equipment: [],
+    notes: "Freestyle performance with blue, pink, and orange lighting throughout. Overheads at 50%. Lighting operator has creative freedom to alternate colors.",
+    directionsLink: "N/A",
+    audioLink: "N/A"
+  },
+  directions: [
+    {
+      timestamp: 0,
+      floodlight: { percent: 100, color: "#FFC0CB", notes: "Pink, orange, and blue throughout" },
+      overhead: { percent: 50, notes: "50% throughout" }
+    }
+  ]
+},
+{
+  id: "atc_execs",
+  name: "ATC execs",
+  audioUrl: "/music/TMS Audio.mp3",
+  duration: 210000, // 3 minutes (estimated)
+  info: {
+    startTime: "TBD",
+    endTime: "TBD",
+    leaders: ["JCODS"],
+    members: [],
+    equipment: [],
+    notes: "Freestyle performance with blue, pink, and orange lighting throughout. Overheads at 50%. Lighting operator has creative freedom to alternate colors.",
+    directionsLink: "N/A",
+    audioLink: "N/A"
+  },
+  directions: [
+    {
+      timestamp: 0,
+      floodlight: { percent: 100, color: "#FFC0CB", notes: "Pink, orange, and blue throughout" },
+      overhead: { percent: 50, notes: "50% throughout" }
+    }
+  ]
+}
 ]
