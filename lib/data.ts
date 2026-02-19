@@ -1,1855 +1,2181 @@
 import type { AudioGroup } from "./types"
 
 export const audioGroups: AudioGroup[] = [
-{
-id: "Still point",
-name: "Still Point (Card Magic)",
-audioUrl: "/music/Time by Victor Xu.mp3",
-duration: 315000, // 5 minutes 15 seconds
-info: {
-  startTime: "5:00 PM",
-  endTime: "5:15 PM",
-  leaders: ["Victor Xu"],
-  members: [],
-  equipment: [
-    "one long table",
-    "one short table",
-    "six chairs",
-    "projector",
-    "projector screen",
-    "camera"
-  ],
-  notes: "Setup: one long table, one short table, six chairs. Performer provides projector, screen, and camera. plug in custom mic thing + turn off lighting at 'Let's take a picture' and on after phone down",
-  directionsLink: "N/A",
-  audioLink: "N/A"
-},
-directions: [
+  {
+    id: "sam_and_saha",
+    name: "Sam & Saha",
+    audioUrl: "/music/sam and sahasra - samanvita meka.mp3",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Samanvita Meka"],
+      members: ["Samanvita Meka", "Sahasra Kotthur"],
+      equipment: [],
+      notes: "N/A",
+      directionsLink: "https://docs.google.com/document/d/1OSxhhnCta6Ni0FaFLyqZ2Tpc1ij2YuTwf5BfWj9q_-E/edit?usp=sharing",
+      audioLink: "/music/sam and sahasra - samanvita meka.mp3"
+    },
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 2000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "On, change color to blue" },
+        overhead: { percent: 40, notes: "Raise to 40%" }
+      },
+      {
+        timestamp: 51000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 117000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 193000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "Change color to yellow" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 240000,
+        floodlight: { percent: 100, color: "#800080", notes: "Change color to purple" },
+        overhead: { percent: 20, notes: "Lower to 20%" }
+      },
+      {
+        timestamp: 276000,
+        floodlight: { percent: 100, color: "#00AA00", notes: "Change color to green" },
+        overhead: { percent: 20, notes: "-" }
+      },
+      {
+        timestamp: 360000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Change color to pink" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 383000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red, flicker to beat" },
+        overhead: { percent: 40, notes: "Lower to 40%" }
+      }
+    ]
+  },
+  {
+    id: "kiranmayea_leela_saanvi_aditi_juhitha",
+    name: "Kiranmayea, Leela, Saanvi, Aditi, Juhitha",
+    audioUrl: "/music/Kiranmayea worldfest - NEW AUDIO - USE THIS ONE (1) - Kiranmayea Y.mp4",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Kiranmayea Yenugudati"],
+      members: ["Kiranmayea Yenugudati", "Leela Dash", "Saanvi Chepiyala", "Aditi Polsani", "Juhitha Alasyam"],
+      equipment: [],
+      notes: "Turn the audio on AFTER we get on the stage. At the very end we have a pose, so lights on us and then lights can go off.",
+      directionsLink: "https://docs.google.com/document/d/1PpzzdRPu4LVCs9eSXpo1g8Uf3hNUAaUbrmdk4Kf9bVc/edit?usp=sharing",
+      audioLink: "/music/Kiranmayea worldfest - NEW AUDIO - USE THIS ONE (1) - Kiranmayea Y.mp4"
+    },
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 2000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 70, notes: "Raise to 70%" }
+      },
+      {
+        timestamp: 3000,
+        floodlight: { percent: 0, color: "#000000", notes: "-" },
+        overhead: { percent: 100, notes: "Raise to 100%" }
+      },
+      {
+        timestamp: 39000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 100, notes: "Flicker to beat" }
+      },
+      {
+        timestamp: 50000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 80, notes: "Raise to 80%" }
+      },
+      {
+        timestamp: 63000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 80, notes: "Flicker to beat" }
+      },
+      {
+        timestamp: 74000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 25, notes: "Lower to 25%" }
+      },
+      {
+        timestamp: 83000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Flicker pink to the beat" },
+        overhead: { percent: 70, notes: "Slowly raise to 70%" }
+      },
+      {
+        timestamp: 88000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 80, notes: "Increase to 80%" }
+      },
+      {
+        timestamp: 104000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 80, notes: "Flicker to beat" }
+      },
+      {
+        timestamp: 109000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Raise white to 100% slowly" },
+        overhead: { percent: 75, notes: "Raise to 75%" }
+      },
+      {
+        timestamp: 129000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "-" },
+        overhead: { percent: 75, notes: "Flicker to beat" }
+      },
+      {
+        timestamp: 139000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Flicker pink" },
+        overhead: { percent: 75, notes: "Keep at 75%" }
+      },
+      {
+        timestamp: 149000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "On" },
+        overhead: { percent: 75, notes: "Flicker to beat" }
+      },
+      {
+        timestamp: 155000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 25, notes: "Lower to 25%" }
+      },
+      {
+        timestamp: 159000,
+        floodlight: { percent: 100, color: "#00AA00", notes: "Change to green" },
+        overhead: { percent: 75, notes: "Increase to 75% slowly" }
+      },
+      {
+        timestamp: 168000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 208000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker with red" },
+        overhead: { percent: 75, notes: "Flicker to beat" }
+      },
+      {
+        timestamp: 210000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 75, notes: "Increase to 75%" }
+      },
+      {
+        timestamp: 228000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker with red" },
+        overhead: { percent: 75, notes: "Flicker to beat" }
+      },
+      {
+        timestamp: 231000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 80, notes: "Increase to 80%" }
+      },
+      {
+        timestamp: 242000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Decrease to 0% slowly" }
+      }
+    ]
+  },
+  {
+    id: "docked_fusion",
+    name: "DOCKED Fusion",
+    audioUrl: "/music/DOCKED Fusion wordlfest Audio - Harshan Gurubaran.mp3",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Harshan G"],
+      members: ["Aasrith P", "Anya P", "Harshan G", "Harshini S", "Sri S"],
+      equipment: [],
+      notes: "None at the moment",
+      directionsLink: "https://docs.google.com/document/d/1S8dKRndlzBoKAs5izA2WPwSDpDrFiXealEP-ti5z9oM/edit?usp=sharing",
+      audioLink: "/music/DOCKED Fusion Worldfest Audio - Harshan Gurubaran.mp3"
+    },
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 100, color: "#FF0000", notes: "RED" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 7000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "-" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 17000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Lower to 0%" }
+      },
+      {
+        timestamp: 17000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Slow Pulse ORANGE on beat" },
+        overhead: { percent: 30, notes: "Raise to 30%" }
+      },
+      {
+        timestamp: 34000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Sustain ORANGE" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 41000,
+        floodlight: { percent: 100, color: "#8B4513", notes: "BROWN" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 63000,
+        floodlight: { percent: 100, color: "#8B4513", notes: "Slow Pulse BROWN on beat" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 92000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker ORANGE & BROWN" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 121000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "RED" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 141000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Slow Pulse PINK on beat" },
+        overhead: { percent: 30, notes: "Lower to 30%" }
+      },
+      {
+        timestamp: 154000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Sustain PINK" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 198000,
+        floodlight: { percent: 100, color: "#ADD8E6", notes: "LIGHT BLUE" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 205000,
+        floodlight: { percent: 100, color: "#ADD8E6", notes: "-" },
+        overhead: { percent: 60, notes: "CONTEMPORARY mode" }
+      },
+      {
+        timestamp: 307000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "PINK" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 320000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Lower to 0%" }
+      },
+      {
+        timestamp: 340000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "YELLOW" },
+        overhead: { percent: 0, notes: "-" }
+      },
+      {
+        timestamp: 348000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "Slow Pulse YELLOW" },
+        overhead: { percent: 30, notes: "Raise to 30%" }
+      },
+      {
+        timestamp: 358000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "BLUE" },
+        overhead: { percent: 50, notes: "Raise to 50%" }
+      },
+      {
+        timestamp: 368000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "YELLOW" },
+        overhead: { percent: 30, notes: "Lower to 30%" }
+      },
+      {
+        timestamp: 377000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "BLUE" },
+        overhead: { percent: 50, notes: "Raise to 50%" }
+      },
+      {
+        timestamp: 386000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "YELLOW" },
+        overhead: { percent: 30, notes: "Lower to 30%" }
+      },
+      {
+        timestamp: 394000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "Slow Pulse between YELLOW & BLUE" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 408000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "Rapid Flicker YELLOW & BLUE" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 411000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "2 BLUE Flashes" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 413000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "Rapid Flicker YELLOW & BLUE" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 416000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "2 YELLOW Flashes" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 418000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "BLUE" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 422000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "Rapid Flicker YELLOW & BLUE" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 425000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "YELLOW" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 427000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "BLUE" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 450000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "RED" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 480000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "-" },
+        overhead: { percent: 60, notes: "CLASSICAL mode" }
+      },
+      {
+        timestamp: 542000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "BLUE" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 563000,
+        floodlight: { percent: 0, color: "#000000", notes: "Lower to 0%" },
+        overhead: { percent: 30, notes: "Lower to 30%" }
+      },
+      {
+        timestamp: 569000,
+        floodlight: { percent: 100, color: "#ADD8E6", notes: "LIGHT BLUE" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 576000,
+        floodlight: { percent: 100, color: "#ADD8E6", notes: "Rapid Flicker LIGHT BLUE" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 595000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "PINK" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 609000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Slow Pulse PINK to beat" },
+        overhead: { percent: 30, notes: "Lower to 30%" }
+      },
+      {
+        timestamp: 628000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Sustain PINK" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 641000,
+        floodlight: { percent: 0, color: "#000000", notes: "Instant 0%" },
+        overhead: { percent: 0, notes: "Instant 0%" }
+      },
+      {
+        timestamp: 643000,
+        floodlight: { percent: 100, color: "#ADD8E6", notes: "Raise slowly to LIGHT BLUE" },
+        overhead: { percent: 30, notes: "Slow Rise to 30%" }
+      },
+      {
+        timestamp: 648000,
+        floodlight: { percent: 100, color: "#ADD8E6", notes: "Rapid Flicker LIGHT BLUE" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 655000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Rapid Flicker PINK" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 661000,
+        floodlight: { percent: 100, color: "#ADD8E6", notes: "Rapid Flicker LIGHT BLUE & PINK" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 673000,
+        floodlight: { percent: 100, color: "#ADD8E6", notes: "Sustain LIGHT BLUE" },
+        overhead: { percent: 60, notes: "Very Slow Rise to 60%" }
+      },
+      {
+        timestamp: 678000,
+        floodlight: { percent: 100, color: "#800080", notes: "PURPLE" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 692000,
+        floodlight: { percent: 100, color: "#800080", notes: "-" },
+        overhead: { percent: 30, notes: "Lower to 30%" }
+      },
+      {
+        timestamp: 702000,
+        floodlight: { percent: 100, color: "#800080", notes: "Pulse PURPLE on beat" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 732000,
+        floodlight: { percent: 100, color: "#800080", notes: "PURPLE" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      }
+    ]
+  },
+  {
+    id: "local_boys",
+    name: "Local Boys",
+    audioUrl: "/music/Local Boys Audio - Harshan Gurubaran.mp3",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Harshan G"],
+      members: ["Harshan G", "Abhinav G", "Mohnish SK", "Aryakrishna K", "Ayush K", "Saharsh T", "Samar R"],
+      equipment: [],
+      notes: "Nothing at the moment",
+      directionsLink: "https://docs.google.com/document/d/1cb9uiL912_jcu_EnCZ3SyiOzvh7ALtnsb3cJ0TRg4gA/edit?usp=sharing",
+      audioLink: "/music/Local Boys Audio - Harshan Gurubaran.mp3"
+    },
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Slowly Pulse RED to beat" },
+        overhead: { percent: 30, notes: "Raise slowly to 30%" }
+      },
+      {
+        timestamp: 7000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Lower to 0%" }
+      },
+      {
+        timestamp: 17000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker RED" },
+        overhead: { percent: 30, notes: "Raise to 30%" }
+      },
+      {
+        timestamp: 24000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker RED & ORANGE" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 30000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Plain Sustained ORANGE" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 32000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "3 Flashes of ORANGE on beat" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 35000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Plain Sustained ORANGE" },
+        overhead: { percent: 30, notes: "Raise to 30%" }
+      },
+      {
+        timestamp: 52000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 59000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "Switch to Yellow" },
+        overhead: { percent: 30, notes: "Lower to 30%" }
+      },
+      {
+        timestamp: 71000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "Slow Pulse Yellow" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 82000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "Plain Sustained Yellow" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 85000,
+        floodlight: { percent: 100, color: "#00AA00", notes: "Flicker Green on beat" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 91000,
+        floodlight: { percent: 100, color: "#00AA00", notes: "Plain Sustained Green" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 97000,
+        floodlight: { percent: 100, color: "#00AA00", notes: "-" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 102000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Lower to 0%" }
+      },
+      {
+        timestamp: 113000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Slow Pulse Blue" },
+        overhead: { percent: 0, notes: "-" }
+      },
+      {
+        timestamp: 130000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker Blue" },
+        overhead: { percent: 0, notes: "-" }
+      },
+      {
+        timestamp: 139000,
+        floodlight: { percent: 100, color: "#800080", notes: "Switch to Purple" },
+        overhead: { percent: 0, notes: "-" }
+      },
+      {
+        timestamp: 154000,
+        floodlight: { percent: 100, color: "#800080", notes: "Plain Sustained Purple" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 165000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Slow Rise RED" },
+        overhead: { percent: 30, notes: "Lower to 30%" }
+      },
+      {
+        timestamp: 178000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Rapid Flicker RED" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 188000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Plain Sustained RED" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 199000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Slow Pulse RED" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 210000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Rapid Flicker RED" },
+        overhead: { percent: 30, notes: "-" }
+      }
+    ]
+  },
+  {
+    id: "register",
+    name: "Register",
+    audioUrl: "/music/shyla_frida_rachel_audio - Shyla Dadwal.mov",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Shyla Dadwal"],
+      members: ["Shyla Dadwal", "Frida Lopez-Vives", "Rachel Ko"],
+      equipment: [],
+      notes: "Song: Esqueca-me Se For Capaz. If dark orange isn't possible, red will work.",
+      directionsLink: "N/A",
+      audioLink: "/music/shyla_frida_rachel_audio - Shyla Dadwal.mov"
+    },
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "On, change color to orange" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 18000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+        overhead: { percent: 60, notes: "On, raise slowly to 60%" }
+      },
+      {
+        timestamp: 34000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker on beat between orange and dark orange" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 38000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 44000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+        overhead: { percent: 30, notes: "Lower slowly to 30%" }
+      },
+      {
+        timestamp: 48000,
+        floodlight: { percent: 100, color: "#CC5500", notes: "Change color to dark orange" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 50000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+        overhead: { percent: 60, notes: "On, raise quickly to 60%" }
+      },
+      {
+        timestamp: 63000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker on beat between orange and dark orange" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 65000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 79000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+        overhead: { percent: 30, notes: "Lower to 30%" }
+      },
+      {
+        timestamp: 89000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+        overhead: { percent: 60, notes: "Raise slowly to 60%" }
+      },
+      {
+        timestamp: 97000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker on beat between orange and dark orange" },
+        overhead: { percent: 60, notes: "Flicker on and off to beat" }
+      },
+      {
+        timestamp: 101000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+        overhead: { percent: 60, notes: "On at 60%" }
+      },
+      {
+        timestamp: 106000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+        overhead: { percent: 30, notes: "Lower slowly to 30%" }
+      },
+      {
+        timestamp: 110000,
+        floodlight: { percent: 100, color: "#CC5500", notes: "Change color to dark orange" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 113000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+        overhead: { percent: 60, notes: "On, raise quickly to 60%" }
+      },
+      {
+        timestamp: 133000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+        overhead: { percent: 75, notes: "Raise slowly to 75%" }
+      },
+      {
+        timestamp: 140000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker orange on and off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 142000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "-" }
+      },
+      {
+        timestamp: 144000,
+        floodlight: { percent: 100, color: "#CC5500", notes: "On, change color to dark orange" },
+        overhead: { percent: 30, notes: "On, raise slowly to 30%" }
+      },
+      {
+        timestamp: 150000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+        overhead: { percent: 30, notes: "-" }
+      },
+      {
+        timestamp: 160000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+        overhead: { percent: 0, notes: "Lower slowly to 0%" }
+      },
+      {
+        timestamp: 160000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+        overhead: { percent: 100, notes: "On — post-performance" }
+      }
+    ]
+  },
+  {
+    id: "nidhi_and_sam",
+    name: "Nidhi and Sam",
+    audioUrl: "https://drive.google.com/open?id=1yoQqZR3FhVDmZD6FObqaMV0J4OfCtcJG",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Sreenidhi Chintalapati"],
+      members: ["Sreenidhi Chintalapati", "Samanvita Meka"],
+      equipment: [],
+      notes: "Entering the stage from the stairs on the side",
+      directionsLink: "https://docs.google.com/document/d/1-3JyGiCd9KlNNox0ciJYHQm9ScAg7CAcKf8fo0zKauY/edit?usp=sharing",
+      audioLink: "https://drive.google.com/open?id=1yoQqZR3FhVDmZD6FObqaMV0J4OfCtcJG"
+    },
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "-" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 5000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Color to red" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 13000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "On" },
+        overhead: { percent: 75, notes: "Raise to 75% slowly" }
+      },
+      {
+        timestamp: 38000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 48000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 82000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 89000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 93000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 96000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 100000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 103000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 132000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 139000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker between blue and red to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 149000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 166000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Change color to pink" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 174000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 197000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Change color to pink" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 222000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Flicker pink to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 238000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 254000,
+        floodlight: { percent: 100, color: "#800080", notes: "Flicker purple to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 262000,
+        floodlight: { percent: 100, color: "#800080", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 288000,
+        floodlight: { percent: 100, color: "#800080", notes: "Flicker purple to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 300000,
+        floodlight: { percent: 100, color: "#800080", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 335000,
+        floodlight: { percent: 100, color: "#800080", notes: "Flicker purple to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 349000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 354000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 359000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 381000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 392000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 403000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Change color to pink" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 411000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Flicker pink to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 419000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 441000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Flicker pink to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 449000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 468000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Change color to white" },
+        overhead: { percent: 75, notes: "-" }
+      }
+    ]
+  },
+  {
+    id: "lux",
+    name: "Lux",
+    audioUrl: "/music/wf lux - Sreenidhi C.mov",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Sreenidhi Chintalapati"],
+      members: ["Sreenidhi Chintalapati", "Samanvita Meka", "Sreeja Metta", "Zerah Davis", "Anwitha Kasireddy", "Aditi Puri", "Sahasra Kotthur"],
+      equipment: [],
+      notes: "Entering from the stairs on side of the stage",
+      directionsLink: "https://docs.google.com/document/d/1Il5PQv9Nux1dMnDxj1EENTdl-dmhZvX2dXwZx1R65lI/edit?usp=sharing",
+      audioLink: "/music/wf lux - Sreenidhi C.mov"
+    },
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "-" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 3000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to the beat" },
+        overhead: { percent: 0, notes: "-" }
+      },
+      {
+        timestamp: 10000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to the beat" },
+        overhead: { percent: 75, notes: "Raise to 75% slowly" }
+      },
+      {
+        timestamp: 16000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 40000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Change color to pink" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 53000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Flicker pink to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 66000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 73000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 81000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 87000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 100000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 124000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 134000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 149000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Flicker pink to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 157000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 188000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 203000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 236000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 243000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 252000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 256000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 283000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to the beat" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 292000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "On" },
+        overhead: { percent: 75, notes: "-" }
+      },
+      {
+        timestamp: 299000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Change color to white" },
+        overhead: { percent: 75, notes: "-" }
+      }
+    ]
+  },
+  {
+    id: "tams_jazz_band",
+    name: "TAMS Jazz Band",
+    audioUrl: "N/A",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Victor Xu"],
+      members: ["Victor Xu", "Aseem Misra", "Carice Chen", "Jayden Weng", "Nisha Patel", "ChiChi Agali", "Jack Finseth", "Jonah Bell", "Alexander Shan", "Ansh Shah", "Sonal Gupta", "Aleena Sojan", "Jonas Li", "Amelia Johnston"],
+      equipment: ["4 low chairs center left stage"],
+      notes: "Cues are song-name-based, not timestamp-based. Requests to be first act of second half to use dinner break for setup.",
+      directionsLink: "https://docs.google.com/document/d/1WHDLeYc6i1e_MUNSbFUVH_zMYMOWmB08pC61MGJXwP4/edit?usp=sharing",
+      audioLink: "N/A"
+    },
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "Off — before start" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 0,
+        floodlight: { percent: 100, color: "#87CEEB", notes: "On, change color to sky blue — start of Fire in the Sky" },
+        overhead: { percent: 50, notes: "Raise to 50%" }
+      },
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "Off — end of Fire in the Sky" },
+        overhead: { percent: 100, notes: "Raise to 100%" }
+      },
+      {
+        timestamp: 0,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Change color to pink — start of Pink Yesterday" },
+        overhead: { percent: 70, notes: "Lower to 70%" }
+      },
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "Off — post-performance" },
+        overhead: { percent: 100, notes: "Raise to 100%" }
+      }
+    ]
+  },
+  {
+    id: "hook",
+    name: "Hook",
+    audioUrl: "/music/Hook Audio - Victor Xu.m4a",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Victor Xu"],
+      members: ["Victor Xu"],
+      equipment: [],
+      notes: "Spoken cue before audio: 'Welcome to my game of mysteries' triggers overhead raise.",
+      directionsLink: "https://docs.google.com/document/d/1_mEo-CYKVrYaFkCetQbIzBMssf7dbFb4dwvox0HfFhU/edit?usp=sharing",
+      audioLink: "/music/Hook Audio - Victor Xu.m4a"
+    },
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "Off — before start" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "- — after spoken cue: Welcome to my game of mysteries" },
+        overhead: { percent: 100, notes: "Raise to 100%" }
+      },
+      {
+        timestamp: 0,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red — at audio 0:00" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 45000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker off and on once with overheads" },
+        overhead: { percent: 100, notes: "Flicker on and off once" }
+      },
+      {
+        timestamp: 78000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker off and on once with overheads" },
+        overhead: { percent: 100, notes: "Flicker on and off once" }
+      },
+      {
+        timestamp: 109000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker off and on once with overheads" },
+        overhead: { percent: 100, notes: "Flicker on and off once" }
+      },
+      {
+        timestamp: 171000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off — end of audio" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 171000,
+        floodlight: { percent: 0, color: "#000000", notes: "- — raise slowly after audio ends" },
+        overhead: { percent: 100, notes: "Raise to 100% slowly" }
+      }
+    ]
+  },
+  {
+    id: "leticia_bromley",
+    name: "Leticia Bromley",
+    audioUrl: "/music/Marília Mendonça - Esqueça-me Se For Capaz (Karaokê - Áudio Oficial) - Leticia Bromley.mp3",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Leticia Bromley"],
+      members: ["Leticia Bromley"],
+      equipment: ["Standup mic"],
+      notes: "N/A",
+      directionsLink: "https://docs.google.com/document/d/18sOBq7eFlpnqzTCqHzMoCuBPv3Ua6UVwoMout3qDVJc/edit?usp=sharing",
+      audioLink: "/music/Marília Mendonça - Esqueça-me Se For Capaz (Karaokê - Áudio Oficial) - Leticia Bromley.mp3"
+    },
+    directions: [
   {
     timestamp: 0,
-    floodlight: { percent: 40, color: "#FFFFFF", notes: "White on stage" },
-    overhead: { percent: 100, notes: "Raise to 100%,  (Turn off at Let’s take a picture and turn on after)" }
+    floodlight: { percent: 100, color: "#FF8C00", notes: "On, change color to orange" },
+    overhead: { percent: 0, notes: "Off" }
   },
   {
-    timestamp: 244000, // 4:04
-    floodlight: { percent: 40, color: "#FFFFFF", notes: "Maintain white" },
-    overhead: { percent: 100, notes: "Begin slow dim" }
+    timestamp: 18000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+    overhead: { percent: 60, notes: "On, raise slowly to 60%" }
   },
   {
-    timestamp: 275000, // 4:35
-    floodlight: { percent: 0, color: "#FFFFFF", notes: "Sudden off" },
-    overhead: { percent: 0, notes: "Slow dim to 0%" }
+    timestamp: 34000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker on beat between orange and dark orange" },
+    overhead: { percent: 60, notes: "-" }
   },
   {
-    timestamp: 276000, // teardown
-    floodlight: { percent: 0, color: "#000000", notes: "Off (Teardown)" },
-    overhead: { percent: 0, notes: "Off (Teardown)" }
+    timestamp: 38000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+    overhead: { percent: 60, notes: "-" }
+  },
+  {
+    timestamp: 44000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+    overhead: { percent: 30, notes: "Lower slowly to 30%" }
+  },
+  {
+    timestamp: 48000,
+    floodlight: { percent: 100, color: "#CC5500", notes: "Change color to dark orange" },
+    overhead: { percent: 0, notes: "Off" }
+  },
+  {
+    timestamp: 50000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+    overhead: { percent: 60, notes: "On, raise quickly to 60%" }
+  },
+  {
+    timestamp: 63000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker on beat between orange and dark orange" },
+    overhead: { percent: 60, notes: "-" }
+  },
+  {
+    timestamp: 65000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+    overhead: { percent: 60, notes: "-" }
+  },
+  {
+    timestamp: 79000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+    overhead: { percent: 30, notes: "Lower to 30%" }
+  },
+  {
+    timestamp: 89000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+    overhead: { percent: 60, notes: "Raise slowly to 60%" }
+  },
+  {
+    timestamp: 97000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker on beat between orange and dark orange" },
+    overhead: { percent: 60, notes: "Flicker on and off to beat" }
+  },
+  {
+    timestamp: 101000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+    overhead: { percent: 60, notes: "On at 60%" }
+  },
+  {
+    timestamp: 106000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+    overhead: { percent: 30, notes: "Lower slowly to 30%" }
+  },
+  {
+    timestamp: 110000,
+    floodlight: { percent: 100, color: "#CC5500", notes: "Change color to dark orange" },
+    overhead: { percent: 0, notes: "Off" }
+  },
+  {
+    timestamp: 113000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+    overhead: { percent: 60, notes: "On, raise quickly to 60%" }
+  },
+  {
+    timestamp: 133000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+    overhead: { percent: 75, notes: "Raise slowly to 75%" }
+  },
+  {
+    timestamp: 140000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker orange on and off" },
+    overhead: { percent: 0, notes: "Off" }
+  },
+  {
+    timestamp: 142000,
+    floodlight: { percent: 0, color: "#000000", notes: "Off" },
+    overhead: { percent: 0, notes: "-" }
+  },
+  {
+    timestamp: 144000,
+    floodlight: { percent: 100, color: "#CC5500", notes: "On, change color to dark orange" },
+    overhead: { percent: 30, notes: "On, raise slowly to 30%" }
+  },
+  {
+    timestamp: 150000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "Change color to orange" },
+    overhead: { percent: 30, notes: "-" }
+  },
+  {
+    timestamp: 160000,
+    floodlight: { percent: 100, color: "#FF8C00", notes: "-" },
+    overhead: { percent: 0, notes: "Lower slowly to 0% — end of performance" }
+  },
+  {
+    timestamp: 160000,
+    floodlight: { percent: 0, color: "#000000", notes: "-" },
+    overhead: { percent: 100, notes: "On — post-performance" }
   }
 ]
-},
-{
-  id: "Dhanush",
-  name: "Dhanush",
-  audioUrl: "/music/Let It Snow Instrumental - Dean Martin.mp3",
-  duration: 150000, // 2:30 in milliseconds
-  info: {
-    startTime: "5:15 PM",
-    endTime: "5:20 PM",
-    leaders: ["Dhanush"],
-    members: [],
-    equipment: ["Microphone"],
-    notes: "Overhead lights: on at 50% the entire time. Stage floodlights: around 50 to 75%. Color changes at timestamps specified.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
   },
-  directions: [
-    {
-      timestamp: 0,
-      floodlight: { percent: 50, color: "#87CEEB", notes: "Light/sky blue" },
-      overhead: { percent: 50, notes: "Overhead lights on at 50%" }
+  {
+    id: "soul_intro_the_chicken",
+    name: "Soul Intro: The Chicken (Jaco Pastorius)",
+    audioUrl: "/music/08 Soul Intro_The Chicken(カラオケ) (1) - Victor Xu.m4a",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Victor Xu"],
+      members: ["Victor Xu"],
+      equipment: [],
+      notes: "N/A",
+      directionsLink: "https://docs.google.com/document/d/1mA1DWj3zlyEwZ8iJHI_tan7NCTbOfwf5YvwPbWYGlNY/edit?usp=sharing",
+      audioLink: "/music/08 Soul Intro_The Chicken(カラオケ) (1) - Victor Xu.m4a"
     },
-    {
-      timestamp: 35000, // 0:35
-      floodlight: { percent: 50, color: "#0000FF", notes: "Change color to blue" },
-      overhead: { percent: 50, notes: "Overhead lights at 50%" }
-    },
-    {
-      timestamp: 60000, // 1:00
-      floodlight: { percent: 50, color: "#00FF00", notes: "Change color to green" },
-      overhead: { percent: 50, notes: "Overhead lights at 50%" }
-    },
-    {
-      timestamp: 93000, // 1:33
-      floodlight: { percent: 50, color: "#87CEEB", notes: "Change color back to sky blue; keep until song end" },
-      overhead: { percent: 50, notes: "Overhead lights at 50%" }
-    }
-  ]
-},
-{
-  id: "prisha_atc",
-  name: "She Said She Would",
-  audioUrl: "/music/ATC Psh Audio from Prisha Ebburu.MP3",
-  duration: 172000, // 2 minutes 52 seconds
-  info: {
-    startTime: "TBD",
-    endTime: "TBD",
-    leaders: ["Prisha Ebburu"],
-    members: [],
-    equipment: [],
-    notes: "Performance with red/purple color scheme and beat-synced flicker effects. Volume should be louder.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 100, color: "#FFD700", notes: "On, change color to gold" },
+        overhead: { percent: 50, notes: "On 50%" }
+      },
+      {
+        timestamp: 15000,
+        floodlight: { percent: 100, color: "#00AA00", notes: "Change color to green" },
+        overhead: { percent: 50, notes: "-" }
+      },
+      {
+        timestamp: 26000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Change color to pink" },
+        overhead: { percent: 100, notes: "Off, raise slowly to 100%" }
+      },
+      {
+        timestamp: 38000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Rapid flicker" }
+      },
+      {
+        timestamp: 41000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 100, notes: "Off, raise slowly to 100%" }
+      },
+      {
+        timestamp: 45000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "-" },
+        overhead: { percent: 100, notes: "On 100%" }
+      },
+      {
+        timestamp: 127000,
+        floodlight: { percent: 100, color: "#FFD700", notes: "Change color to gold" },
+        overhead: { percent: 70, notes: "Lower to 70%" }
+      },
+      {
+        timestamp: 154000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Change color to pink" },
+        overhead: { percent: 70, notes: "-" }
+      },
+      {
+        timestamp: 190000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 200000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "-" },
+        overhead: { percent: 100, notes: "Raise to 100%" }
+      },
+      {
+        timestamp: 224000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 100, notes: "-" }
+      }
+    ]
   },
-  directions: [
-    {
-      timestamp: 0, // 0:00 – 0:01
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Off" }
+  {
+    id: "pokiris",
+    name: "Pokiris",
+    audioUrl: "/music/Pokiris Worldfest - Anton Joseph.mp3",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Anton Joseph"],
+      members: ["Anton Joseph", "Avin Gupta", "Ansh Kapadia", "Gurtaj Boparai"],
+      equipment: [],
+      notes: "~20 performers total, final list TBD.",
+      directionsLink: "TBD",
+      audioLink: "/music/Pokiris Worldfest - Anton Joseph.mp3"
     },
-    {
-      timestamp: 1000, // 0:01 – 0:07
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 80, notes: "Raise to 80%" }
-    },
-    {
-      timestamp: 7000, // 0:07 – 0:32
-      floodlight: { percent: 100, color: "#800080", notes: "On, color to purple" },
-      overhead: { percent: 80, notes: "Keep 80%" }
-    },
-    {
-      timestamp: 32000, // 0:32 – 0:34
-      floodlight: { percent: 100, color: "#800080", notes: "Flicker purple to beat" },
-      overhead: { percent: 70, notes: "Lower to 70%" }
-    },
-    {
-      timestamp: 34000, // 0:34 – 0:37
-      floodlight: { percent: 100, color: "#FFA500", notes: "On, change color to orange" },
-      overhead: { percent: 70, notes: "Keep 70%" }
-    },
-    {
-      timestamp: 37000, // 0:37 – 0:48
-      floodlight: { percent: 100, color: "#FFA500", notes: "Flicker orange and white to beat" },
-      overhead: { percent: 80, notes: "Raise 80%" }
-    },
-    {
-      timestamp: 49000, // 0:49 – 0:54
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 50, notes: "Lower to 50%" }
-    },
-    {
-      timestamp: 54000, // 0:54 – 1:00
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 80, notes: "Slowly raise to 80%" }
-    },
-    {
-      timestamp: 60000, // 1:00 – 1:15
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "On, color to red (pink)" },
-      overhead: { percent: 80, notes: "Keep at 80%" }
-    },
-    {
-      timestamp: 75000, // 1:15 – 1:28
-      floodlight: { percent: 100, color: "#FF0000", notes: "Color red" },
-      overhead: { percent: 80, notes: "Keep at 80%" }
-    },
-    {
-      timestamp: 89000, // 1:29 – 1:31
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red fast" },
-      overhead: { percent: 80, notes: "Keep at 80%" }
-    },
-    {
-      timestamp: 91000, // 1:31 – 2:01
-      floodlight: { percent: 100, color: "#FF0000", notes: "On, color to red" },
-      overhead: { percent: 80, notes: "Keep at 80%" }
-    },
-    {
-      timestamp: 121000, // 2:01 – 2:07
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 40, notes: "Lower to 40%" }
-    },
-    {
-      timestamp: 127000, // 2:07 – 2:10
-      floodlight: { percent: 100, color: "#FF0000", notes: "On, color to red, flicker slowly" },
-      overhead: { percent: 40, notes: "Keep 40%" }
-    },
-    {
-      timestamp: 130000, // 2:10 – 2:22
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to beat" },
-      overhead: { percent: 70, notes: "Raise fast to 70%" }
-    },
-    {
-      timestamp: 142000, // 2:22 – 2:29
-      floodlight: { percent: 100, color: "#FF0000", notes: "On, color to red" },
-      overhead: { percent: 70, notes: "Keep to 70%" }
-    },
-    {
-      timestamp: 149000, // 2:29 – 2:35
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red slowly" },
-      overhead: { percent: 70, notes: "Keep 70%" }
-    },
-    {
-      timestamp: 155000, // 2:35 – 2:41
-      floodlight: { percent: 100, color: "#FF0000", notes: "On, color to red" },
-      overhead: { percent: 70, notes: "Keep to 70%" }
-    },
-    {
-      timestamp: 161000, // 2:41 – 2:47
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to beat" },
-      overhead: { percent: 70, notes: "Keep 70%" }
-    },
-    {
-      timestamp: 167000, // 2:47 – 2:52
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 40, notes: "Lower to 40%" }
-    },
-    {
-      timestamp: 172001, // Post performance
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 100, notes: "On, 100%" }
-    }
-  ]
-},
-{
-  id: "Mirrors",
-  name: "Poem reading: Mirrors - Elliot",
-  audioUrl: "",
-  duration: 180000, // 3 minutes
-  info: {
-    startTime: "5:25 PM",
-    endTime: "5:30 PM",
-    leaders: ["Elliot Tian"],
-    members: [],
-    equipment: [
-      "a chair",
-      "microphone",
-      "book (performer-provided)",
-      "spoon (performer-provided)",
-      "mirror (performer-provided)"
-    ],
-    notes: "Performer brings their own props of a book, spoon, and mirror.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
+    directions: []
   },
-  directions: [
-    {
-      timestamp: 0,
-      floodlight: { percent: 75, color: "#0051ffff", notes: "Off" },
-      overhead: { percent: 0, notes: "Off" }
+  {
+    id: "camille",
+    name: "Camille",
+    audioUrl: "https://drive.google.com/open?id=1O40OXddjYjjoDiveRdX4imiY6ia_pMA4",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Anton Joseph"],
+      members: ["Camille", "Secret performer TBD"],
+      equipment: [],
+      notes: "TBD",
+      directionsLink: "TBD",
+      audioLink: "https://drive.google.com/open?id=1O40OXddjYjjoDiveRdX4imiY6ia_pMA4"
     },
-    {
-      timestamp: 180000, // end of performance
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 100, notes: "On" }
-    }
-  ]
-},
-{
-  id: "MegalovaniaTrio",
-  name: "Piano, violin, and cello trio - Megalovania",
-  audioUrl: "",
-  duration: 120000, // 2 minutes
-  info: {
-    startTime: "5:30 PM",
-    endTime: "5:35 PM",
-    leaders: ["Pranay Pottipati", "Akhil Tumati", "Dylan Joseph"],
-    members: [],
-    equipment: [
-      "One piano",
-      "Two music stands"
-    ],
-    notes: "Spotlight on center stage when performing.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
+    directions: [] // ⚠️ TBD — performer has not submitted lighting cues yet
   },
-  directions: [
-    {
-      timestamp: 0,
-      floodlight: { percent: 0, color: "#FFFFFF", notes: "Off" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
+  {
+    id: "dying_lights",
+    name: "Dying Lights",
+    audioUrl: "N/A",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Elliot Tian"],
+      members: ["Elliot Tian"],
+      equipment: [],
+      notes: "Walks on stage to read poem. Lighting cues dependent on stanzas.",
+      directionsLink: "TBD",
+      audioLink: "N/A"
     },
-    {
-      timestamp: 120000,
-      floodlight: { percent: 0, color: "#000000", notes: "Off after performance" },
-      overhead: { percent: 0, notes: "Off" }
-    }
-  ]
-},
-{
-  id: "NidhiSam",
-  name: "Nidhi and Sam",
-  audioUrl: "/music/ATC Performance Sreenidhi.m4a",
-  duration: 252000, // 4 minutes 12 seconds
-  info: {
-    startTime: "5:35 PM",
-    endTime: "5:40 PM",
-    leaders: ["Sreenidhi", "Samanvita"],
-    members: [],
-    equipment: [],
-    notes: "",
-    directionsLink: "N/A",
-    audioLink: "N/A"
+    directions: [] // ⚠️ TBD — dependent on poem stanzas, not yet submitted
   },
-  directions: [
-    {
-      timestamp: 0,
-      floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue to the beat" },
-      overhead: { percent: 0, notes: "Off" }
+  {
+    id: "saanvi_and_nihitha",
+    name: "Saanvi and Nihitha",
+    audioUrl: "/music/Saanvi&NihithaWorldFest - Saanvi Somani.mp3",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Saanvi Somani"],
+      members: ["Saanvi Somani", "Nihitha Valagonda"],
+      equipment: [],
+      notes: "Will start on stage — start lighting immediately. At the end, make the lights go dark.",
+      directionsLink: "https://docs.google.com/document/d/1eDxB4eXhH90oT0r5mDCadDqgPI5O7TR7gquu7rbh2MI/edit?usp=drivesdk",
+      audioLink: "/music/Saanvi&NihithaWorldFest - Saanvi Somani.mp3"
     },
-    {
-      timestamp: 11000,
-      floodlight: { percent: 100, color: "#0000FF", notes: "On (blue)" },
-      overhead: { percent: 90, notes: "Raise to 90% slowly" }
-    },
-    {
-      timestamp: 34000,
-      floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue to the beat" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 42000,
-      floodlight: { percent: 100, color: "#0000FF", notes: "On (blue)" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 57000,
-      floodlight: { percent: 100, color: "#800080", notes: "Change color to purple" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 67000,
-      floodlight: { percent: 100, color: "#800080", notes: "Flicker purple to the beat" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 71000,
-      floodlight: { percent: 100, color: "#800080", notes: "On (purple)" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 95000,
-      floodlight: { percent: 100, color: "#800080", notes: "Flicker purple to the beat" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 100000,
-      floodlight: { percent: 100, color: "#800080", notes: "On (purple)" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 104000,
-      floodlight: { percent: 100, color: "#800080", notes: "Flicker purple to the beat" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 109000,
-      floodlight: { percent: 100, color: "#800080", notes: "On (purple)" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 115000,
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to the beat" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 121000,
-      floodlight: { percent: 100, color: "#FF0000", notes: "On (red)" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 131000,
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to the beat" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 137000,
-      floodlight: { percent: 100, color: "#FF0000", notes: "On (red)" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 168000,
-      floodlight: { percent: 100, color: "#00FF00", notes: "Flicker green to the beat" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 175000,
-      floodlight: { percent: 100, color: "#00FF00", notes: "On (green)" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 210000,
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Change color to pink" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 236000,
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker pink to the beat" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 243000,
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "On (pink)" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    },
-    {
-      timestamp: 252000,
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "Change color to white" },
-      overhead: { percent: 90, notes: "Maintain 90%" }
-    }
-  ]
-},
-{
-  id: "ChloeCamille",
-  name: "Chloe and Camille",
-  audioUrl: "/music/Chloe Lu.mp3",
-  duration: 300000, // 5 minutes 0 seconds, corrected from 1:20? Seems 1:20 = 80s = 80000ms. Using 80s below.
-  info: {
-    startTime: "5:40 PM",
-    endTime: "5:45 PM",
-    leaders: ["Chloe Lu", "Camille Liu"],
-    members: [],
-    equipment: [],
-    notes: "White lighting until 0:53, then switch to pink",
-    directionsLink: "N/A",
-    audioLink: "N/A"
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 10000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "On, change color to blue" },
+        overhead: { percent: 70, notes: "Raise to 70%" }
+      },
+      {
+        timestamp: 15000,
+        floodlight: { percent: 100, color: "#87CEEB", notes: "Change color to sky blue" },
+        overhead: { percent: 100, notes: "Raise to 100%" }
+      },
+      {
+        timestamp: 23000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 100, notes: "-" }
+      },
+      {
+        timestamp: 33000,
+        floodlight: { percent: 100, color: "#800080", notes: "Change color to purple" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 40000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "-" }
+      },
+      {
+        timestamp: 45000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker orange to the beat" },
+        overhead: { percent: 100, notes: "On" }
+      },
+      {
+        timestamp: 50000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue to the beat" },
+        overhead: { percent: 100, notes: "-" }
+      },
+      {
+        timestamp: 55000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 67000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Raise white to 100% slowly" },
+        overhead: { percent: 100, notes: "Raise to 100% slowly" }
+      },
+      {
+        timestamp: 84000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "-" },
+        overhead: { percent: 100, notes: "Flicker" }
+      },
+      {
+        timestamp: 86000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Flicker white" },
+        overhead: { percent: 100, notes: "Flicker (maintain)" }
+      },
+      {
+        timestamp: 90000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "On (stop flickering)" },
+        overhead: { percent: 100, notes: "On (stop flickering)" }
+      },
+      {
+        timestamp: 105000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker between red, purple, and blue" },
+        overhead: { percent: 50, notes: "Lower to 50%" }
+      },
+      {
+        timestamp: 113000,
+        floodlight: { percent: 0, color: "#000000", notes: "Change to blue, lower to 0%" },
+        overhead: { percent: 0, notes: "Lower to 0%" }
+      },
+      {
+        timestamp: 120000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 120000,
+        floodlight: { percent: 0, color: "#000000", notes: "- — post-performance (pictures, team chant)" },
+        overhead: { percent: 100, notes: "On" }
+      }
+    ]
   },
-  directions: [
-    {
-      timestamp: 0,
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "White on stage" },
-      overhead: { percent: 100, notes: "White" }
+  {
+    id: "prisha_and_sri",
+    name: "prisha & sri",
+    audioUrl: "/music/worldfest final audio - prisha ebburu.mp3",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Prisha Ebburu"],
+      members: ["Prisha Ebburu", "Sri Hima Vishnavi Somu"],
+      equipment: [],
+      notes: "Clear stage",
+      directionsLink: "https://docs.google.com/document/d/1NZseQhBiKxxa7__OySqSWDAoBIsp5aIArGaWuPPBU4o/edit?usp=sharing",
+      audioLink: "/music/worldfest final audio - prisha ebburu.mp3"
     },
-    {
-      timestamp: 53000, // 0:53
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Switch to pink" },
-      overhead: { percent: 100, notes: "Switch to pink" }
-    },
-    {
-      timestamp: 80000, // 1:20 end
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Off" }
-    }
-  ]
-},
-{
-  id: "ThePokiris",
-  name: "The Pokiris",
-  audioUrl: "/music/Final Audio THX GOATS.m4a",
-  duration: 600000, // 10 minutes = 600,000 ms
-  info: {
-    startTime: "5:45 PM",
-    endTime: "5:55 PM",
-    leaders: [
-      "Gagan", "Pranav", "Advay", "Samarth", "Niam", "Anton", "Rohan", "Sujay",
-      "Krishna", "Mihir", "Arjun", "Shrey", "Subhash", "Ayush", "Vik", "Nitosh",
-      "Nikhil", "Praj", "Ishani", "Sahana", "Ananya", "Nora", "Deeksha", "Anshu",
-      "Nihitha", "Anya", "Akshaya", "Anika"
-    ],
-    members: [],
-    equipment: [],
-    notes: "White lighting entire performance",
-    directionsLink: "N/A",
-    audioLink: "N/A"
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Raise to White" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 7000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Switch to Blue" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 23000,
+        floodlight: { percent: 100, color: "#800080", notes: "Switch to Purple" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 36000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Switch to Blue" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 52000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Slowly Raise to White" },
+        overhead: { percent: 30, notes: "Instant to 0%, Slow raise to 30%" }
+      },
+      {
+        timestamp: 66000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Slowly Pulse White on beat" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 75000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "Switch to Yellow" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 92000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Switch to White" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 109000,
+        floodlight: { percent: 100, color: "#FFFF00", notes: "Switch to Yellow" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 121000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Switch to Orange" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 139000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Slowly Raise to White" },
+        overhead: { percent: 30, notes: "Instant to 0%, Slow raise to 30%" }
+      },
+      {
+        timestamp: 146000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Switch to Pink" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 162000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Switch to Red" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 178000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Switch to White" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 180000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Pulse Pink on Beats x2" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 183000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Switch to Pink" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 189000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Switch to Red" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 204000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Switch to Pink, Pulse Red on Beats" },
+        overhead: { percent: 60, notes: "-" }
+      },
+      {
+        timestamp: 218000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Slowly Switch to White" },
+        overhead: { percent: 60, notes: "-" }
+      }
+    ]
   },
-  directions: [
-    {
-      timestamp: 0,
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "White on stage" },
-      overhead: { percent: 100, notes: "White lighting" }
+  {
+    id: "pranav_bharadwaj",
+    name: "Pranav Bharadwaj",
+    audioUrl: "N/A",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Pranav Bharadwaj"],
+      members: ["Pranav Bharadwaj"],
+      equipment: ["Piano (center stage)", "Microphone"],
+      notes: "Need piano set near the middle and a mic held up to mouth. Lights on the whole time.",
+      directionsLink: "N/A",
+      audioLink: "N/A"
     },
-    {
-      timestamp: 600000,
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Off" }
-    }
-  ]
-},
-{
-  id: "NihithaSaanvi",
-  name: "Nihitha and Saanvi",
-  audioUrl: "/music/My Movie 7 from Saanvi Somani.mp3", // TODO: Add audio file path here
-  duration: 240000, // 4 minutes = 240,000 ms
-  info: {
-    startTime: "5:55 PM",
-    endTime: "6:00 PM",
-    leaders: ["Nihitha", "Saanvi"],
-    members: [],
-    equipment: [],
-    notes: "Lighting changes synced to performance, CUT AT 3:15!!",
-    directionsLink: "N/A",
-    audioLink: "N/A"
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "On — stay on for full duration of performance" },
+        overhead: { percent: 100, notes: "On — stay on for full duration of performance" }
+      }
+    ]
   },
-  directions: [
-    {
-      timestamp: 0,
-      overhead: { percent: 100, notes: "On" },
-      floodlight: { percent: 100, color: "#FFFF00", notes: "Yellow" }
+  {
+    id: "vibe",
+    name: "VIBE",
+    audioUrl: "/music/vibe worldfest FINAL audio - Sri Kowtha.MP3",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Sri Kowtha"],
+      members: ["Sashrika Pinapatruni", "Isabelle Wu", "Sri Kowtha", "Audrey Li", "Audria Tan", "Sonal Gupta", "Neha Reddy", "Taylor Park", "Annika Wong", "Charvi Gunda", "Sana Sachdeva", "Anika Sarna", "Catherine Xu", "Nia Abrams", "Tiffany Zhang", "Anika Mallela", "Suhita Sainathuni", "Varuni Saranu", "Amelia Johnston", "Claire Hood", "Eireen Liao", "Elizabeth Jiang", "Fay Gao", "Prisha Ebburu", "Rachel John", "Varshitha Kukatla"],
+      equipment: [],
+      notes: "N/A",
+      directionsLink: "https://docs.google.com/document/d/1O89v_4GYkV9igSvt-sX8KeAN22SwBMlVlg80vXz5lYA/edit?usp=sharing",
+      audioLink: "/music/vibe worldfest FINAL audio - Sri Kowtha.MP3"
     },
-    {
-      timestamp: 75000,
-      overhead: { percent: 0, notes: "Off" },
-      floodlight: { percent: 100, color: "#FF0000", notes: "Change to red" }
-    },
-    {
-      timestamp: 129000,
-      overhead: { percent: 100, notes: "On" },
-      floodlight: { percent: 100, color: "#0000FF", notes: "Change to blue" }
-    },
-    {
-      timestamp: 195000,
-      overhead: { percent: 50, notes: "Lower to 50%" },
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Change to pink" }
-    },
-    {
-      timestamp: 271000,
-      overhead: { percent: 0, notes: "Off" },
-      floodlight: { percent: 0, color: "#000000", notes: "Off" }
-    }
-  ]
-},
-{
-  id: "LeticiaCalista",
-  name: "Leticia & Calista",
-  audioUrl: "",
-  duration: 480000, // 8 minutes = 480,000 ms
-  info: {
-    startTime: "6:00 PM",
-    endTime: "6:15 PM",
-    leaders: ["Leticia", "Calista"],
-    members: [],
-    equipment: ["2 mics", "1 mic stand"],
-    notes: "Soft purple lighting throughout the performance. wireless mics w/ mic stand adapter?",
-    directionsLink: "N/A",
-    audioLink: "N/A"
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 10000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue on the beat" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 19000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Keep color blue (no flicker)" },
+        overhead: { percent: 30, notes: "Raise to 30%" }
+      },
+      {
+        timestamp: 35000,
+        floodlight: { percent: 100, color: "#800080", notes: "Change color to purple and blue" },
+        overhead: { percent: 60, notes: "Raise to 60%" }
+      },
+      {
+        timestamp: 53000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red, purple, and blue" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 68000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 50, notes: "On (50%)" }
+      },
+      {
+        timestamp: 99000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red, purple, and blue" },
+        overhead: { percent: 100, notes: "On" }
+      },
+      {
+        timestamp: 114000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 127000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker orange" },
+        overhead: { percent: 40, notes: "On (40%)" }
+      },
+      {
+        timestamp: 138000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 80, notes: "Raise to 80%" }
+      },
+      {
+        timestamp: 146000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker orange and red" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 153000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 164000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Flicker white" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 169000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Change color to pink" },
+        overhead: { percent: 100, notes: "On" }
+      },
+      {
+        timestamp: 179000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "Flicker pink on the beat" },
+        overhead: { percent: 100, notes: "On" }
+      },
+      {
+        timestamp: 191000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 204000,
+        floodlight: { percent: 100, color: "#00AA00", notes: "Change color to green and blue" },
+        overhead: { percent: 100, notes: "Raise to 100% slowly" }
+      },
+      {
+        timestamp: 226000,
+        floodlight: { percent: 100, color: "#800080", notes: "Change color to purple and blue" },
+        overhead: { percent: 100, notes: "On" }
+      },
+      {
+        timestamp: 236000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 243000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red on the beat" },
+        overhead: { percent: 100, notes: "Flicker" }
+      },
+      {
+        timestamp: 263000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Change color to blue" },
+        overhead: { percent: 40, notes: "Raise to 40%" }
+      },
+      {
+        timestamp: 279000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 291000,
+        floodlight: { percent: 100, color: "#00AA00", notes: "Change color to green" },
+        overhead: { percent: 40, notes: "On (40%)" }
+      },
+      {
+        timestamp: 318000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 334000,
+        floodlight: { percent: 100, color: "#800080", notes: "Change color to purple" },
+        overhead: { percent: 80, notes: "Raise to 80%" }
+      },
+      {
+        timestamp: 352000,
+        floodlight: { percent: 100, color: "#800080", notes: "Flicker purple" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 355000,
+        floodlight: { percent: 100, color: "#87CEEB", notes: "Change color to sky blue" },
+        overhead: { percent: 40, notes: "On (40%)" }
+      }
+    ]
   },
-  directions: [
-    {
-      timestamp: 0,
-      overhead: { percent: 100, notes: "On" },
-      floodlight: { percent: 100, color: "#C8A2C8", notes: "Soft purple lighting" }
-    }
-  ]
-},
-{
-  id: "yash_atc",
-  name: "Yash",
-  audioUrl: "/music/ATC - Yash (1).mp3",
-  duration: 182000, // 3 minutes 2 seconds
-  info: {
-    startTime: "TBD",
-    endTime: "TBD",
-    leaders: ["Yash"],
-    members: [],
-    equipment: [],
-    notes: "Performance with extensive beat-synced color flicker effects.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
+  {
+    id: "ctrl",
+    name: "CTRL",
+    audioUrl: "/music/ctrl worldfest final audio - Sri Kowtha.MP3",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Sri Kowtha"],
+      members: ["Aasrith Parasu", "Sri Kowtha", "Ajooni Chandi", "Dishita Anand", "Isabelle Wu", "Nitya Bhupathiraju", "Surya Anand", "Anton Joseph", "Nitosh Kumaravel"],
+      equipment: [],
+      notes: "N/A",
+      directionsLink: "https://docs.google.com/document/d/12Lc6iCdJ0-OWQfsyWdG_TLLWO9HjNEqcra07n_SGOew/edit?usp=sharing",
+      audioLink: "/music/ctrl worldfest final audio - Sri Kowtha.MP3"
+    },
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Flicker (on/off) synced to intro rhythm" }
+      },
+      {
+        timestamp: 8000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "WHITE" },
+        overhead: { percent: 20, notes: "On (20%)" }
+      },
+      {
+        timestamp: 18000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Flicker (on/off)" }
+      },
+      {
+        timestamp: 24000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 27000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Flicker ORANGE & WHITE on beat" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 33000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Solid ORANGE" },
+        overhead: { percent: 80, notes: "Fade to 80% (slow)" }
+      },
+      {
+        timestamp: 45000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Strobe ORANGE & WHITE on Lotus" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 48000,
+        floodlight: { percent: 100, color: "#FF8C00", notes: "Solid ORANGE" },
+        overhead: { percent: 100, notes: "Fade to 100% (gradual)" }
+      },
+      {
+        timestamp: 64000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Flicker (on/off)" }
+      },
+      {
+        timestamp: 68000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 70000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "WHITE" },
+        overhead: { percent: 40, notes: "Fade to 40% (slow)" }
+      },
+      {
+        timestamp: 81000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "WHITE" },
+        overhead: { percent: 100, notes: "Fade to 100%" }
+      },
+      {
+        timestamp: 93000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Strobe BLUE & RED on beat" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 97000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Solid RED and WHITE" },
+        overhead: { percent: 50, notes: "Full (50%)" }
+      },
+      {
+        timestamp: 111000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Pulse RED (slow)" },
+        overhead: { percent: 50, notes: "Lower to 50%" }
+      },
+      {
+        timestamp: 125000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Solid RED" },
+        overhead: { percent: 80, notes: "Raise to 80%" }
+      },
+      {
+        timestamp: 132000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker RED" },
+        overhead: { percent: 90, notes: "Gradual to 90%" }
+      },
+      {
+        timestamp: 138000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Fade out completely" }
+      },
+      {
+        timestamp: 144000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker RED and WHITE" },
+        overhead: { percent: 0, notes: "Flicker (on/off) heavy on beat" }
+      },
+      {
+        timestamp: 154000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Solid RED" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 159000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Solid RED" },
+        overhead: { percent: 50, notes: "Fade in to 50%" }
+      },
+      {
+        timestamp: 163000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker RED" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 167000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Strobe RED and WHITE" },
+        overhead: { percent: 40, notes: "Fade to 40% (gradual)" }
+      },
+      {
+        timestamp: 170000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Flicker WHITE" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 171000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker RED and WHITE" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 182000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 188000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "WHITE" },
+        overhead: { percent: 20, notes: "Drop to 20%" }
+      },
+      {
+        timestamp: 213000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "BLUE" },
+        overhead: { percent: 80, notes: "Raise to 80%" }
+      },
+      {
+        timestamp: 217000,
+        floodlight: { percent: 100, color: "#FF69B4", notes: "PINK" },
+        overhead: { percent: 30, notes: "Lower to 30%" }
+      },
+      {
+        timestamp: 229000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "BLUE" },
+        overhead: { percent: 50, notes: "Raise to 50%" }
+      },
+      {
+        timestamp: 250000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker BLUE and PINK" },
+        overhead: { percent: 0, notes: "Flicker (on/off)" }
+      },
+      {
+        timestamp: 260000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "BLUE" },
+        overhead: { percent: 70, notes: "Fade to 70%" }
+      },
+      {
+        timestamp: 271000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Slow flicker of BLUE" },
+        overhead: { percent: 20, notes: "Fade out to 20%" }
+      },
+      {
+        timestamp: 281000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 284000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "WHITE" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 313000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red, orange, blue, and white" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 326000,
+        floodlight: { percent: 100, color: "#800080", notes: "PURPLE" },
+        overhead: { percent: 0, notes: "Flicker (on/off) aggressive" }
+      },
+      {
+        timestamp: 340000,
+        floodlight: { percent: 100, color: "#800080", notes: "Flicker PURPLE" },
+        overhead: { percent: 0, notes: "Fade in" }
+      },
+      {
+        timestamp: 356000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 361000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "WHITE" },
+        overhead: { percent: 50, notes: "Raise to 50%" }
+      },
+      {
+        timestamp: 371000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Flicker WHITE and RED" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 385000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Strobe RED" },
+        overhead: { percent: 60, notes: "Fade in to 60%" }
+      },
+      {
+        timestamp: 391000,
+        floodlight: { percent: 100, color: "#CC5500", notes: "Solid ORANGE (burnt)" },
+        overhead: { percent: 80, notes: "Raise to 80%" }
+      },
+      {
+        timestamp: 397000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Strobe RED" },
+        overhead: { percent: 20, notes: "Drop to 20%" }
+      },
+      {
+        timestamp: 405000,
+        floodlight: { percent: 100, color: "#CC5500", notes: "Solid ORANGE (burnt)" },
+        overhead: { percent: 100, notes: "Full (100%)" }
+      },
+      {
+        timestamp: 414000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Strobe RED (chaotic flicker)" },
+        overhead: { percent: 0, notes: "Off immediately" }
+      },
+      {
+        timestamp: 418000,
+        floodlight: { percent: 100, color: "#CC5500", notes: "Solid ORANGE (burnt)" },
+        overhead: { percent: 80, notes: "Raise to 80%" }
+      },
+      {
+        timestamp: 427000,
+        floodlight: { percent: 100, color: "#800080", notes: "Turn to PURPLE" },
+        overhead: { percent: 80, notes: "Keep at 80%" }
+      },
+      {
+        timestamp: 436000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker RED" },
+        overhead: { percent: 100, notes: "Full (100%)" }
+      },
+      {
+        timestamp: 446000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Strobe RED & ORANGE" },
+        overhead: { percent: 20, notes: "Drop to 20%" }
+      },
+      {
+        timestamp: 451000,
+        floodlight: { percent: 100, color: "#800080", notes: "Turn to PURPLE" },
+        overhead: { percent: 100, notes: "Full (100%)" }
+      },
+      {
+        timestamp: 461000,
+        floodlight: { percent: 100, color: "#FFFFFF", notes: "Flicker WHITE" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 465000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      }
+    ]
   },
-  directions: [
-    {
-      timestamp: 0, // Start
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 4000, // 0:04-0:09
-      floodlight: { percent: 100, color: "#FFA500", notes: "Flicker orange ↔ red to the beat" },
-      overhead: { percent: 60, notes: "Raise to 60%" }
-    },
-    {
-      timestamp: 15000, // 0:15-0:20
-      floodlight: { percent: 100, color: "#FFA500", notes: "Change color to orange" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    },
-    {
-      timestamp: 20000, // 0:20-0:33
-      floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
-      overhead: { percent: 100, notes: "On (steady)" }
-    },
-    {
-      timestamp: 33000, // 0:33-0:43
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red ↔ yellow to the beat" },
-      overhead: { percent: 70, notes: "Lower to 70%" }
-    },
-    {
-      timestamp: 43000, // 0:43-0:48
-      floodlight: { percent: 100, color: "#FFA500", notes: "Change color to orange" },
-      overhead: { percent: 100, notes: "On (steady)" }
-    },
-    {
-      timestamp: 48000, // 0:48-0:54
-      floodlight: { percent: 100, color: "#FFA500", notes: "Flicker orange ↔ yellow to the beat" },
-      overhead: { percent: 100, notes: "On (steady)" }
-    },
-    {
-      timestamp: 54000, // 0:54-1:06
-      floodlight: { percent: 100, color: "#FFA500", notes: "Change color to orange" },
-      overhead: { percent: 100, notes: "On (steady)" }
-    },
-    {
-      timestamp: 66000, // 1:06-1:18
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "Flicker white ↔ orange to the beat" },
-      overhead: { percent: 100, notes: "Flicker (on/off) to beat" }
-    },
-    {
-      timestamp: 78000, // 1:18-1:20
-      floodlight: { percent: 100, color: "#800080", notes: "Flicker purple <-> blue to the beat" },
-      overhead: { percent: 100, notes: "On (steady)" }
-    },
-    {
-      timestamp: 80000, // 1:20-1:39
-      floodlight: { percent: 100, color: "#800080", notes: "Change color to purple" },
-      overhead: { percent: 60, notes: "Lower to 60%" }
-    },
-    {
-      timestamp: 99000, // 1:39-1:48
-      floodlight: { percent: 100, color: "#800080", notes: "Flicker purple ↔ red to the beat" },
-      overhead: { percent: 100, notes: "On (steady)" }
-    },
-    {
-      timestamp: 108000, // 1:48-1:52
-      floodlight: { percent: 100, color: "#0000FF", notes: "Flicker multi-color (blue, red, yellow)" },
-      overhead: { percent: 100, notes: "Flicker (on/off) to beat" }
-    },
-    {
-      timestamp: 112000, // 1:52-2:00
-      floodlight: { percent: 100, color: "#0000FF", notes: "Change to blue" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    },
-    {
-      timestamp: 120000, // 2:00-2:16
-      floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue ↔ pink to the beat" },
-      overhead: { percent: 60, notes: "Lower to 60%" }
-    },
-    {
-      timestamp: 136000, // 2:16-2:20
-      floodlight: { percent: 100, color: "#00FF00", notes: "Change to green, flicker to beat" },
-      overhead: { percent: 100, notes: "On (steady)" }
-    },
-    {
-      timestamp: 140000, // 2:20-2:27
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    },
-    {
-      timestamp: 147000, // 2:27-2:43
-      floodlight: { percent: 100, color: "#0000FF", notes: "Change to blue" },
-      overhead: { percent: 60, notes: "Lower to 60%" }
-    },
-    {
-      timestamp: 163000, // 2:43-3:02
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "Flicker white ↔ blue" },
-      overhead: { percent: 100, notes: "Flicker (on/off)" }
-    },
-    {
-      timestamp: 182000, // End (white at the end)
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "White at the end" },
-      overhead: { percent: 100, notes: "On" }
-    }
-  ]
-},
-{
-  id: "PearsonPatriots",
-  name: "Pearson Patriots",
-  audioUrl: "/music/Videoplayback from Saivi Bhandary.mp3", 
-  duration: 227000, // 3:47 = 227 seconds = 227,000 ms
-  info: {
-    startTime: "6:20 PM",
-    endTime: "6:25 PM",
-    leaders: ["Neha", "Saivi"],
-    members: [],
-    equipment: [],
-    notes: "Lighting coordinated by TAMS Media, Performance Lighting ~ Neha and Saivi.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
-  },
-  directions: [
-    { timestamp: 0, overhead: { percent: 0, notes: "Off" }, floodlight: { percent: 0, color: "#000000", notes: "Off" } },
-    { timestamp: 8000, overhead: { percent: 50, notes: "Raise to 50%" }, floodlight: { percent: 100, color: "#800080", notes: "Change to purple" } },
-    { timestamp: 15000, overhead: { percent: 80, notes: "Raise to 80%" }, floodlight: { percent: 100, color: "#ADD8E6", notes: "Change to light blue" } },
-    { timestamp: 22000, overhead: { percent: 100, notes: "Raise to 100%" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Change to pink" } },
-    { timestamp: 25000, overhead: { percent: 100, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFFF00", notes: "Change to yellow" } },
-    { timestamp: 30000, overhead: { percent: 100, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink and yellow on beat" } },
-    { timestamp: 37000, overhead: { percent: 0, notes: "Off" }, floodlight: { percent: 100, color: "#ADD8E6", notes: "Change to light blue" } },
-    { timestamp: 41000, overhead: { percent: 25, notes: "Raise to 25%" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink and yellow on beat" } },
-    { timestamp: 44000, overhead: { percent: 0, notes: "Off" }, floodlight: { percent: 100, color: "#ADD8E6", notes: "Change to light blue" } },
-    { timestamp: 48000, overhead: { percent: 25, notes: "Raise to 25%" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink and yellow on beat" } },
-    { timestamp: 52000, overhead: { percent: 100, notes: "Raise to 100%" }, floodlight: { percent: 100, color: "#800080", notes: "Change to purple" } },
-    { timestamp: 60000, overhead: { percent: 75, notes: "Lower to 75%" }, floodlight: { percent: 100, color: "#FFFF00", notes: "Change to yellow" } },
-    { timestamp: 61000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Change to pink" } },
-    { timestamp: 63000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink and yellow on beat" } },
-    { timestamp: 67000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#ADD8E6", notes: "Change to light blue" } },
-    { timestamp: 70000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink and yellow on beat" } },
-    { timestamp: 74000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#ADD8E6", notes: "Change to light blue" } },
-    { timestamp: 78000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink and yellow on beat" } },
-    { timestamp: 81000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#ADD8E6", notes: "Change and flicker by beat to light blue" } },
-    { timestamp: 110000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#ADD8E6", notes: "Keep at light blue" } },
-    { timestamp: 114000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink and yellow on beat" } },
-    { timestamp: 118000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#ADD8E6", notes: "Keep at light blue" } },
-    { timestamp: 122000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink and yellow on beat" } },
-    { timestamp: 126000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#800080", notes: "Change to purple" } },
-    { timestamp: 133000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFFF00", notes: "Change to yellow" } },
-    { timestamp: 135000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Change to pink" } },
-    { timestamp: 137000, overhead: { percent: 75, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink and yellow on beat" } },
-    { timestamp: 140000, overhead: { percent: 0, notes: "Off" }, floodlight: { percent: 100, color: "#ADD8E6", notes: "Change and flicker by beat to light blue" } },
-    { timestamp: 144000, overhead: { percent: 50, notes: "Raise to 50%" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink and yellow on beat" } },
-    { timestamp: 148000, overhead: { percent: 50, notes: "Maintain" }, floodlight: { percent: 100, color: "#ADD8E6", notes: "Change and flicker by beat to light blue" } },
-    { timestamp: 151000, overhead: { percent: 50, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink and yellow on beat" } },
-    { timestamp: 155000, overhead: { percent: 50, notes: "Maintain" }, floodlight: { percent: 100, color: "#ADD8E6", notes: "Change and flicker by beat to light blue" } },
-    { timestamp: 171000, overhead: { percent: 50, notes: "Maintain" }, floodlight: { percent: 100, color: "#800080", notes: "Change to purple" } },
-    { timestamp: 174000, overhead: { percent: 50, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Change to pink" } },
-    { timestamp: 177000, overhead: { percent: 50, notes: "Maintain" }, floodlight: { percent: 100, color: "#800080", notes: "Change to purple" } },
-    { timestamp: 181000, overhead: { percent: 50, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Change to pink" } },
-    { timestamp: 184000, overhead: { percent: 50, notes: "Maintain" }, floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink and yellow on beat" } },
-    { timestamp: 214000, overhead: { percent: 100, notes: "Raise to 100%" }, floodlight: { percent: 0, color: "#000000", notes: "Off" } }
-  ]
-},
-{
-  id: "VoicesOfTAMS",
-  name: "Voices of TAMS",
-  audioUrl: "N/A",
-  duration: 150000, // 2 minutes 30 seconds = 150,000 ms
-  info: {
-    startTime: "6:25 PM",
-    endTime: "6:30 PM",
-    leaders: [
-      "Bella Mueller",
-      "Prisha Ebburu",
-      "Iksha Vuppala",
-      "Sri Hima Vishnavi Somu",
-      "Anya Parganiha",
-      "Kathie Anipindi",
-      "Avin Gupta",
-      "Aseem MisraVl"
-    ],
-    members: [],
-    equipment: [],
-    notes: "turn onto power amp mon, volume controlled by monitor, master at 6, wired (1) at 8.75, wireless at max",
-    directionsLink: "N/A",
-    audioLink: "N/A"
-  },
-  directions: [
-    {
-      timestamp: 0,
-      overhead: { percent: 100, notes: "On" },
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "White stage lighting" }
-    }
-  ]
-},
-{
-  id: "jawad_dead_dance",
-  name: "Jawad - Dead Dance",
-  audioUrl: "/music/dead_dance.mp3",
-  duration: 211000, // 3 minutes 31 seconds
-  info: {
-    startTime: "TBD",
-    endTime: "TBD",
-    leaders: ["Jawad"],
-    members: [],
-    equipment: [],
-    notes: "Performance with beat-synced flicker effects and color transitions.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
-  },
-  directions: [
-    {
-      timestamp: 0, // Start
-      floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red (Turn on at start of song, may be diff than 0:00)" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 10000, // 0:10
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
-      overhead: { percent: 50, notes: "Raise to 50%" }
-    },
-    {
-      timestamp: 15000, // 0:15
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
-      overhead: { percent: 70, notes: "Raise to 70%" }
-    },
-    {
-      timestamp: 24000, // 0:24
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    },
-    {
-      timestamp: 25000, // 0:25
-      floodlight: { percent: 100, color: "#FFA500", notes: "Change color to orange" },
-      overhead: { percent: 70, notes: "Lower to 70%" }
-    },
-    {
-      timestamp: 35000, // 0:35
-      floodlight: { percent: 100, color: "#FFA500", notes: "Continue orange" },
-      overhead: { percent: 50, notes: "Lower to 50%" }
-    },
-    {
-      timestamp: 54000, // 0:54-1:23
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker between red, purple, blue, orange" },
-      overhead: { percent: 50, notes: "Slowly dim lights" }
-    },
-    {
-      timestamp: 83000, // 1:23
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 20, notes: "Lower to 20%" }
-    },
-    {
-      timestamp: 85000, // 1:25
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 86000, // 1:26
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 100, notes: "Raise to 100% immediately" }
-    },
-    {
-      timestamp: 87000, // 1:27
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red and orange to the beat" },
-      overhead: { percent: 100, notes: "Keep at 100%" }
-    },
-    {
-      timestamp: 97000, // 1:37
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red and orange to the beat" },
-      overhead: { percent: 70, notes: "Lower to 70%" }
-    },
-    {
-      timestamp: 115000, // 1:55
-      floodlight: { percent: 100, color: "#800080", notes: "Change and Flicker purple to the beat" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    },
-    {
-      timestamp: 116000, // 1:56
-      floodlight: { percent: 100, color: "#800080", notes: "Continue flicker purple to the beat" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    },
-    {
-      timestamp: 116000, // 1:56-2:12
-      floodlight: { percent: 100, color: "#00008B", notes: "Change to deep blue and flicker to beat" },
-      overhead: { percent: 70, notes: "Lower to 70%" }
-    },
-    {
-      timestamp: 117000, // 1:57
-      floodlight: { percent: 100, color: "#800080", notes: "Change and Flicker purple to the beat" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    },
-    {
-      timestamp: 133000, // 2:13-2:44
-      floodlight: { percent: 100, color: "#00008B", notes: "Flicker deep blue to the beat" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    },
-    {
-      timestamp: 164000, // 2:44-2:50
-      floodlight: { percent: 100, color: "#00FF00", notes: "Change to green, flicker to beat" },
-      overhead: { percent: 70, notes: "Lower to 70%" }
-    },
-    {
-      timestamp: 170000, // 2:50-2:58
-      floodlight: { percent: 100, color: "#FF0000", notes: "Change to red" },
-      overhead: { percent: 70, notes: "Continue 70%" }
-    },
-    {
-      timestamp: 179000, // 2:59-3:30
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
-      overhead: { percent: 50, notes: "Lower to 50%" }
-    },
-    {
-      timestamp: 211000, // 3:31
-      floodlight: { percent: 100, color: "#800080", notes: "Change to purple" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    }
-  ]
-},
-{
-  id: "PramitiAndRithanya",
-  name: "Pramiti and Rithanya",
-  audioUrl: "/music/Pramiti Audio.mp3",
-  duration: 240000, // 4 minutes = 240,000 ms
-  info: {
-    startTime: "6:30 PM",
-    endTime: "6:35 PM",
-    leaders: ["Pramiti", "Rithanya"],
-    members: [],
-    equipment: ["N/A"],
-    notes: "Overhead lights on 100% throughout performance.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
-  },
-  directions: [
-    {
-      timestamp: 0,
-      overhead: { percent: 100, notes: "On" },
-      floodlight: { percent: 0, color: "N/A", notes: "No color lighting used" }
-    }
-  ]
-},
-{
-  id: "ctrl",
-  name: "CTRL",
-  audioUrl: "/music/Final Audio from Sri Kowtha.MP3",
-  duration: 403000, // 6 minutes 43 seconds
-  info: {
-    startTime: "TBD",
-    endTime: "TBD",
-    leaders: ["Sri Kowtha"],
-    members: [],
-    equipment: [],
-    notes: "Performance with dynamic lighting changes and beat-synced effects.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
-  },
-  directions: [
-    {
-      timestamp: 0, // 0:00 - 0:26
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 100, notes: "Flicker (on and off)" }
-    },
-    {
-      timestamp: 27000, // 0:27 - 0:37
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red and white (on the beat)" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 38000, // 0:38 - 0:42
-      floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
-      overhead: { percent: 80, notes: "Raise to 80% slowly" }
-    },
-    {
-      timestamp: 43000, // 0:43 - 0:44
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red and white (on the 'Venom' beat/lyric)" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 45000, // 0:45 - 0:55
-      floodlight: { percent: 100, color: "#FF0000", notes: "Keep red" },
-      overhead: { percent: 100, notes: "Raise to 100% slowly" }
-    },
-    {
-      timestamp: 56000, // 0:56 - 1:08
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 100, notes: "Flicker (on and off)" }
-    },
-    {
-      timestamp: 70000, // 1:10 - 1:14
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Fade out" }
-    },
-    {
-      timestamp: 75000, // 1:15 - 1:20
-      floodlight: { percent: 100, color: "#00FF00", notes: "Change color to green" },
-      overhead: { percent: 100, notes: "Raise to 100% slowly" }
-    },
-    {
-      timestamp: 81000, // 1:21 - 1:33
-      floodlight: { percent: 100, color: "#00FF00", notes: "Keep green" },
-      overhead: { percent: 100, notes: "On" }
-    },
-    {
-      timestamp: 94000, // 1:34 - 1:36
-      floodlight: { percent: 100, color: "#00FF00", notes: "Flicker green and red (can change to smth else)" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 97000, // 1:37 - 1:49
-      floodlight: { percent: 100, color: "#00FF00", notes: "Change back to green" },
-      overhead: { percent: 100, notes: "On (100%)" }
-    },
-    {
-      timestamp: 110000, // 1:50 - 1:55
-      floodlight: { percent: 100, color: "#00FF00", notes: "Flicker green" },
-      overhead: { percent: 50, notes: "Lower to 50%" }
-    },
-    {
-      timestamp: 116000, // 1:56 - 2:06
-      floodlight: { percent: 100, color: "#00FF00", notes: "Keep green" },
-      overhead: { percent: 80, notes: "Raise to 80%" }
-    },
-    {
-      timestamp: 127000, // 2:07 - 2:14
-      floodlight: { percent: 100, color: "#00FF00", notes: "Keep green" },
-      overhead: { percent: 100, notes: "On (100%)" }
-    },
-    {
-      timestamp: 135000, // 2:15 - 2:17
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Fade out to off" }
-    },
-    {
-      timestamp: 138000, // 2:18 - 2:44
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 100, notes: "Flicker (on and off)" }
-    },
-    {
-      timestamp: 165000, // 2:45 - 2:48
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 169000, // 2:49 - 2:54
-      floodlight: { percent: 100, color: "#B8860B", notes: "Pulse gold (dark yellow)" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 175000, // 2:55 - 3:01
-      floodlight: { percent: 100, color: "#B8860B", notes: "Pulse gold (dark yellow)" },
-      overhead: { percent: 60, notes: "Fade into 60%" }
-    },
-    {
-      timestamp: 182000, // 3:02 - 3:12
-      floodlight: { percent: 100, color: "#FFFF00", notes: "Change color to yellow" },
-      overhead: { percent: 80, notes: "Raise to 80% slowly" }
-    },
-    {
-      timestamp: 193000, // 3:13 - 3:14
-      floodlight: { percent: 100, color: "#B8860B", notes: "Flicker gold & yellow (on the four beats)" },
-      overhead: { percent: 30, notes: "Lower to 30%" }
-    },
-    {
-      timestamp: 195000, // 3:15 - 3:25
-      floodlight: { percent: 100, color: "#B8860B", notes: "Change color to gold" },
-      overhead: { percent: 80, notes: "Raise to 80%" }
-    },
-    {
-      timestamp: 206000, // 3:26 - 3:29
-      floodlight: { percent: 100, color: "#B8860B", notes: "Keep gold" },
-      overhead: { percent: 50, notes: "Lower to 50%" }
-    },
-    {
-      timestamp: 210000, // 3:30
-      floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
-      overhead: { percent: 20, notes: "Lower to 20%" }
-    },
-    {
-      timestamp: 211000, // 3:31 - 3:45
-      floodlight: { percent: 100, color: "#FFFF00", notes: "Change color to yellow" },
-      overhead: { percent: 80, notes: "Raise to 80%" }
-    },
-    {
-      timestamp: 226000, // 3:46 - 3:57
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red" },
-      overhead: { percent: 30, notes: "Lower to 30%" }
-    },
-    {
-      timestamp: 237000, // 3:57 - 4:00
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Fade out to off" }
-    },
-    {
-      timestamp: 241000, // 4:01 - 4:18
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 100, notes: "Flicker (on and off)" }
-    },
-    {
-      timestamp: 259000, // 4:19 - 4:28
-      floodlight: { percent: 100, color: "#00FFFF", notes: "Change color to cyan" },
-      overhead: { percent: 70, notes: "Fade into 70%" }
-    },
-    {
-      timestamp: 269000, // 4:29 - 4:39
-      floodlight: { percent: 100, color: "#00FFFF", notes: "Keep cyan" },
-      overhead: { percent: 80, notes: "Raise to 80%" }
-    },
-    {
-      timestamp: 279000, // 4:39 - 4:55
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Change color to pink" },
-      overhead: { percent: 100, notes: "On (100%)" }
-    },
-    {
-      timestamp: 296000, // 4:56 - 5:14
-      floodlight: { percent: 100, color: "#00FFFF", notes: "Change color to cyan" },
-      overhead: { percent: 100, notes: "On (100%)" }
-    },
-    {
-      timestamp: 315000, // 5:15
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Off immediately" }
-    },
-    {
-      timestamp: 316000, // 5:16 - 5:32
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 100, notes: "Flicker (on and off)" }
-    },
-    {
-      timestamp: 332000, // 5:32 - 5:37
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 100, notes: "Fade in" }
-    },
-    {
-      timestamp: 338000, // 5:38
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red on the lion 'rawr' noise" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 339000, // 5:39 - 5:48
-      floodlight: { percent: 100, color: "#0000FF", notes: "Change color to blue" },
-      overhead: { percent: 50, notes: "Raise to 50%" }
-    },
-    {
-      timestamp: 349000, // 5:49 - 6:01
-      floodlight: { percent: 100, color: "#CC5500", notes: "Change color to burnt orange" },
-      overhead: { percent: 80, notes: "Raise to 80%" }
-    },
-    {
-      timestamp: 362000, // 6:02 - 6:04
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red (on the four beats)" },
-      overhead: { percent: 30, notes: "Lower to 30%" }
-    },
-    {
-      timestamp: 365000, // 6:05 - 6:12
-      floodlight: { percent: 100, color: "#CC5500", notes: "Change color to burnt orange" },
-      overhead: { percent: 50, notes: "Raise to 50%" }
-    },
-    {
-      timestamp: 373000, // 6:13 - 6:14
-      floodlight: { percent: 100, color: "#CC5500", notes: "Flicker the burnt orange on the 'aint nobody f with my clique'" },
-      overhead: { percent: 20, notes: "Lower to 20%" }
-    },
-    {
-      timestamp: 375000, // 6:15 - 6:23
-      floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    },
-    {
-      timestamp: 384000, // 6:24 - 6:32
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red" },
-      overhead: { percent: 0, notes: "Off immediately" }
-    },
-    {
-      timestamp: 393000, // 6:33 - 6:43
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 100, notes: "Flicker (on and off)" }
-    },
-    {
-      timestamp: 404000, // 6:44 - end
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Off" }
-    }
-  ]
-},
-{
-  id: "docked_atc",
-  name: "Docked",
-  audioUrl: "/music/Docked ATC 2025 (1).mp3",
-  duration: 710000, // 11 minutes 50 seconds
-  info: {
-    startTime: "TBD",
-    endTime: "TBD",
-    leaders: ["ATC"],
-    members: [],
-    equipment: [],
-    notes: "Performance with complex lighting sequences including pulses, flickers, and beat-synced effects.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
-  },
-  directions: [
-    {
-      timestamp: 0, // 0:00-0:03
-      floodlight: { percent: 0, color: "#000000", notes: "Continue previous" },
-      overhead: { percent: 50, notes: "Fade to 50%" }
-    },
-    {
-      timestamp: 3000, // 0:03-0:14
-      floodlight: { percent: 0, color: "#000000", notes: "Continue previous" },
-      overhead: { percent: 50, notes: "50%" }
-    },
-    {
-      timestamp: 14000, // 0:14-0:17
-      floodlight: { percent: 0, color: "#000000", notes: "Continue previous" },
-      overhead: { percent: 0, notes: "Fade to 0%" }
-    },
-    {
-      timestamp: 17000, // 0:17-0:20
-      floodlight: { percent: 100, color: "#FFA500", notes: "Orange fade in" },
-      overhead: { percent: 25, notes: "25%" }
-    },
-    {
-      timestamp: 20000, // 0:20-0:31
-      floodlight: { percent: 100, color: "#FFA500", notes: "Orange" },
-      overhead: { percent: 0, notes: "0%" }
-    },
-    {
-      timestamp: 31000, // 0:31-0:36
-      floodlight: { percent: 100, color: "#FF0000", notes: "Red" },
-      overhead: { percent: 20, notes: "20%" }
-    },
-    {
-      timestamp: 36000, // 0:36-0:48
-      floodlight: { percent: 100, color: "#FF0000", notes: "Red" },
-      overhead: { percent: 40, notes: "Fade to 40%" }
-    },
-    {
-      timestamp: 48000, // 0:48-1:15
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "All colors flash" },
-      overhead: { percent: 60, notes: "Pulse 60%-20%" }
-    },
-    {
-      timestamp: 75000, // 1:15-1:17
-      floodlight: { percent: 100, color: "#FF0000", notes: "Red" },
-      overhead: { percent: 70, notes: "70%" }
-    },
-    {
-      timestamp: 78000, // 1:18-1:28
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
-      overhead: { percent: 0, notes: "Fade to 0%" }
-    },
-    {
-      timestamp: 88000, // 1:28-1:34
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
-      overhead: { percent: 20, notes: "20%" }
-    },
-    {
-      timestamp: 94000, // 1:34-1:39
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
-      overhead: { percent: 0, notes: "0%" }
-    },
-    {
-      timestamp: 99000, // 1:39-1:49
-      floodlight: { percent: 100, color: "#FF0000", notes: "Red pulse" },
-      overhead: { percent: 0, notes: "Continue 0%" }
-    },
-    {
-      timestamp: 110000, // 1:50-2:08
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red pulse" },
-      overhead: { percent: 70, notes: "Raise to 70%" }
-    },
-    {
-      timestamp: 128000, // 2:08-2:28
-      floodlight: { percent: 100, color: "#800080", notes: "Purple slow pulse" },
-      overhead: { percent: 70, notes: "Continue 70%" }
-    },
-    {
-      timestamp: 149000, // 2:29-2:38
-      floodlight: { percent: 100, color: "#0000FF", notes: "Blue pulse beat" },
-      overhead: { percent: 70, notes: "Continue 70%" }
-    },
-    {
-      timestamp: 158000, // 2:38-2:48
-      floodlight: { percent: 100, color: "#800080", notes: "Purple" },
-      overhead: { percent: 70, notes: "Continue 70%" }
-    },
-    {
-      timestamp: 169000, // 2:49-2:57
-      floodlight: { percent: 100, color: "#0000FF", notes: "Blue pulse beat" },
-      overhead: { percent: 70, notes: "Continue 70%" }
-    },
-    {
-      timestamp: 177000, // 2:57-3:01
-      floodlight: { percent: 100, color: "#0000FF", notes: "Continue blue" },
-      overhead: { percent: 0, notes: "Fade to 0%" }
-    },
-    {
-      timestamp: 181000, // 3:01-3:03
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to beat" },
-      overhead: { percent: 30, notes: "30%" }
-    },
-    {
-      timestamp: 183000, // 3:03-3:05
-      floodlight: { percent: 100, color: "#FF0000", notes: "On, red" },
-      overhead: { percent: 70, notes: "70%" }
-    },
-    {
-      timestamp: 185000, // 3:05-3:08
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to beat" },
-      overhead: { percent: 30, notes: "30%" }
-    },
-    {
-      timestamp: 188000, // 3:08-3:23
-      floodlight: { percent: 100, color: "#FF0000", notes: "On, red" },
-      overhead: { percent: 70, notes: "70%" }
-    },
-    {
-      timestamp: 203000, // 3:23-3:25
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
-      overhead: { percent: 70, notes: "70%" }
-    },
-    {
-      timestamp: 205000, // 3:25-3:33
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
-      overhead: { percent: 70, notes: "Dim 1 color / Bring 1 up" }
-    },
-    {
-      timestamp: 213000, // 3:33-3:38
-      floodlight: { percent: 100, color: "#00FF00", notes: "Green" },
-      overhead: { percent: 70, notes: "Continue" }
-    },
-    {
-      timestamp: 219000, // 3:39-3:40
-      floodlight: { percent: 0, color: "#000000", notes: "Fade out" },
-      overhead: { percent: 70, notes: "Continue 70%" }
-    },
-    {
-      timestamp: 222000, // 3:42-3:45
-      floodlight: { percent: 100, color: "#0000FF", notes: "Blue fade in" },
-      overhead: { percent: 75, notes: "75%" }
-    },
-    {
-      timestamp: 225000, // 3:45-3:50
-      floodlight: { percent: 100, color: "#0000FF", notes: "Blue" },
-      overhead: { percent: 50, notes: "50%" }
-    },
-    {
-      timestamp: 230000, // 3:50-3:59
-      floodlight: { percent: 100, color: "#800080", notes: "Purple" },
-      overhead: { percent: 50, notes: "Continue 50%" }
-    },
-    {
-      timestamp: 239000, // 3:59-4:08
-      floodlight: { percent: 100, color: "#FFD700", notes: "Gold pulse" },
-      overhead: { percent: 50, notes: "Continue 50%" }
-    },
-    {
-      timestamp: 248000, // 4:08-4:17
-      floodlight: { percent: 100, color: "#FFA500", notes: "Orange" },
-      overhead: { percent: 50, notes: "Continue 50%" }
-    },
-    {
-      timestamp: 257000, // 4:17-4:26
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "White" },
-      overhead: { percent: 50, notes: "Continue 50%" }
-    },
-    {
-      timestamp: 266000, // 4:26-4:36
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "White/red flicker" },
-      overhead: { percent: 50, notes: "Continue 50%" }
-    },
-    {
-      timestamp: 276000, // 4:36-4:45
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "White" },
-      overhead: { percent: 50, notes: "Continue 50%" }
-    },
-    {
-      timestamp: 285000, // 4:45-4:52
-      floodlight: { percent: 100, color: "#FFD700", notes: "Gold" },
-      overhead: { percent: 20, notes: "20%" }
-    },
-    {
-      timestamp: 295000, // 4:55-5:07
-      floodlight: { percent: 100, color: "#FFD700", notes: "Hold last color" },
-      overhead: { percent: 20, notes: "Continue 20%" }
-    },
-    {
-      timestamp: 307000, // 5:07-5:12
-      floodlight: { percent: 100, color: "#FFD700", notes: "Continue gold" },
-      overhead: { percent: 20, notes: "Continue 20%" }
-    },
-    {
-      timestamp: 312000, // 5:12-5:56
-      floodlight: { percent: 100, color: "#FFD700", notes: "Continue gold" },
-      overhead: { percent: 20, notes: "Continue 20%" }
-    },
-    {
-      timestamp: 356000, // 5:56-6:06
-      floodlight: { percent: 0, color: "#000000", notes: "No Color" },
-      overhead: { percent: 0, notes: "Fade to 0%" }
-    },
-    {
-      timestamp: 366000, // 6:06-6:20
-      floodlight: { percent: 0, color: "#000000", notes: "Continue no color" },
-      overhead: { percent: 40, notes: "40%" }
-    },
-    {
-      timestamp: 380000, // 6:20-6:34
-      floodlight: { percent: 0, color: "#000000", notes: "Continue no color" },
-      overhead: { percent: 60, notes: "60% flicker ON/OFF (Mosh Pit Style)" }
-    },
-    {
-      timestamp: 394000, // 6:34-6:39
-      floodlight: { percent: 0, color: "#000000", notes: "Continue no color" },
-      overhead: { percent: 0, notes: "Fade to 0%" }
-    },
-    {
-      timestamp: 399000, // 6:39-6:42
-      floodlight: { percent: 100, color: "#FF0000", notes: "Raise Red" },
-      overhead: { percent: 40, notes: "40%" }
-    },
-    {
-      timestamp: 402000, // 6:42-7:01
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flash Red ↔ Orange beat" },
-      overhead: { percent: 40, notes: "Continue 40%" }
-    },
-    {
-      timestamp: 421000, // 7:01-7:08
-      floodlight: { percent: 100, color: "#FF0000", notes: "Pulse Red" },
-      overhead: { percent: 40, notes: "Continue 40%" }
-    },
-    {
-      timestamp: 428000, // 7:08-7:20
-      floodlight: { percent: 100, color: "#FF0000", notes: "Solid Red" },
-      overhead: { percent: 40, notes: "Continue 40%" }
-    },
-    {
-      timestamp: 440000, // 7:20-7:30
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flash Red ↔ Orange beat" },
-      overhead: { percent: 40, notes: "Continue 40%" }
-    },
-    {
-      timestamp: 450000, // 7:30-7:42
-      floodlight: { percent: 100, color: "#FF0000", notes: "Fast Flicker Red" },
-      overhead: { percent: 40, notes: "Continue 40%" }
-    },
-    {
-      timestamp: 462000, // 7:42-7:53
-      floodlight: { percent: 100, color: "#FF0000", notes: "Solid Red" },
-      overhead: { percent: 40, notes: "Continue 40%" }
-    },
-    {
-      timestamp: 473000, // 7:53-8:03
-      floodlight: { percent: 100, color: "#FF0000", notes: "Pulse Red" },
-      overhead: { percent: 40, notes: "Continue 40%" }
-    },
-    {
-      timestamp: 483000, // 8:03-8:11
-      floodlight: { percent: 0, color: "#000000", notes: "Fade No Color" },
-      overhead: { percent: 0, notes: "Fade to 0%" }
-    },
-    {
-      timestamp: 491000, // 8:11-8:14
-      floodlight: { percent: 100, color: "#FF0000", notes: "Raise Red" },
-      overhead: { percent: 20, notes: "20%" }
-    },
-    {
-      timestamp: 493000, // 8:13-8:33
-      floodlight: { percent: 100, color: "#FF0000", notes: "Rapid Flicker Red" },
-      overhead: { percent: 20, notes: "Continue 20%" }
-    },
-    {
-      timestamp: 513000, // 8:33-8:40
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
-      overhead: { percent: 70, notes: "70%" }
-    },
-    {
-      timestamp: 520000, // 8:40-8:49
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
-      overhead: { percent: 0, notes: "Fade to 0%" }
-    },
-    {
-      timestamp: 529000, // 8:49-9:00
-      floodlight: { percent: 100, color: "#FF0000", notes: "Continue red" },
-      overhead: { percent: 20, notes: "20%" }
-    },
-    {
-      timestamp: 540000, // 9:00-9:13
-      floodlight: { percent: 100, color: "#ADD8E6", notes: "Light blue fade" },
-      overhead: { percent: 50, notes: "50%" }
-    },
-    {
-      timestamp: 553000, // 9:13-9:35
-      floodlight: { percent: 100, color: "#ADD8E6", notes: "Light blue" },
-      overhead: { percent: 80, notes: "80%" }
-    },
-    {
-      timestamp: 575000, // 9:35-9:52
-      floodlight: { percent: 100, color: "#00FF00", notes: "Green" },
-      overhead: { percent: 80, notes: "80%" }
-    },
-    {
-      timestamp: 592000, // 9:52-9:58
-      floodlight: { percent: 100, color: "#800080", notes: "Purple" },
-      overhead: { percent: 80, notes: "80%" }
-    },
-    {
-      timestamp: 598000, // 9:58-10:09
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red and blue" },
-      overhead: { percent: 80, notes: "80%" }
-    },
-    {
-      timestamp: 607000, // 10:07-10:09
-      floodlight: { percent: 100, color: "#800080", notes: "Purple" },
-      overhead: { percent: 80, notes: "80%" }
-    },
-    {
-      timestamp: 609000, // 10:09-10:11
-      floodlight: { percent: 0, color: "#000000", notes: "Fade to no color" },
-      overhead: { percent: 50, notes: "50%" }
-    },
-    {
-      timestamp: 611000, // 10:11-10:23
-      floodlight: { percent: 100, color: "#ADD8E6", notes: "Light blue" },
-      overhead: { percent: 80, notes: "80%" }
-    },
-    {
-      timestamp: 623000, // 10:23-10:32
-      floodlight: { percent: 100, color: "#ADD8E6", notes: "Light blue" },
-      overhead: { percent: 80, notes: "80%" }
-    },
-    {
-      timestamp: 632000, // 10:32-10:34
-      floodlight: { percent: 0, color: "#000000", notes: "Fade to no color" },
-      overhead: { percent: 80, notes: "80%" }
-    },
-    {
-      timestamp: 637000, // 10:37-10:45
-      floodlight: { percent: 0, color: "#000000", notes: "Continue no color" },
-      overhead: { percent: 30, notes: "30%" }
-    },
-    {
-      timestamp: 645000, // 10:45-11:00
-      floodlight: { percent: 100, color: "#800080", notes: "Purple" },
-      overhead: { percent: 80, notes: "80%" }
-    },
-    {
-      timestamp: 660000, // 11:00-11:09
-      floodlight: { percent: 100, color: "#FFA500", notes: "Orange" },
-      overhead: { percent: 80, notes: "80%" }
-    },
-    {
-      timestamp: 669000, // 11:09-11:23
-      floodlight: { percent: 100, color: "#800080", notes: "Flicker purple ↔ blue" },
-      overhead: { percent: 80, notes: "80%" }
-    },
-    {
-      timestamp: 684000, // 11:24-11:39
-      floodlight: { percent: 100, color: "#FFA500", notes: "Flicker orange ↔ yellow" },
-      overhead: { percent: 80, notes: "80%" }
-    },
-    {
-      timestamp: 700000, // 11:40-11:45
-      floodlight: { percent: 0, color: "#000000", notes: "No color" },
-      overhead: { percent: 100, notes: "Slow raise" }
-    },
-    {
-      timestamp: 705000, // 11:45-11:50
-      floodlight: { percent: 0, color: "#000000", notes: "Continue no color" },
-      overhead: { percent: 100, notes: "100%" }
-    }
-  ]
-},
-{
-  id: "vibe_hteam",
-  name: "Vibe H-Team",
-  audioUrl: "/music/ATC Vibe Audio (2).MP3",
-  duration: 362000, // 6 minutes 2 seconds
-  info: {
-    startTime: "TBD",
-    endTime: "TBD",
-    leaders: ["H-Team"],
-    members: [],
-    equipment: [],
-    notes: "Performance with dynamic lighting changes and beat-synced effects.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
-  },
-  directions: [
-    {
-      timestamp: 0, // 0:00 - 0:08
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 9000, // 0:09 - 0:20
-      floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue and green (on the beat)" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 20000, // 0:20 - 0:24
-      floodlight: { percent: 100, color: "#0000FF", notes: "Keep flickering blue" },
-      overhead: { percent: 70, notes: "Raise to 70%" }
-    },
-    {
-      timestamp: 25000, // 0:25 - 0:32
-      floodlight: { percent: 100, color: "#0000FF", notes: "Keep color blue and green (no flicker)" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    },
-    {
-      timestamp: 33000, // 0:33 - 0:48
-      floodlight: { percent: 100, color: "#0000FF", notes: "Change color to blue" },
-      overhead: { percent: 100, notes: "On" }
-    },
-    {
-      timestamp: 49000, // 0:49 - 0:50
-      floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 51000, // 0:51 - 1:06
-      floodlight: { percent: 100, color: "#00FF00", notes: "Change color to green" },
-      overhead: { percent: 100, notes: "On" }
-    },
-    {
-      timestamp: 67000, // 1:07 - 1:10
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red, purple, and blue" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 71000, // 1:11 - 1:19
-      floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue" },
-      overhead: { percent: 20, notes: "On (20%)" }
-    },
-    {
-      timestamp: 80000, // 1:20 - 1:36
-      floodlight: { percent: 100, color: "#800080", notes: "Change color to purple" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    },
-    {
-      timestamp: 97000, // 1:37 - 1:56
-      floodlight: { percent: 100, color: "#0000FF", notes: "Change color to blue" },
-      overhead: { percent: 100, notes: "On (100%)" }
-    },
-    {
-      timestamp: 117000, // 1:57 - 2:05
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "Flicker white" },
-      overhead: { percent: 30, notes: "Fade to 30%" }
-    },
-    {
-      timestamp: 126000, // 2:06 - 2:31
-      floodlight: { percent: 100, color: "#FFA500", notes: "Change color to orange" },
-      overhead: { percent: 100, notes: "On (100%)" }
-    },
-    {
-      timestamp: 152000, // 2:32 - 2:38
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "Flicker white" },
-      overhead: { percent: 100, notes: "On" }
-    },
-    {
-      timestamp: 159000, // 2:39 - 2:51
-      floodlight: { percent: 100, color: "#FFA500", notes: "Change color to orange" },
-      overhead: { percent: 100, notes: "On" }
-    },
-    {
-      timestamp: 172000, // 2:52 - 3:00
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red and pink (on the beat)" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 181000, // 3:01 - 3:29
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Change color to pink" },
-      overhead: { percent: 100, notes: "Raise to 100% slowly" }
-    },
-    {
-      timestamp: 210000, // 3:30
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker pink (on the beat)" },
-      overhead: { percent: 100, notes: "On" }
-    },
-    {
-      timestamp: 223000, // 3:43
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 226000, // 3:46 - 3:51
-      floodlight: { percent: 0, color: "#000000", notes: "Continue off" },
-      overhead: { percent: 100, notes: "Flicker" }
-    },
-    {
-      timestamp: 232000, // 3:52 - 4:00
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red (on the beat)" },
-      overhead: { percent: 10, notes: "Raise to 10%" }
-    },
-    {
-      timestamp: 241000, // 4:01
-      floodlight: { percent: 100, color: "#0000FF", notes: "Change color to blue" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 242000, // 4:02 - 4:10
-      floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
-      overhead: { percent: 100, notes: "On (100%)" }
-    },
-    {
-      timestamp: 251000, // 4:11
-      floodlight: { percent: 100, color: "#0000FF", notes: "Change color to blue" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 252000, // 4:12 - 4:43
-      floodlight: { percent: 100, color: "#800080", notes: "Change color to purple" },
-      overhead: { percent: 100, notes: "Raise to 100%" }
-    },
-    {
-      timestamp: 284000, // 4:44 - 5:00
-      floodlight: { percent: 100, color: "#800080", notes: "Continue purple" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 301000, // 5:01 - 5:13
-      floodlight: { percent: 100, color: "#87CEEB", notes: "Flicker sky blue" },
-      overhead: { percent: 10, notes: "On (10%)" }
-    },
-    {
-      timestamp: 314000, // 5:14 - 5:50
-      floodlight: { percent: 100, color: "#87CEEB", notes: "Keep color as sky blue" },
-      overhead: { percent: 100, notes: "Raise to 100% slowly" }
-    },
-    {
-      timestamp: 351000, // 5:51 - 6:02
-      floodlight: { percent: 100, color: "#87CEEB", notes: "Continue sky blue" },
-      overhead: { percent: 0, notes: "Off" }
-    }
-  ]
-},
-{
-  id: "vibe_kteam",
-  name: "Vibe K-Team",
-  audioUrl: "/music/ENHYPEN XO Only If You Say Yes.mp3",
-  duration: 190000, // 3 minutes 10 seconds (approximate based on last cue)
-  info: {
-    startTime: "TBD",
-    endTime: "TBD",
-    leaders: ["K-Team"],
-    members: [],
-    equipment: [],
-    notes: "Performance with dynamic lighting changes and beat-synced effects.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
-  },
-  directions: [
-    {
-      timestamp: 0,
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 0, // Start - 0:06
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "On, change color to pink" },
-      overhead: { percent: 70, notes: "Raise to 70%" }
-    },
-    {
-      timestamp: 17000, // 0:17
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Continue pink" },
-      overhead: { percent: 70, notes: "Continue 70%" }
-    },
-    {
-      timestamp: 19000, // 0:19
-      floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
-      overhead: { percent: 10, notes: "Lower to 10%" }
-    },
-    {
-      timestamp: 26000, // 0:26
-      floodlight: { percent: 100, color: "#800080", notes: "Change color to purple" },
-      overhead: { percent: 80, notes: "Raise to 80%" }
-    },
-    {
-      timestamp: 39000, // 0:39
-      floodlight: { percent: 100, color: "#87CEEB", notes: "Flicker sky blue to the beat" },
-      overhead: { percent: 100, notes: "On" }
-    },
-    {
-      timestamp: 48000, // 0:48
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Change color to pink" },
-      overhead: { percent: 100, notes: "Continue on" }
-    },
-    {
-      timestamp: 60000, // 1:00
-      floodlight: { percent: 100, color: "#0000FF", notes: "Change color to blue" },
-      overhead: { percent: 100, notes: "Continue on" }
-    },
-    {
-      timestamp: 67000, // 1:07
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 80, notes: "Lower to 80%" }
-    },
-    {
-      timestamp: 77000, // 1:17
-      floodlight: { percent: 100, color: "#800080", notes: "Change color to purple" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 86000, // 1:26
-      floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
-      overhead: { percent: 50, notes: "Raise to 50%" }
-    },
-    {
-      timestamp: 90000, // 1:30 (Note: this comes after 1:36 in source but timestamp suggests 1:30)
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "On (flickering stopped)" },
-      overhead: { percent: 100, notes: "On (flickering stopped)" }
-    },
-    {
-      timestamp: 96000, // 1:36
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "Flicker white" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 108000, // 1:48
-      floodlight: { percent: 100, color: "#FF0000", notes: "Flicker between red, purple, and blue" },
-      overhead: { percent: 50, notes: "Raise to 50%" }
-    },
-    {
-      timestamp: 117000, // 1:57
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Change to pink" },
-      overhead: { percent: 100, notes: "On" }
-    },
-    {
-      timestamp: 136000, // 2:16
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Flicker between pink, red, purple" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 145000, // 2:25
-      floodlight: { percent: 100, color: "#87CEEB", notes: "Change color to sky blue" },
-      overhead: { percent: 70, notes: "Raise to 70%" }
-    },
-    {
-      timestamp: 155000, // 2:35
-      floodlight: { percent: 100, color: "#800080", notes: "Change color to purple" },
-      overhead: { percent: 70, notes: "Continue 70%" }
-    },
-    {
-      timestamp: 165000, // 2:45
-      floodlight: { percent: 100, color: "#800080", notes: "Flicker purple" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 176000, // 2:56
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Change color to pink" },
-      overhead: { percent: 50, notes: "Raise to 50%" }
-    },
-    {
-      timestamp: 183000, // 3:03
-      floodlight: { percent: 100, color: "#FFFFFF", notes: "Flicker white" },
-      overhead: { percent: 0, notes: "Off" }
-    },
-    {
-      timestamp: 190000, // 3:10 to end
-      floodlight: { percent: 0, color: "#000000", notes: "Off" },
-      overhead: { percent: 0, notes: "Off, slowly" }
-    },
-    {
-      timestamp: 190001, // Pictures (after performance)
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Change color to pink" },
-      overhead: { percent: 100, notes: "On" }
-    }
-  ]
-},
-{
-  id: "atc_jcods",
-  name: "ATC JCODS",
-  audioUrl: "/music/Kung Fu Fighting Just Dance Summer Party.mp3",
-  duration: 210000, // 3 minutes (estimated)
-  info: {
-    startTime: "TBD",
-    endTime: "TBD",
-    leaders: ["JCODS"],
-    members: [],
-    equipment: [],
-    notes: "Freestyle performance with blue, pink, and orange lighting throughout. Overheads at 50%. Lighting operator has creative freedom to alternate colors.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
-  },
-  directions: [
-    {
-      timestamp: 0,
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Pink, orange, and blue throughout" },
-      overhead: { percent: 50, notes: "50% throughout" }
-    }
-  ]
-},
-{
-  id: "atc_execs",
-  name: "ATC execs",
-  audioUrl: "/music/TMS Audio.mp3",
-  duration: 210000, // 3 minutes (estimated)
-  info: {
-    startTime: "TBD",
-    endTime: "TBD",
-    leaders: ["JCODS"],
-    members: [],
-    equipment: [],
-    notes: "Freestyle performance with blue, pink, and orange lighting throughout. Overheads at 50%. Lighting operator has creative freedom to alternate colors.",
-    directionsLink: "N/A",
-    audioLink: "N/A"
-  },
-  directions: [
-    {
-      timestamp: 0,
-      floodlight: { percent: 100, color: "#FFC0CB", notes: "Pink, orange, and blue throughout" },
-      overhead: { percent: 50, notes: "50% throughout" }
-    }
-  ]
-}
+  {
+    id: "vibe_execs",
+    name: "VIBE Execs",
+    audioUrl: "/music/drama vibe exec dance audio - Sri Kowtha.MP3",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: ["Sri Kowtha"],
+      members: ["Sashrika Pinapatruni", "Isabelle Wu", "Sri Kowtha", "Audrey Li"],
+      equipment: [],
+      notes: "N/A",
+      directionsLink: "https://docs.google.com/document/d/1ftSHbruQL1xM7plIBWfOCDryYgFOzq4P_cysLf-DPXA/edit?usp=sharing",
+      audioLink: "/music/drama vibe exec dance audio - Sri Kowtha.MP3"
+    },
+    directions: [
+      {
+        timestamp: 0,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 3000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "On, change color to blue" },
+        overhead: { percent: 70, notes: "Raise to 70%" }
+      },
+      {
+        timestamp: 8000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker red to the beat" },
+        overhead: { percent: 50, notes: "Lower to 50%" }
+      },
+      {
+        timestamp: 15000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Change color to blue" },
+        overhead: { percent: 75, notes: "Raise to 75%" }
+      },
+      {
+        timestamp: 21000,
+        floodlight: { percent: 100, color: "#800080", notes: "Change color to purple" },
+        overhead: { percent: 100, notes: "Raise to 100%" }
+      },
+      {
+        timestamp: 30000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 100, notes: "-" }
+      },
+      {
+        timestamp: 44000,
+        floodlight: { percent: 100, color: "#0000FF", notes: "Flicker blue to the beat" },
+        overhead: { percent: 100, notes: "-" }
+      },
+      {
+        timestamp: 52000,
+        floodlight: { percent: 100, color: "#800080", notes: "Change color to purple" },
+        overhead: { percent: 50, notes: "Lower to 50%" }
+      },
+      {
+        timestamp: 82000,
+        floodlight: { percent: 100, color: "#800080", notes: "-" },
+        overhead: { percent: 0, notes: "Off" }
+      },
+      {
+        timestamp: 91000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Raise to 100% slowly" }
+      },
+      {
+        timestamp: 105000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Change color to red" },
+        overhead: { percent: 0, notes: "Flicker" }
+      },
+      {
+        timestamp: 112000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "-" },
+        overhead: { percent: 100, notes: "On" }
+      },
+      {
+        timestamp: 127000,
+        floodlight: { percent: 100, color: "#FF0000", notes: "Flicker between red, purple, and blue" },
+        overhead: { percent: 100, notes: "-" }
+      },
+      {
+        timestamp: 143000,
+        floodlight: { percent: 0, color: "#000000", notes: "Off" },
+        overhead: { percent: 0, notes: "Fade to 0%" }
+      }
+    ]
+  }
 ]

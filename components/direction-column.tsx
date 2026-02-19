@@ -30,33 +30,37 @@ export function DirectionColumn({
         <div className="space-y-2">
           <div>
             <p className="text-sm font-semibold text-foreground mb-1">Floodlight</p>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mb-2">
               <div
                 className="w-8 h-8 rounded border border-border"
                 style={{ backgroundColor: direction.floodlight.color }}
               />
+              <p className="text-sm text-foreground">{direction.floodlight.percent}%</p>
+            </div>
+            <div className="w-full h-2 bg-gray-300 rounded mb-2">
+              <div
+                className="h-full rounded"
+                style={{ width: `${direction.floodlight.percent}%`, backgroundColor: direction.floodlight.color }}
+              />
+            </div>
+            <p className="text-sm text-muted-foreground">{direction.floodlight.notes}</p>
+          </div>
+
+          <div>
+            <p className="text-sm font-semibold text-foreground mb-1">Overhead</p>
+            <div className="w-full h-2 bg-gray-300 rounded mb-2">
+              <div
+                className="h-full bg-blue-700 rounded"
+                style={{ width: `${direction.overhead.percent}%` }}
+              />
+            </div>
+            <div className="flex items-center gap-2">
               <div className="flex-1">
-                <p className="text-sm text-foreground">{direction.floodlight.percent}%</p>
-                <p className="text-sm text-muted-foreground">{direction.floodlight.notes}</p>
+                <p className="text-xl font-bold text-foreground">{direction.overhead.percent}%</p>
+                <p className="text-xl font-bold text-foreground">{direction.overhead.notes}</p>
               </div>
             </div>
           </div>
-
-            <div>
-                <p className="text-sm font-semibold text-foreground mb-1">Overhead</p>
-                <div className="w-full h-2 bg-gray-300 rounded mb-2">
-                  <div
-                  className="h-full bg-blue-700 rounded"
-                  style={{ width: `${direction.overhead.percent}%` }}
-                  />
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="flex-1">
-                  <p className="text-xl font-bold text-foreground">{direction.overhead.percent}%</p>
-                  <p className="text-xl font-bold text-foreground">{direction.overhead.notes}</p>
-                  </div>
-                </div>
-            </div>
         </div>
       </div>
     </div>
