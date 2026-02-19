@@ -729,7 +729,7 @@ export const audioGroups: AudioGroup[] = [
   {
     id: "nidhi_and_sam",
     name: "Nidhi and Sam",
-    audioUrl: "https://drive.google.com/open?id=1yoQqZR3FhVDmZD6FObqaMV0J4OfCtcJG",
+    audioUrl: "VERT_wf nidhi and sam - Sreenidhi C.mp3",
     duration: 0,
     info: {
       startTime: "TBD",
@@ -1103,7 +1103,7 @@ export const audioGroups: AudioGroup[] = [
   {
     id: "hook",
     name: "Hook",
-    audioUrl: "/music/Hook Audio - Victor Xu.m4a",
+    audioUrl: "/music/Hook Audio New.m4a",
     duration: 0,
     info: {
       startTime: "TBD",
