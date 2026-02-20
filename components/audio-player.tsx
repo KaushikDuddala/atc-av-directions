@@ -6,6 +6,7 @@ import { useRef, useState, useEffect } from "react"
 import type { AudioGroup } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import { Play, Pause } from "lucide-react"
+import { useAudioSync } from "@/contexts/audio-sync-context"
 
 export function AudioPlayer({
   group,
@@ -18,6 +19,8 @@ export function AudioPlayer({
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
+  const { playbackState, updatePlaybackState, isConnected } = useAudioSync()
+  const isApplyingRemoteState = useRef(false)
 
   useEffect(() => {
     const audio = audioRef.current
@@ -48,6 +51,42 @@ export function AudioPlayer({
     }
   }, [onTimeUpdate])
 
+  // Listen for playback state changes from other clients
+  useEffect(() => {
+    if (!playbackState || !isConnected) return
+    
+    // Only sync if the group ID matches
+    if (playbackState.groupId !== group.id) return
+
+    const audio = audioRef.current
+    if (!audio) return
+
+    isApplyingRemoteState.current = true
+
+    try {
+      // Calculate time difference to determine if we need to seek
+      const timeDiff = Math.abs(playbackState.currentTime - audio.currentTime * 1000)
+      
+      // If time difference is significant (more than 500ms), seek to the remote time
+      if (timeDiff > 500) {
+        audio.currentTime = playbackState.currentTime / 1000
+      }
+
+      // Sync play/pause state
+      if (playbackState.isPlaying && !isPlaying) {
+        audio.play().catch((err) => {
+          console.warn("Failed to sync play state:", err)
+        })
+        setIsPlaying(true)
+      } else if (!playbackState.isPlaying && isPlaying) {
+        audio.pause()
+        setIsPlaying(false)
+      }
+    } finally {
+      isApplyingRemoteState.current = false
+    }
+  }, [playbackState, isConnected, group.id, isPlaying])
+
   // When group changes, reset player state and ensure the new source is loaded
   useEffect(() => {
     const audio = audioRef.current
@@ -71,6 +110,16 @@ export function AudioPlayer({
     if (isPlaying) {
       audio.pause()
       setIsPlaying(false)
+      
+      // Broadcast pause event
+      if (isConnected) {
+        updatePlaybackState({
+          groupId: group.id,
+          isPlaying: false,
+          currentTime: audio.currentTime * 1000,
+          timestamp: Date.now(),
+        })
+      }
       return
     }
 
@@ -78,7 +127,19 @@ export function AudioPlayer({
     const playPromise = audio.play()
     if (playPromise !== undefined) {
       playPromise
-        .then(() => setIsPlaying(true))
+        .then(() => {
+          setIsPlaying(true)
+          
+          // Broadcast play event
+          if (isConnected) {
+            updatePlaybackState({
+              groupId: group.id,
+              isPlaying: true,
+              currentTime: audio.currentTime * 1000,
+              timestamp: Date.now(),
+            })
+          }
+        })
         .catch((err) => {
           console.warn("Audio play failed:", err)
           setIsPlaying(false)
@@ -93,6 +154,16 @@ export function AudioPlayer({
     const newTime = percent * duration
     audioRef.current.currentTime = newTime / 1000 // Convert back to seconds
     setCurrentTime(newTime)
+
+    // Broadcast seek event
+    if (isConnected) {
+      updatePlaybackState({
+        groupId: group.id,
+        isPlaying: isPlaying,
+        currentTime: newTime,
+        timestamp: Date.now(),
+      })
+    }
   }
 
   const minutes = Math.floor(currentTime / 60000)
