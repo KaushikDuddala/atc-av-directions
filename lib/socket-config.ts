@@ -23,5 +23,5 @@ export function getSocketUrl(): string {
   }
   
   // Server-side fallback (shouldn't be used in normal flow)
-  return "http://localhost:3000"
+  return "http://100.123.206.111:3000"
 }
