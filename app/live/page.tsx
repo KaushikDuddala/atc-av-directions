@@ -7,34 +7,19 @@ import { DirectionsDisplay } from "@/components/directions-display"
 import { AudioPlayer } from "@/components/audio-player"
 import { GroupInfo } from "@/components/group-info"
 import { CountdownTimer } from "@/components/countdown-timer"
-import { Moon, Sun, Search, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react"
+import { Search, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function Live() {
   const [selectedGroupId, setSelectedGroupId] = useState<string>(audioGroups[0]?.id || "")
   const [currentTime, setCurrentTime] = useState(0)
-  const [isDark, setIsDark] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
   const [showSelector, setShowSelector] = useState(true)
   const listRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const savedDarkMode = localStorage.getItem("darkMode")
-    if (savedDarkMode !== null) {
-      setIsDark(JSON.parse(savedDarkMode))
-    } else {
-      setIsDark(true)
-    }
+    document.documentElement.classList.add("dark")
   }, [])
-
-  useEffect(() => {
-    localStorage.setItem("darkMode", JSON.stringify(isDark))
-    if (isDark) {
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
-    }
-  }, [isDark])
 
   const filteredGroups = useMemo(() => {
     if (!searchQuery) return audioGroups
@@ -88,9 +73,6 @@ export default function Live() {
             <h1 className="text-3xl font-bold mb-2">Directions Control</h1>
             <p className="text-muted-foreground">AV System cues</p>
           </div>
-          <Button variant="outline" size="icon" onClick={() => setIsDark(!isDark)} className="rounded-full">
-            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </Button>
         </div>
 
         {/* Main content area */}
