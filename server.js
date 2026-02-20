@@ -29,8 +29,11 @@ app.prepare().then(() => {
   // Initialize Socket.io
   const io = new SocketIOServer(httpServer, {
     cors: {
-      origin: "*",
+      origin: process.env.NODE_ENV === "production" 
+        ? ["https://tams-av.vercel.app", "tams-av.vercel.app"]
+        : "*",
       methods: ["GET", "POST"],
+      credentials: true,
     },
     path: "/socket.io",
   })
@@ -44,6 +47,13 @@ app.prepare().then(() => {
       console.log(`[Socket.io] Playback update from ${socket.id}:`, state)
       // Broadcast to all clients except the sender
       socket.broadcast.emit("playback:update", state)
+    })
+
+    // Handle group changes
+    socket.on("group:change", (change) => {
+      console.log(`[Socket.io] Group change from ${socket.id}:`, change)
+      // Broadcast to all clients except the sender
+      socket.broadcast.emit("group:change", change)
     })
 
     // Handle disconnection

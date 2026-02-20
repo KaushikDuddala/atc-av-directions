@@ -1,4 +1,5 @@
 import { io, Socket } from "socket.io-client"
+import { getSocketUrl } from "./socket-config"
 
 export interface PlaybackState {
   groupId: string
@@ -7,13 +8,17 @@ export interface PlaybackState {
   timestamp: number
 }
 
+export interface GroupChange {
+  groupId: string
+  timestamp: number
+}
+
 let socket: Socket | null = null
 
 export function getSocket(): Socket {
   if (!socket) {
-    // Connect to Socket.io server
-    // The server is running on the same host
-    const socketUrl = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000"
+    const socketUrl = getSocketUrl()
+    console.log("[Socket.io] Connecting to", socketUrl)
     
     socket = io(socketUrl, {
       path: "/socket.io",
@@ -31,12 +36,25 @@ export function emitPlaybackState(state: PlaybackState) {
   socket.emit("playback:update", state)
 }
 
+export function emitGroupChange(change: GroupChange) {
+  const socket = getSocket()
+  socket.emit("group:change", change)
+}
+
 export function onPlaybackStateChange(
   callback: (state: PlaybackState) => void
 ) {
   const socket = getSocket()
   socket.on("playback:update", callback)
   return () => socket.off("playback:update", callback)
+}
+
+export function onGroupChange(
+  callback: (change: GroupChange) => void
+) {
+  const socket = getSocket()
+  socket.on("group:change", callback)
+  return () => socket.off("group:change", callback)
 }
 
 export function onConnect(callback: () => void) {

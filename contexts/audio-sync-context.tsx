@@ -4,22 +4,28 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import {
   getSocket,
   emitPlaybackState,
+  emitGroupChange,
   onPlaybackStateChange,
+  onGroupChange,
   onConnect,
   offConnect,
   type PlaybackState,
+  type GroupChange,
 } from "@/lib/audio-sync"
 
 interface AudioSyncContextType {
   playbackState: PlaybackState | null
+  groupChange: GroupChange | null
   isConnected: boolean
   updatePlaybackState: (state: PlaybackState) => void
+  updateGroupChange: (change: GroupChange) => void
 }
 
 const AudioSyncContext = createContext<AudioSyncContextType | undefined>(undefined)
 
 export function AudioSyncProvider({ children }: { children: React.ReactNode }) {
   const [playbackState, setPlaybackState] = useState<PlaybackState | null>(null)
+  const [groupChange, setGroupChange] = useState<GroupChange | null>(null)
   const [isConnected, setIsConnected] = useState(false)
 
   useEffect(() => {
@@ -36,8 +42,13 @@ export function AudioSyncProvider({ children }: { children: React.ReactNode }) {
     }
 
     // Listen for playback state changes from other clients
-    const unsubscribe = onPlaybackStateChange((state: PlaybackState) => {
+    const unsubscribePlayback = onPlaybackStateChange((state: PlaybackState) => {
       setPlaybackState(state)
+    })
+
+    // Listen for group changes from other clients
+    const unsubscribeGroup = onGroupChange((change: GroupChange) => {
+      setGroupChange(change)
     })
 
     onConnect(handleConnect)
@@ -48,7 +59,8 @@ export function AudioSyncProvider({ children }: { children: React.ReactNode }) {
     }
 
     return () => {
-      unsubscribe()
+      unsubscribePlayback()
+      unsubscribeGroup()
       offConnect(handleConnect)
       socket.off("disconnect", handleDisconnect)
     }
@@ -59,8 +71,13 @@ export function AudioSyncProvider({ children }: { children: React.ReactNode }) {
     emitPlaybackState(state)
   }, [])
 
+  const updateGroupChange = useCallback((change: GroupChange) => {
+    setGroupChange(change)
+    emitGroupChange(change)
+  }, [])
+
   return (
-    <AudioSyncContext.Provider value={{ playbackState, isConnected, updatePlaybackState }}>
+    <AudioSyncContext.Provider value={{ playbackState, groupChange, isConnected, updatePlaybackState, updateGroupChange }}>
       {children}
     </AudioSyncContext.Provider>
   )

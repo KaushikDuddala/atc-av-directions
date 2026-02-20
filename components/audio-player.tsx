@@ -40,14 +40,26 @@ export function AudioPlayer({
       setCurrentTime(0)
     }
 
+    const handlePlay = () => {
+      setIsPlaying(true)
+    }
+
+    const handlePause = () => {
+      setIsPlaying(false)
+    }
+
     audio.addEventListener("timeupdate", handleTimeUpdate)
     audio.addEventListener("loadedmetadata", handleLoadedMetadata)
     audio.addEventListener("ended", handleEnded)
+    audio.addEventListener("play", handlePlay)
+    audio.addEventListener("pause", handlePause)
 
     return () => {
       audio.removeEventListener("timeupdate", handleTimeUpdate)
       audio.removeEventListener("loadedmetadata", handleLoadedMetadata)
       audio.removeEventListener("ended", handleEnded)
+      audio.removeEventListener("play", handlePlay)
+      audio.removeEventListener("pause", handlePause)
     }
   }, [onTimeUpdate])
 
@@ -64,28 +76,38 @@ export function AudioPlayer({
     isApplyingRemoteState.current = true
 
     try {
-      // Calculate time difference to determine if we need to seek
+      // Wait a bit for audio to be ready
       const timeDiff = Math.abs(playbackState.currentTime - audio.currentTime * 1000)
       
-      // If time difference is significant (more than 500ms), seek to the remote time
-      if (timeDiff > 500) {
+      // If time difference is significant (more than 1000ms), seek to the remote time
+      // But only if audio has metadata loaded
+      if (audio.readyState >= audio.HAVE_METADATA && timeDiff > 1000) {
         audio.currentTime = playbackState.currentTime / 1000
       }
 
-      // Sync play/pause state
-      if (playbackState.isPlaying && !isPlaying) {
-        audio.play().catch((err) => {
-          console.warn("Failed to sync play state:", err)
-        })
-        setIsPlaying(true)
-      } else if (!playbackState.isPlaying && isPlaying) {
+      // Sync play/pause state - check actual audio state, not component state
+      if (playbackState.isPlaying && audio.paused) {
+        console.log("Remote: Playing audio from other client")
+        const playPromise = audio.play()
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              setIsPlaying(true)
+            })
+            .catch((err) => {
+              console.warn("Failed to sync play state:", err)
+              setIsPlaying(false)
+            })
+        }
+      } else if (!playbackState.isPlaying && !audio.paused) {
+        console.log("Remote: Pausing audio from other client")
         audio.pause()
         setIsPlaying(false)
       }
     } finally {
       isApplyingRemoteState.current = false
     }
-  }, [playbackState, isConnected, group.id, isPlaying])
+  }, [playbackState, isConnected, group.id])
 
   // When group changes, reset player state and ensure the new source is loaded
   useEffect(() => {
@@ -104,12 +126,14 @@ export function AudioPlayer({
   }, [group])
 
   const togglePlayPause = () => {
+    if (isApplyingRemoteState.current) return // Don't broadcast if we're applying remote state
+    
     const audio = audioRef.current
     if (!audio) return
 
-    if (isPlaying) {
+    if (!audio.paused) {
+      // Currently playing, so pause
       audio.pause()
-      setIsPlaying(false)
       
       // Broadcast pause event
       if (isConnected) {
@@ -128,9 +152,7 @@ export function AudioPlayer({
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          setIsPlaying(true)
-          
-          // Broadcast play event
+          // Broadcast play event only after successfully playing
           if (isConnected) {
             updatePlaybackState({
               groupId: group.id,
@@ -142,7 +164,6 @@ export function AudioPlayer({
         })
         .catch((err) => {
           console.warn("Audio play failed:", err)
-          setIsPlaying(false)
         })
     }
   }
@@ -179,8 +200,9 @@ export function AudioPlayer({
       <audio
         ref={audioRef}
         src={group.audioUrl || group.info?.audioLink || ""}
-        preload="metadata"
+        preload="auto"
         playsInline
+        crossOrigin="anonymous"
       />
 
       <div className="space-y-2">
