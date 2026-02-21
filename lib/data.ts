@@ -958,7 +958,7 @@ export const audioGroups: AudioGroup[] = [
   {
     id: "lux",
     name: "Lux",
-    audioUrl: "/music/lux2.mp3",
+    audioUrl: "/music/lux3.mp3",
     duration: 0,
     info: {
       startTime: "TBD",
@@ -968,7 +968,7 @@ export const audioGroups: AudioGroup[] = [
       equipment: [],
       notes: "Entering from the stairs on side of the stage",
       directionsLink: "https://docs.google.com/document/d/1Il5PQv9Nux1dMnDxj1EENTdl-dmhZvX2dXwZx1R65lI/edit?usp=sharing",
-      audioLink: "/music/lux2.mov"
+      audioLink: "/music/lux3.mov"
     },
     directions: [
   {
