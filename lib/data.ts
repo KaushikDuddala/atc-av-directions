@@ -19,7 +19,24 @@ export const audioGroups: AudioGroup[] = [
     directions: [
     ]
   },
-
+{
+    id: "execs",
+    name: "execs",
+    audioUrl: "/music/execs.mp3",
+    duration: 0,
+    info: {
+      startTime: "TBD",
+      endTime: "TBD",
+      leaders: [],
+      members: [],
+      equipment: [],
+      notes: "N/A",
+      directionsLink: "",
+      audioLink: "/music/execs.mp3"
+    },
+    directions: [
+    ]
+  },
   {
     id: "sam_and_saha",
     name: "Sam & Saha",
