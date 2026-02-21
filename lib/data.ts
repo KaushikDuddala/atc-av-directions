@@ -22,7 +22,7 @@ export const audioGroups: AudioGroup[] = [
 {
     id: "execs",
     name: "execs",
-    audioUrl: "/music/execs.mp3",
+    audioUrl: "/music/execs.m4a",
     duration: 0,
     info: {
       startTime: "TBD",
@@ -32,7 +32,7 @@ export const audioGroups: AudioGroup[] = [
       equipment: [],
       notes: "N/A",
       directionsLink: "",
-      audioLink: "/music/execs.mp3"
+      audioLink: "/music/execs.m4a"
     },
     directions: [
     ]
