@@ -9,6 +9,7 @@ import { GroupInfo } from "@/components/group-info"
 import { CountdownTimer } from "@/components/countdown-timer"
 import { Search, ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useAudioSync } from "@/contexts/audio-sync-context"
 
 export default function Live() {
   const [selectedGroupId, setSelectedGroupId] = useState<string>(audioGroups[0]?.id || "")
@@ -16,10 +17,26 @@ export default function Live() {
   const [searchQuery, setSearchQuery] = useState("")
   const [showSelector, setShowSelector] = useState(true)
   const listRef = useRef<HTMLDivElement>(null)
+  const { groupChange, updateGroupChange } = useAudioSync()
+  const isApplyingRemoteChange = useRef(false)
 
   useEffect(() => {
     document.documentElement.classList.add("dark")
   }, [])
+
+  // Listen for group changes from other clients
+  useEffect(() => {
+    if (!groupChange) return
+
+    isApplyingRemoteChange.current = true
+    setSelectedGroupId(groupChange.groupId)
+    setCurrentTime(0)
+    
+    setTimeout(() => {
+      scrollToSelected()
+      isApplyingRemoteChange.current = false
+    }, 50)
+  }, [groupChange])
 
   const filteredGroups = useMemo(() => {
     if (!searchQuery) return audioGroups
@@ -43,16 +60,36 @@ export default function Live() {
 
   const goToPrevious = () => {
     if (currentIndex > 0) {
-      setSelectedGroupId(audioGroups[currentIndex - 1].id)
+      const newGroupId = audioGroups[currentIndex - 1].id
+      setSelectedGroupId(newGroupId)
       setCurrentTime(0)
+      
+      // Broadcast group change to other clients
+      if (!isApplyingRemoteChange.current) {
+        updateGroupChange({
+          groupId: newGroupId,
+          timestamp: Date.now(),
+        })
+      }
+      
       setTimeout(scrollToSelected, 50)
     }
   }
 
   const goToNext = () => {
     if (currentIndex < audioGroups.length - 1) {
-      setSelectedGroupId(audioGroups[currentIndex + 1].id)
+      const newGroupId = audioGroups[currentIndex + 1].id
+      setSelectedGroupId(newGroupId)
       setCurrentTime(0)
+      
+      // Broadcast group change to other clients
+      if (!isApplyingRemoteChange.current) {
+        updateGroupChange({
+          groupId: newGroupId,
+          timestamp: Date.now(),
+        })
+      }
+      
       setTimeout(scrollToSelected, 50)
     }
   }
@@ -60,6 +97,14 @@ export default function Live() {
   const handleGroupSelect = (groupId: string) => {
     setSelectedGroupId(groupId)
     setCurrentTime(0)
+    
+    // Broadcast group change to other clients
+    if (!isApplyingRemoteChange.current) {
+      updateGroupChange({
+        groupId: groupId,
+        timestamp: Date.now(),
+      })
+    }
   }
 
   const selectedGroup = audioGroups.find((g) => g.id === selectedGroupId) as AudioGroup
@@ -124,8 +169,17 @@ export default function Live() {
                 <select
                   value={selectedGroupId}
                   onChange={(e) => {
-                    setSelectedGroupId(e.target.value)
+                    const newGroupId = e.target.value
+                    setSelectedGroupId(newGroupId)
                     setCurrentTime(0)
+                    
+                    // Broadcast group change to other clients
+                    if (!isApplyingRemoteChange.current) {
+                      updateGroupChange({
+                        groupId: newGroupId,
+                        timestamp: Date.now(),
+                      })
+                    }
                   }}
                   className="w-full h-10 pl-3 pr-8 rounded-lg border border-border bg-background text-foreground cursor-pointer appearance-none"
                   style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M2 4l4 4 4-4'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 12px center" }}
