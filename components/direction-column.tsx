@@ -16,8 +16,8 @@ export function DirectionColumn({
     )
   }
 
-  const minutes = Math.floor(direction.timestamp / 60000)
-  const seconds = Math.floor((direction.timestamp % 60000) / 1000)
+  const minutes = Math.floor(direction.startTime / 60000)
+  const seconds = Math.floor((direction.startTime % 60000) / 1000)
   const timeStr = `${minutes}:${seconds.toString().padStart(2, "0")}`
 
   return (

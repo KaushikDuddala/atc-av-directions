@@ -3,9 +3,26 @@ import type { GroupInfo as GroupInfoType } from "@/lib/types"
 
 interface GroupInfoProps {
   info: GroupInfoType
+  duration?: number
 }
 
-export function GroupInfo({ info }: GroupInfoProps) {
+function formatDuration(ms: number): string {
+  const mins = Math.floor(ms / 60000)
+  const secs = Math.floor((ms % 60000) / 1000)
+  return `${mins}:${secs.toString().padStart(2, "0")}`
+}
+
+function calculateEndTime(startTime: string, durationMs: number): string {
+  if (!startTime) return ""
+  const [hours, minutes] = startTime.split(":").map(Number)
+  const totalMinutes = hours * 60 + minutes + Math.floor(durationMs / 60000)
+  const endHours = Math.floor(totalMinutes / 60) % 24
+  const endMins = totalMinutes % 60
+  return `${endHours.toString().padStart(2, "0")}:${endMins.toString().padStart(2, "0")}`
+}
+
+export function GroupInfo({ info, duration = 0 }: GroupInfoProps) {
+  const endTime = info.startTime ? calculateEndTime(info.startTime, duration) : ""
   return (
     <div className="bg-card border border-border rounded-lg p-6 space-y-6 h-full overflow-y-auto">
       <div>
@@ -16,12 +33,14 @@ export function GroupInfo({ info }: GroupInfoProps) {
       <div className="space-y-2">
         <div className="flex justify-between items-start">
           <span className="text-sm font-medium text-muted-foreground">Start Time</span>
-          <span className="font-semibold">{info.startTime}</span>
+          <span className="font-semibold">{info.startTime || "—"}</span>
         </div>
-        <div className="flex justify-between items-start">
-          <span className="text-sm font-medium text-muted-foreground">End Time</span>
-          <span className="font-semibold">{info.endTime}</span>
-        </div>
+        {endTime && (
+          <div className="flex justify-between items-start">
+            <span className="text-sm font-medium text-muted-foreground">End Time</span>
+            <span className="font-semibold">{endTime}</span>
+          </div>
+        )}
       </div>
 
       <div className="border-t border-border" />
@@ -58,7 +77,8 @@ export function GroupInfo({ info }: GroupInfoProps) {
       <div className="space-y-2">
         <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Duration</h4>
         <p className="text-sm">
-          {info.startTime} - {info.endTime}
+          {formatDuration(duration)}
+          {endTime && ` (${info.startTime} - ${endTime})`}
         </p>
       </div>
 

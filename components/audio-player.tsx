@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect, useCallback } from "react"
 import type { AudioGroup } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import { Play, Pause } from "lucide-react"
@@ -18,18 +18,25 @@ export function AudioPlayer({
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
+  const onTimeUpdateRef = useRef(onTimeUpdate)
+
+  // Keep ref updated
+  useEffect(() => {
+    onTimeUpdateRef.current = onTimeUpdate
+  }, [onTimeUpdate])
 
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
 
     const handleTimeUpdate = () => {
-      setCurrentTime(audio.currentTime * 1000) // Convert to ms
-      onTimeUpdate(audio.currentTime * 1000)
+      const timeMs = audio.currentTime * 1000
+      setCurrentTime(timeMs)
+      onTimeUpdateRef.current(timeMs)
     }
 
     const handleLoadedMetadata = () => {
-      setDuration(audio.duration * 1000) // Convert to ms
+      setDuration(audio.duration * 1000)
     }
 
     const handleEnded = () => {
@@ -37,87 +44,83 @@ export function AudioPlayer({
       setCurrentTime(0)
     }
 
+    const handlePlay = () => setIsPlaying(true)
+    const handlePause = () => setIsPlaying(false)
+
     audio.addEventListener("timeupdate", handleTimeUpdate)
     audio.addEventListener("loadedmetadata", handleLoadedMetadata)
     audio.addEventListener("ended", handleEnded)
+    audio.addEventListener("play", handlePlay)
+    audio.addEventListener("pause", handlePause)
 
     return () => {
       audio.removeEventListener("timeupdate", handleTimeUpdate)
       audio.removeEventListener("loadedmetadata", handleLoadedMetadata)
       audio.removeEventListener("ended", handleEnded)
+      audio.removeEventListener("play", handlePlay)
+      audio.removeEventListener("pause", handlePause)
     }
-  }, [onTimeUpdate])
+  }, [])
 
-  // When group changes, reset player state and ensure the new source is loaded
+  // When group changes, reset player state
   useEffect(() => {
     const audio = audioRef.current
     setIsPlaying(false)
     setCurrentTime(0)
     setDuration(0)
     if (audio) {
-      // Ensure the new src is picked up by the element
-      try {
-        audio.load()
-      } catch (e) {
-        // ignore load errors
-      }
+      audio.currentTime = 0
+      audio.pause()
     }
-  }, [group])
+  }, [group.id, group.audioUrl])
 
-  const togglePlayPause = () => {
+  const togglePlayPause = useCallback(() => {
     const audio = audioRef.current
     if (!audio) return
 
     if (isPlaying) {
       audio.pause()
-      setIsPlaying(false)
-      return
+    } else {
+      audio.play().catch(console.error)
     }
-
-    // play() returns a promise in modern browsers; handle rejections (e.g., autoplay policy)
-    const playPromise = audio.play()
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => setIsPlaying(true))
-        .catch((err) => {
-          console.warn("Audio play failed:", err)
-          setIsPlaying(false)
-        })
-    }
-  }
+  }, [isPlaying])
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!audioRef.current || duration === 0) return
     const rect = e.currentTarget.getBoundingClientRect()
     const percent = (e.clientX - rect.left) / rect.width
     const newTime = percent * duration
-    audioRef.current.currentTime = newTime / 1000 // Convert back to seconds
+    audioRef.current.currentTime = newTime / 1000
     setCurrentTime(newTime)
+    onTimeUpdate(newTime)
   }
 
   const minutes = Math.floor(currentTime / 60000)
   const seconds = Math.floor((currentTime % 60000) / 1000)
   const durationMinutes = Math.floor(duration / 60000)
   const durationSeconds = Math.floor((duration % 60000) / 1000)
-
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0
+
+  const audioSrc = group.audioUrl || group.info?.audioLink || ""
 
   return (
     <div className="w-full space-y-4">
-      {/* prefer explicit audioUrl, fallback to info.audioLink; ensure absolute/public path is used */}
       <audio
         ref={audioRef}
-        src={group.audioUrl || group.info?.audioLink || ""}
-        preload="metadata"
+        src={audioSrc}
+        preload="auto"
         playsInline
       />
 
       <div className="space-y-2">
         <div
-          className="h-1 bg-muted rounded-full overflow-hidden cursor-pointer hover:h-2 transition-all"
+          className="h-2 bg-muted rounded-full overflow-hidden cursor-pointer"
           onClick={handleSeek}
         >
-          <div className="h-full bg-foreground transition-all duration-100" style={{ width: `${progressPercent}%` }} />
+          <div
+            className="h-full bg-foreground transition-all"
+            style={{ width: `${progressPercent}%` }}
+          />
         </div>
         <div className="flex justify-between text-xs text-muted-foreground font-mono">
           <span>

@@ -14,10 +14,10 @@ export function CountdownTimer({
 
   useEffect(() => {
     // Find next direction
-    const nextDirection = group.directions.find((d) => d.timestamp > currentTime)
+    const nextDirection = group.directions.find((d) => d.startTime > currentTime)
 
     if (nextDirection) {
-      const remaining = nextDirection.timestamp - currentTime
+      const remaining = nextDirection.startTime - currentTime
       setTimeToNext(Math.max(0, remaining))
     } else {
       setTimeToNext(null)
