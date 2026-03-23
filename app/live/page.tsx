@@ -128,7 +128,7 @@ export default function Live() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-background flex items-center justify-center">
+      <main className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-white">Loading...</div>
       </main>
     )
@@ -136,23 +136,23 @@ export default function Live() {
 
   if (performances.length === 0) {
     return (
-      <main className="min-h-screen bg-background flex items-center justify-center">
+      <main className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-2 text-white">No Performances</h1>
-          <p className="text-slate-400">No approved performances scheduled yet.</p>
+          <p className="text-white/70">No approved performances scheduled yet.</p>
         </div>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen bg-black text-white">
       <div className="flex h-screen flex-col">
         {/* Header */}
-        <div className="border-b border-border px-6 py-6 flex items-center justify-between">
+        <div className="border-b border-white/15 px-6 py-6 flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold mb-2">Directions Control</h1>
-            <p className="text-muted-foreground">AV System cues</p>
+            <p className="text-white/60">AV System cues</p>
           </div>
         </div>
 
@@ -160,16 +160,16 @@ export default function Live() {
         <div className="flex flex-1 overflow-hidden">
           {/* Left sidebar - Search and Group List */}
           {leftSidebarOpen && (
-            <div className="w-80 border-r border-border flex flex-col bg-card/30">
-              <div className="p-4 border-b border-border">
+            <div className="w-80 border-r border-white/15 flex flex-col bg-black">
+              <div className="p-4 border-b border-white/15">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/55" />
                   <input
                     type="text"
                     placeholder="Search performances..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full h-10 pl-10 pr-4 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground"
+                    className="w-full h-10 pl-10 pr-4 rounded-lg border border-white/15 bg-black text-white placeholder:text-white/45"
                   />
                 </div>
               </div>
@@ -180,23 +180,23 @@ export default function Live() {
                     key={group.id}
                     data-selected={group.id === selectedGroupId}
                     onClick={() => handleGroupSelect(group.id)}
-                    className={`w-full text-left px-4 py-3 border-b border-border last:border-b-0 ${
+                    className={`w-full cursor-pointer text-left px-4 py-3 border-b border-white/10 last:border-b-0 ${
                       group.id === selectedGroupId
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-muted"
+                        ? "bg-white text-black"
+                        : "hover:bg-white/5"
                     }`}
                   >
-                    <span className="font-mono text-xs text-muted-foreground mr-2">
+                    <span className={`font-mono text-xs mr-2 ${group.id === selectedGroupId ? "text-black/70" : "text-white/45"}`}>
                       {group.schedule_time || `#${index + 1}`}
                     </span>
                     <span className="font-medium">{group.name}</span>
-                    <span className="text-sm ml-2 opacity-70">
+                    <span className={`text-sm ml-2 ${group.id === selectedGroupId ? "text-black/70" : "text-white/65"}`}>
                       {group.info?.leaders?.join(", ")}
                     </span>
                   </button>
                 ))}
                 {filteredPerformances.length === 0 && (
-                  <div className="px-4 py-2 text-muted-foreground">No results found</div>
+                  <div className="px-4 py-2 text-white/55">No results found</div>
                 )}
               </div>
             </div>
@@ -207,23 +207,23 @@ export default function Live() {
             {/* Navigation */}
             <div className="flex items-center gap-2 mb-8">
               <Button
-                variant="outline"
                 size="icon"
                 onClick={goToPrevious}
                 disabled={currentIndex <= 0}
+                className="border-white/15 bg-black text-white hover:bg-white hover:text-black"
               >
                 <ChevronLeft className="w-4 h-4" />
               </Button>
               <div className="flex-1" />
-              <span className="text-muted-foreground">
+              <span className="text-white/60">
                 {currentIndex + 1} / {filteredPerformances.length}
               </span>
               <div className="flex-1" />
               <Button
-                variant="outline"
                 size="icon"
                 onClick={goToNext}
                 disabled={currentIndex >= filteredPerformances.length - 1}
+                className="border-white/15 bg-black text-white hover:bg-white hover:text-black"
               >
                 <ChevronRight className="w-4 h-4" />
               </Button>
@@ -231,7 +231,7 @@ export default function Live() {
 
             {/* Audio Player */}
             {selectedGroup && (
-              <div className="mb-8 p-6 rounded-lg border border-border bg-card">
+              <div className="mb-8 p-6 rounded-lg border border-white/15 bg-black">
                 <AudioPlayer group={selectedGroup} onTimeUpdate={setCurrentTime} />
               </div>
             )}
@@ -254,7 +254,7 @@ export default function Live() {
 
           {/* Right section - Group Info sidebar */}
           {selectedGroup && (
-            <div className="w-80 border-l border-border overflow-hidden flex flex-col">
+            <div className="w-80 border-l border-white/15 overflow-hidden flex flex-col bg-black">
               <GroupInfo info={selectedGroup.info} duration={selectedGroup.duration} />
             </div>
           )}

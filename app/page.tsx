@@ -1,88 +1,57 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Plus, Edit3, Radio, Settings } from "lucide-react"
+import { ArrowRight, CalendarDays, PencilRuler, TimerReset } from "lucide-react"
+
+const quickLinks = [
+  {
+    href: "/editor",
+    title: "Build",
+    description: "Create a new performance and add cues.",
+    icon: PencilRuler,
+    tone: "from-amber-500/16 to-transparent",
+  },
+  {
+    href: "/edit",
+    title: "Edit",
+    description: "Open a saved performance and update it.",
+    icon: TimerReset,
+    tone: "from-emerald-500/16 to-transparent",
+  },
+  {
+    href: "/schedule",
+    title: "Schedule",
+    description: "View the published run of show.",
+    icon: CalendarDays,
+    tone: "from-sky-500/16 to-transparent",
+  },
+]
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col items-center justify-center p-4">
-      <div className="max-w-3xl w-full">
-        {/* Header */}
-        <div className="text-center mb-20">
-          <div className="mb-6">
-            <div className="inline-block p-3 bg-blue-500/10 rounded-lg border border-blue-500/20 mb-6">
-              <div className="w-8 h-8 text-blue-400">◆</div>
-            </div>
-          </div>
-          <h1 className="text-6xl font-black mb-3 tracking-tight">AV Directions</h1>
-          <p className="text-xl text-slate-400">Professional lighting control for performances</p>
-        </div>
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.12),transparent_24%),linear-gradient(180deg,#0b1020_0%,#090d18_100%)] text-white">
+      <div className="mx-auto flex min-h-screen w-full max-w-5xl items-center px-4 py-10 sm:px-6 lg:px-8">
+        <section className="grid w-full gap-4 md:grid-cols-3">
+          {quickLinks.map((item) => {
+            const Icon = item.icon
 
-        {/* Navigation Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Add Performance */}
-          <Link href="/editor">
-            <div className="group relative p-6 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl hover:border-blue-500/50 transition-all duration-300 cursor-pointer overflow-hidden h-40">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-blue-500/0 group-hover:from-blue-500/5 group-hover:to-blue-500/10 transition-all duration-300"></div>
-              <div className="relative flex flex-col items-center justify-center h-full gap-3">
-                <div className="p-2 bg-blue-500/10 rounded-lg group-hover:bg-blue-500/20 transition-colors">
-                  <Plus className="w-6 h-6 text-blue-400" />
-                </div>
-                <div className="text-center">
-                  <div className="font-semibold text-white text-sm">New Performance</div>
-                  <div className="text-xs text-slate-400 mt-1">Create with lighting cues</div>
-                </div>
-              </div>
-            </div>
-          </Link>
+            return (
+              <Link key={item.href} href={item.href} className="group">
+                <article
+                  className={`h-full rounded-[28px] border border-white/10 bg-gradient-to-br ${item.tone} bg-[#0f172a] p-6 shadow-[0_24px_80px_-36px_rgba(0,0,0,0.75)] transition duration-200 hover:-translate-y-1 hover:border-white/20`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-white">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <ArrowRight className="h-4 w-4 text-slate-500 transition group-hover:translate-x-0.5 group-hover:text-white" />
+                  </div>
 
-          {/* Edit Performance */}
-          <Link href="/edit">
-            <div className="group relative p-6 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl hover:border-emerald-500/50 transition-all duration-300 cursor-pointer overflow-hidden h-40">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-emerald-500/0 group-hover:from-emerald-500/5 group-hover:to-emerald-500/10 transition-all duration-300"></div>
-              <div className="relative flex flex-col items-center justify-center h-full gap-3">
-                <div className="p-2 bg-emerald-500/10 rounded-lg group-hover:bg-emerald-500/20 transition-colors">
-                  <Edit3 className="w-6 h-6 text-emerald-400" />
-                </div>
-                <div className="text-center">
-                  <div className="font-semibold text-white text-sm">Edit Performance</div>
-                  <div className="text-xs text-slate-400 mt-1">Modify existing shows</div>
-                </div>
-              </div>
-            </div>
-          </Link>
-
-          {/* Live */}
-          <Link href="/live">
-            <div className="group relative p-6 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl hover:border-red-500/50 transition-all duration-300 cursor-pointer overflow-hidden h-40">
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500/0 to-red-500/0 group-hover:from-red-500/5 group-hover:to-red-500/10 transition-all duration-300"></div>
-              <div className="relative flex flex-col items-center justify-center h-full gap-3">
-                <div className="p-2 bg-red-500/10 rounded-lg group-hover:bg-red-500/20 transition-colors">
-                  <Radio className="w-6 h-6 text-red-400" />
-                </div>
-                <div className="text-center">
-                  <div className="font-semibold text-white text-sm">Live Display</div>
-                  <div className="text-xs text-slate-400 mt-1">Monitoring & control</div>
-                </div>
-              </div>
-            </div>
-          </Link>
-
-          {/* Admin Dashboard */}
-          <Link href="/admin">
-            <div className="group relative p-6 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl hover:border-purple-500/50 transition-all duration-300 cursor-pointer overflow-hidden h-40">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-purple-500/0 group-hover:from-purple-500/5 group-hover:to-purple-500/10 transition-all duration-300"></div>
-              <div className="relative flex flex-col items-center justify-center h-full gap-3">
-                <div className="p-2 bg-purple-500/10 rounded-lg group-hover:bg-purple-500/20 transition-colors">
-                  <Settings className="w-6 h-6 text-purple-400" />
-                </div>
-                <div className="text-center">
-                  <div className="font-semibold text-white text-sm">Admin</div>
-                  <div className="text-xs text-slate-400 mt-1">System settings</div>
-                </div>
-              </div>
-            </div>
-          </Link>
-        </div>
+                  <h1 className="mt-12 text-3xl font-semibold tracking-tight text-white">{item.title}</h1>
+                  <p className="mt-3 text-sm leading-6 text-slate-300">{item.description}</p>
+                </article>
+              </Link>
+            )
+          })}
+        </section>
       </div>
     </div>
   )

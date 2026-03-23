@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, ChangeEvent } from "react"
+import { useId, useState, type ChangeEvent } from "react"
 import { Upload } from "lucide-react"
 
 export interface AudioUploadResult {
@@ -12,23 +12,24 @@ export interface AudioUploadResult {
 export function AudioUpload({
   onUpload,
   disabled = false,
+  label = "Choose audio",
 }: {
   onUpload: (result: AudioUploadResult) => void
   disabled?: boolean
+  label?: string
 }) {
   const [isLoading, setIsLoading] = useState(false)
-  const [fileName, setFileName] = useState<string>("")
+  const inputId = useId()
 
-  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
     if (!file) return
 
     setIsLoading(true)
-    setFileName(file.name)
 
     try {
       const audio = new Audio()
-      
+
       audio.addEventListener("loadedmetadata", () => {
         const durationMs = Math.floor(audio.duration * 1000)
         onUpload({
@@ -40,14 +41,12 @@ export function AudioUpload({
       })
 
       audio.addEventListener("error", () => {
-        console.error("Audio load error")
         alert("Error loading audio file")
         setIsLoading(false)
       })
 
       audio.src = URL.createObjectURL(file)
-    } catch (error) {
-      console.error("Error uploading audio:", error)
+    } catch {
       setIsLoading(false)
     }
   }
@@ -59,17 +58,15 @@ export function AudioUpload({
         accept="audio/*"
         onChange={handleFileChange}
         disabled={disabled || isLoading}
-        id="audio-upload"
+        id={inputId}
         className="hidden"
       />
       <label
-        htmlFor="audio-upload"
-        className={`cursor-pointer px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-colors ${disabled || isLoading ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}`}
+        htmlFor={inputId}
+        className={`inline-flex cursor-pointer items-center gap-2 rounded-full border border-amber-300 bg-amber-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-amber-600 ${disabled || isLoading ? "pointer-events-none opacity-50" : ""}`}
       >
-        <span className="flex items-center gap-2">
-          <Upload className="w-4 h-4" />
-          {isLoading ? "Loading..." : "Upload"}
-        </span>
+        <Upload className="h-4 w-4" />
+        {isLoading ? "Reading file..." : label}
       </label>
     </div>
   )

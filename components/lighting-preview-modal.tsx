@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
-import { Play, Pause, X, ChevronLeft, ChevronRight } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
+import { Pause, Play, X } from "lucide-react"
 import { Button } from "./ui/button"
 import type { AudioGroup } from "@/lib/types"
 import { formatTimeMMSS } from "@/lib/time-utils"
@@ -18,22 +18,21 @@ export function LightingPreviewModal({ group, onClose, onConfirm }: LightingPrev
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.play()
-      } else {
-        audioRef.current.pause()
-      }
+    if (!audioRef.current) return
+    if (isPlaying) {
+      audioRef.current.play()
+    } else {
+      audioRef.current.pause()
     }
   }, [isPlaying])
 
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
-    
+
     const handleTimeUpdate = () => setCurrentTime(audio.currentTime * 1000)
     const handleEnded = () => setIsPlaying(false)
-    
+
     audio.addEventListener("timeupdate", handleTimeUpdate)
     audio.addEventListener("ended", handleEnded)
     return () => {
@@ -43,191 +42,156 @@ export function LightingPreviewModal({ group, onClose, onConfirm }: LightingPrev
   }, [])
 
   const currentDirection = group.directions
-    .filter(d => d.startTime <= currentTime)
+    .filter((direction) => direction.startTime <= currentTime)
     .sort((a, b) => b.startTime - a.startTime)[0] || null
 
-  const nextDirection = group.directions.find(d => d.startTime > currentTime) || null
-
-  const formatTime = (ms: number) => formatTimeMMSS(ms)
+  const nextDirection = group.directions.find((direction) => direction.startTime > currentTime) || null
 
   return (
-    <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
-      <div className="bg-slate-900 rounded-xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-slate-700">
-          <h2 className="text-xl font-bold text-white">Preview Lighting Cues</h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-white">
-            <X className="w-6 h-6" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/55 p-4 backdrop-blur-sm">
+      <div className="soft-card-strong flex max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden">
+        <div className="flex items-center justify-between border-b border-stone-200/80 px-6 py-5">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Preview</p>
+            <h2 className="mt-1 text-2xl font-semibold tracking-tight text-stone-900">Lighting cue check</h2>
+          </div>
+          <button onClick={onClose} className="rounded-full border border-stone-200 bg-white/80 p-2 text-stone-600 transition hover:bg-white hover:text-stone-900">
+            <X className="h-5 w-5" />
           </button>
         </div>
 
-        {/* Preview Content */}
         <div className="flex-1 overflow-auto p-6">
-          {/* Audio + Time */}
-          <div className="mb-6">
-            <audio ref={audioRef} src={group.audioUrl} crossOrigin="anonymous" />
-            <div className="flex items-center gap-4 mb-4">
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
-              >
-                {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-                {isPlaying ? "Pause" : "Play"}
-              </button>
-              <div className="text-white font-mono">
-                {formatTime(currentTime)} / {formatTime(group.duration)}
+          <audio ref={audioRef} src={group.audioUrl} crossOrigin="anonymous" />
+
+          <div className="muted-card p-5">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="text-lg font-semibold text-stone-900">{group.name}</p>
+                <p className="mt-1 text-sm text-stone-600">
+                  {formatTimeMMSS(currentTime)} / {formatTimeMMSS(group.duration)}
+                </p>
               </div>
+
+              <Button type="button" onClick={() => setIsPlaying(!isPlaying)}>
+                {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                {isPlaying ? "Pause preview" : "Play preview"}
+              </Button>
             </div>
+
             <input
               type="range"
               min="0"
               max={group.duration}
               value={currentTime}
-              onChange={(e) => {
-                const time = Number(e.target.value)
+              onChange={(event) => {
+                const time = Number(event.target.value)
                 setCurrentTime(time)
                 if (audioRef.current) {
                   audioRef.current.currentTime = time / 1000
                 }
               }}
-              className="w-full"
+              className="mt-5 w-full accent-[var(--primary)]"
             />
           </div>
 
-          {/* Current & Next Directions */}
-          <div className="grid grid-cols-2 gap-4">
-            {/* Current */}
-            <div className="p-4 rounded-lg border border-slate-700 bg-slate-800">
-              <h3 className="text-sm font-semibold text-slate-400 mb-3">CURRENT</h3>
+          <div className="mt-6 grid gap-4 lg:grid-cols-2">
+            <div className="soft-card p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Current cue</p>
               {currentDirection ? (
-                <div className="space-y-3">
-                  <div className="text-xs text-slate-500 font-mono">{formatTime(currentDirection.startTime)}</div>
-                  
+                <div className="mt-4 space-y-4 text-sm text-stone-600">
                   <div>
-                    <p className="text-xs text-slate-400 mb-1">Floodlight</p>
-                    <div className="flex items-center gap-2 mb-1">
-                      <div 
-                        className="w-6 h-6 rounded border border-slate-600"
-                        style={{ backgroundColor: currentDirection.floodlight.color }}
-                      />
-                      <span className="text-lg font-bold text-white">{currentDirection.floodlight.percent}%</span>
-                    </div>
-                    <div className="w-full h-2 bg-slate-700 rounded">
-                      <div 
-                        className="h-full rounded"
-                        style={{ 
-                          width: `${currentDirection.floodlight.percent}%`, 
-                          backgroundColor: currentDirection.floodlight.color 
-                        }}
-                      />
-                    </div>
-                    {currentDirection.floodlight.notes && (
-                      <p className="text-xs text-slate-500 mt-1">{currentDirection.floodlight.notes}</p>
-                    )}
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">Starts at</p>
+                    <p className="mt-1 text-lg font-semibold text-stone-900">{formatTimeMMSS(currentDirection.startTime)}</p>
                   </div>
-
-                  <div>
-                    <p className="text-xs text-slate-400 mb-1">Overhead</p>
-                    <div className="w-full h-2 bg-slate-700 rounded mb-1">
-                      <div 
-                        className="h-full bg-blue-500 rounded"
-                        style={{ width: `${currentDirection.overhead.percent}%` }}
-                      />
+                  <div className="rounded-2xl border border-stone-200 bg-white/80 p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="h-6 w-6 rounded-full border border-stone-200" style={{ backgroundColor: currentDirection.floodlight.color }} />
+                      <div>
+                        <p className="font-semibold text-stone-900">Floodlight {currentDirection.floodlight.percent}%</p>
+                        {currentDirection.floodlight.notes && <p className="text-sm text-stone-500">{currentDirection.floodlight.notes}</p>}
+                      </div>
                     </div>
-                    <span className="text-lg font-bold text-white">{currentDirection.overhead.percent}%</span>
-                    {currentDirection.overhead.notes && (
-                      <p className="text-xs text-slate-500 mt-1">{currentDirection.overhead.notes}</p>
-                    )}
+                    <div className="mt-3 h-2 rounded-full bg-stone-100">
+                      <div className="h-full rounded-full" style={{ width: `${currentDirection.floodlight.percent}%`, backgroundColor: currentDirection.floodlight.color }} />
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-stone-200 bg-white/80 p-4">
+                    <p className="font-semibold text-stone-900">Overhead {currentDirection.overhead.percent}%</p>
+                    {currentDirection.overhead.notes && <p className="mt-1 text-sm text-stone-500">{currentDirection.overhead.notes}</p>}
+                    <div className="mt-3 h-2 rounded-full bg-stone-100">
+                      <div className="h-full rounded-full bg-sky-500" style={{ width: `${currentDirection.overhead.percent}%` }} />
+                    </div>
                   </div>
                 </div>
               ) : (
-                <p className="text-slate-500">--:--</p>
+                <p className="mt-4 text-sm text-stone-500">No cue is active at the current playhead position.</p>
               )}
             </div>
 
-            {/* Next */}
-            <div className="p-4 rounded-lg border border-slate-700 bg-slate-800">
-              <h3 className="text-sm font-semibold text-slate-400 mb-3">NEXT</h3>
+            <div className="soft-card p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Next cue</p>
               {nextDirection ? (
-                <div className="space-y-3">
-                  <div className="text-xs text-slate-500 font-mono">{formatTime(nextDirection.startTime)}</div>
-                  
+                <div className="mt-4 space-y-4 text-sm text-stone-600">
                   <div>
-                    <p className="text-xs text-slate-400 mb-1">Floodlight</p>
-                    <div className="flex items-center gap-2 mb-1">
-                      <div 
-                        className="w-6 h-6 rounded border border-slate-600"
-                        style={{ backgroundColor: nextDirection.floodlight.color }}
-                      />
-                      <span className="text-lg font-bold text-white">{nextDirection.floodlight.percent}%</span>
-                    </div>
-                    <div className="w-full h-2 bg-slate-700 rounded">
-                      <div 
-                        className="h-full rounded"
-                        style={{ 
-                          width: `${nextDirection.floodlight.percent}%`, 
-                          backgroundColor: nextDirection.floodlight.color 
-                        }}
-                      />
-                    </div>
-                    {nextDirection.floodlight.notes && (
-                      <p className="text-xs text-slate-500 mt-1">{nextDirection.floodlight.notes}</p>
-                    )}
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-400">Starts at</p>
+                    <p className="mt-1 text-lg font-semibold text-stone-900">{formatTimeMMSS(nextDirection.startTime)}</p>
                   </div>
-
-                  <div>
-                    <p className="text-xs text-slate-400 mb-1">Overhead</p>
-                    <div className="w-full h-2 bg-slate-700 rounded mb-1">
-                      <div 
-                        className="h-full bg-blue-500 rounded"
-                        style={{ width: `${nextDirection.overhead.percent}%` }}
-                      />
+                  <div className="rounded-2xl border border-stone-200 bg-white/80 p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="h-6 w-6 rounded-full border border-stone-200" style={{ backgroundColor: nextDirection.floodlight.color }} />
+                      <div>
+                        <p className="font-semibold text-stone-900">Floodlight {nextDirection.floodlight.percent}%</p>
+                        {nextDirection.floodlight.notes && <p className="text-sm text-stone-500">{nextDirection.floodlight.notes}</p>}
+                      </div>
                     </div>
-                    <span className="text-lg font-bold text-white">{nextDirection.overhead.percent}%</span>
-                    {nextDirection.overhead.notes && (
-                      <p className="text-xs text-slate-500 mt-1">{nextDirection.overhead.notes}</p>
-                    )}
+                    <div className="mt-3 h-2 rounded-full bg-stone-100">
+                      <div className="h-full rounded-full" style={{ width: `${nextDirection.floodlight.percent}%`, backgroundColor: nextDirection.floodlight.color }} />
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-stone-200 bg-white/80 p-4">
+                    <p className="font-semibold text-stone-900">Overhead {nextDirection.overhead.percent}%</p>
+                    {nextDirection.overhead.notes && <p className="mt-1 text-sm text-stone-500">{nextDirection.overhead.notes}</p>}
+                    <div className="mt-3 h-2 rounded-full bg-stone-100">
+                      <div className="h-full rounded-full bg-sky-500" style={{ width: `${nextDirection.overhead.percent}%` }} />
+                    </div>
                   </div>
                 </div>
               ) : (
-                <p className="text-slate-500">End of performance</p>
+                <p className="mt-4 text-sm text-stone-500">There are no more cues after this point.</p>
               )}
             </div>
           </div>
 
-          {/* All Cues Summary */}
-          <div className="mt-6">
-            <h3 className="text-sm font-semibold text-slate-400 mb-3">ALL CUES ({group.directions.length})</h3>
-            <div className="space-y-2 max-h-48 overflow-auto">
-              {group.directions.map((cue, idx) => (
-                <div 
-                  key={idx}
-                  className={`flex items-center gap-4 p-2 rounded text-sm ${
-                    cue.startTime <= currentTime ? 'bg-blue-900/30' : 'bg-slate-800'
+          <div className="soft-card mt-6 p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">
+              All cues ({group.directions.length})
+            </p>
+            <div className="mt-4 grid gap-2">
+              {group.directions.map((cue, index) => (
+                <div
+                  key={index}
+                  className={`flex flex-wrap items-center gap-4 rounded-2xl border px-4 py-3 text-sm ${
+                    cue.startTime <= currentTime ? "border-amber-200 bg-amber-50/80" : "border-stone-200 bg-white/75"
                   }`}
                 >
-                  <span className="text-slate-400 font-mono w-16">{formatTime(cue.startTime)}</span>
-                  <div className="flex items-center gap-2">
-                    <div 
-                      className="w-4 h-4 rounded"
-                      style={{ backgroundColor: cue.floodlight.color }}
-                    />
-                    <span className="text-white">FL: {cue.floodlight.percent}%</span>
-                  </div>
-                  <span className="text-white">OH: {cue.overhead.percent}%</span>
+                  <span className="min-w-20 font-semibold text-stone-900">{formatTimeMMSS(cue.startTime)}</span>
+                  <span className="flex items-center gap-2 text-stone-600">
+                    <span className="h-3 w-3 rounded-full" style={{ backgroundColor: cue.floodlight.color }} />
+                    Flood {cue.floodlight.percent}%
+                  </span>
+                  <span className="text-stone-600">Overhead {cue.overhead.percent}%</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="p-4 border-t border-slate-700 flex gap-3">
-          <Button onClick={onClose} variant="outline" className="flex-1">
-            Go Back to Edit
+        <div className="flex flex-col gap-3 border-t border-stone-200/80 px-6 py-5 sm:flex-row">
+          <Button type="button" variant="outline" onClick={onClose} className="sm:flex-1">
+            Go back to editing
           </Button>
-          <Button onClick={onConfirm} className="flex-1 bg-green-600 hover:bg-green-700">
-            Confirm & Save
+          <Button type="button" onClick={onConfirm} className="sm:flex-1">
+            Confirm and save
           </Button>
         </div>
       </div>

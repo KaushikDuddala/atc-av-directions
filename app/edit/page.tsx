@@ -1,30 +1,27 @@
 "use client"
 
-import { useEffect, useState, useRef, useCallback } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
+import { ChevronLeft, Save } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LightingTimeline } from "@/components/lighting-timeline"
-import { ChevronLeft, Save, Trash2 } from "lucide-react"
 import { usePerformanceDatabase } from "@/lib/hooks/usePerformanceDatabase"
 import type { AudioGroup, Direction } from "@/lib/types"
 import { supabase } from "@/lib/supabase"
-import { EditAuth } from "@/components/edit-auth"
-import { EditLogout } from "@/components/edit-logout"
 
 function EditPageContent() {
-  const { getPerformances, updatePerformance, deletePerformance } = usePerformanceDatabase()
+  const { getPerformances, updatePerformance } = usePerformanceDatabase()
   const audioRef = useRef<HTMLAudioElement>(null)
-  const rafRef   = useRef<number | null>(null)
+  const rafRef = useRef<number | null>(null)
 
-  const [performances,        setPerformances]        = useState<AudioGroup[]>([])
+  const [performances, setPerformances] = useState<AudioGroup[]>([])
   const [selectedPerformance, setSelectedPerformance] = useState<AudioGroup | null>(null)
-  const [editingPerformance,  setEditingPerformance]  = useState<AudioGroup | null>(null)
-  const [loading,             setLoading]             = useState(true)
-  const [currentTime,         setCurrentTime]         = useState(0)
-  const [isPlaying,           setIsPlaying]           = useState(false)
-  const [isSaving,            setIsSaving]            = useState(false)
+  const [editingPerformance, setEditingPerformance] = useState<AudioGroup | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
 
-  // ── Load performances ──────────────────────────────────────────────────────
   useEffect(() => {
     const load = async () => {
       try {
@@ -34,36 +31,35 @@ function EditPageContent() {
             result.data.map(async (perf: any) => {
               let audioUrl = ""
               if (perf.audio_path) {
-                const { data } = supabase.storage
-                  .from("performance-audio")
-                  .getPublicUrl(perf.audio_path)
+                const { data } = supabase.storage.from("performance-audio").getPublicUrl(perf.audio_path)
                 audioUrl = data.publicUrl
               }
+
               return {
-                id:                   perf.id,
-                name:                 perf.name,
+                id: perf.id,
+                name: perf.name,
                 audioUrl,
-                duration:             perf.duration,
-                performanceType:      perf.performance_type,
+                duration: perf.duration,
+                performanceType: perf.performance_type,
                 performanceTypeOther: perf.performance_type_other,
-                directions:           perf.directions || [],
-                info:                 perf.info       || {},
+                directions: perf.directions || [],
+                info: perf.info || {},
               } as AudioGroup
-            })
+            }),
           )
           setPerformances(withAudio)
         }
-      } catch (err) {
-        console.error("Error loading performances:", err)
+      } catch (error) {
+        console.error("Error loading performances:", error)
         alert("Failed to load performances")
       } finally {
         setLoading(false)
       }
     }
+
     load()
   }, [getPerformances])
 
-  // ── rAF loop — drives smooth 60fps playhead position from audio element ────
   useEffect(() => {
     const tick = () => {
       if (audioRef.current) {
@@ -74,11 +70,9 @@ function EditPageContent() {
 
     if (isPlaying) {
       rafRef.current = requestAnimationFrame(tick)
-    } else {
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current)
-        rafRef.current = null
-      }
+    } else if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current)
+      rafRef.current = null
     }
 
     return () => {
@@ -89,14 +83,12 @@ function EditPageContent() {
     }
   }, [isPlaying])
 
-  // ── Audio play/pause ───────────────────────────────────────────────────────
   useEffect(() => {
     if (!audioRef.current || !selectedPerformance) return
     if (isPlaying) audioRef.current.play().catch(() => setIsPlaying(false))
-    else           audioRef.current.pause()
+    else audioRef.current.pause()
   }, [isPlaying, selectedPerformance])
 
-  // ── Audio ended ────────────────────────────────────────────────────────────
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
@@ -105,32 +97,36 @@ function EditPageContent() {
     return () => audio.removeEventListener("ended", onEnded)
   }, [])
 
-  // ── Handlers ──────────────────────────────────────────────────────────────
-  const handleSelectPerformance = (perf: AudioGroup) => {
-    setSelectedPerformance(perf)
-    setEditingPerformance({ ...perf })
+  const handleSelectPerformance = (performance: AudioGroup) => {
+    setSelectedPerformance(performance)
+    setEditingPerformance({ ...performance })
     setCurrentTime(0)
     setIsPlaying(false)
     if (audioRef.current) audioRef.current.currentTime = 0
   }
 
   const handleDirectionsChange = useCallback((directions: Direction[]) => {
-    setSelectedPerformance(prev => prev ? { ...prev, directions } : prev)
+    setSelectedPerformance((previous) => (previous ? { ...previous, directions } : previous))
   }, [])
 
   const handleSeek = useCallback((ms: number) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = ms / 1000
-      setCurrentTime(ms)
-    }
+    if (!audioRef.current) return
+    audioRef.current.currentTime = ms / 1000
+    setCurrentTime(ms)
   }, [])
 
   const handleSave = async () => {
     if (!selectedPerformance) return
-    // Apply any pending editingPerformance changes first
     const toSave = editingPerformance
-      ? { ...selectedPerformance, name: editingPerformance.name, performanceType: editingPerformance.performanceType, performanceTypeOther: editingPerformance.performanceTypeOther, info: editingPerformance.info }
+      ? {
+          ...selectedPerformance,
+          name: editingPerformance.name,
+          performanceType: editingPerformance.performanceType,
+          performanceTypeOther: editingPerformance.performanceTypeOther,
+          info: editingPerformance.info,
+        }
       : selectedPerformance
+
     setIsSaving(true)
     try {
       const result = await updatePerformance(toSave.id, toSave)
@@ -140,234 +136,224 @@ function EditPageContent() {
       } else {
         alert("Failed to save performance")
       }
-    } catch (err) {
-      console.error("Error saving:", err)
+    } catch (error) {
+      console.error("Error saving:", error)
       alert("Error saving performance")
     } finally {
       setIsSaving(false)
     }
   }
 
-  const handleDelete = async () => {
-    if (!selectedPerformance) return
-    if (!confirm("Delete this performance? This cannot be undone.")) return
-    try {
-      const result = await deletePerformance(selectedPerformance.id)
-      if (result.success) {
-        setPerformances(prev => prev.filter(p => p.id !== selectedPerformance.id))
-        setSelectedPerformance(null)
-        setEditingPerformance(null)
-      } else {
-        alert("Failed to delete performance")
-      }
-    } catch (err) {
-      console.error("Error deleting:", err)
-      alert("Error deleting performance")
-    }
-  }
-
-  // ── Loading ────────────────────────────────────────────────────────────────
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
-        <div className="text-white text-lg">Loading performances…</div>
+      <div className="page-shell">
+        <div className="page-content flex min-h-screen items-center justify-center">
+          <div className="soft-card px-8 py-6 text-stone-600">Loading performances…</div>
+        </div>
       </div>
     )
   }
 
-  // ── Performance list ───────────────────────────────────────────────────────
   if (!selectedPerformance) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4">
-        <div className="mx-auto max-w-4xl">
-          <Link href="/">
-            <Button variant="ghost" className="mb-8 text-slate-400 hover:text-white">
-              <ChevronLeft className="w-4 h-4 mr-2" />
-              Back to Home
-            </Button>
-          </Link>
-          <div className="mb-8">
-            <h1 className="text-5xl font-black mb-3 tracking-tight">Edit Performance</h1>
-            <p className="text-lg text-slate-400">Select a performance to edit</p>
-          </div>
-          {performances.length === 0 ? (
-            <div className="p-8 bg-slate-800/50 border border-slate-700/50 rounded-xl text-center">
-              <p className="text-slate-400">No performances found. Create one first!</p>
-              <Link href="/editor">
-                <Button className="mt-4 bg-blue-600 hover:bg-blue-700">Create Performance</Button>
-              </Link>
-            </div>
-          ) : (
-            <div className="grid gap-4">
-              {performances.map((perf) => (
-                <button
-                  key={perf.id}
-                  onClick={() => handleSelectPerformance(perf)}
-                  className="text-left p-6 bg-slate-800/50 border border-slate-700/50 rounded-lg hover:border-blue-500/50 hover:bg-slate-800/70 transition-colors"
-                >
-                  <h2 className="text-xl font-bold text-white mb-2">{perf.name}</h2>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                    <div className="text-slate-400">Type: <span className="text-white">{perf.performanceType}</span></div>
-                    {perf.info?.leaders?.length > 0 && (
-                      <div className="text-slate-400">Leaders: <span className="text-white">{perf.info.leaders.join(", ")}</span></div>
+      <div className="page-shell">
+        <div className="page-content">
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/">
+              <ChevronLeft className="h-4 w-4" />
+              Back home
+            </Link>
+          </Button>
+
+          <section className="soft-card-strong mt-5 p-8 sm:p-10">
+            <p className="section-kicker border-none bg-sky-100/70 text-sky-800 shadow-none">Saved performances</p>
+            <h1 className="mt-5 text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">Edit a saved performance</h1>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-stone-600 sm:text-lg">
+              Pick a performance to reopen the cue timeline, update performer details, or remove an entry entirely.
+            </p>
+          </section>
+
+          <section className="mt-5">
+            {performances.length === 0 ? (
+              <div className="soft-card p-10 text-center">
+                <p className="text-lg font-semibold text-stone-900">No performances found yet.</p>
+                <p className="mt-2 text-sm text-stone-600">Create one first, then come back here to edit it.</p>
+                <Button asChild className="mt-5">
+                  <Link href="/editor">Create a performance</Link>
+                </Button>
+              </div>
+            ) : (
+              <div className="grid gap-4 lg:grid-cols-2">
+                {performances.map((performance) => (
+                  <button
+                    key={performance.id}
+                    onClick={() => handleSelectPerformance(performance)}
+                    className="soft-card cursor-pointer p-6 text-left transition hover:-translate-y-1 hover:border-white hover:shadow-[0_32px_80px_-42px_rgba(72,41,18,0.32)]"
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div>
+                        <h2 className="text-2xl font-semibold tracking-tight text-stone-900">{performance.name}</h2>
+                        <div className="mt-3 flex flex-wrap gap-2 text-sm text-stone-600">
+                          {performance.performanceType && <span className="summary-pill">{performance.performanceType}</span>}
+                          {performance.info?.members?.length > 0 && <span className="summary-pill">{performance.info.members.length} members</span>}
+                        </div>
+                      </div>
+                    </div>
+                    {performance.info?.leaders?.length > 0 && (
+                      <p className="mt-4 text-sm leading-6 text-stone-600">
+                        Led by {performance.info.leaders.join(", ")}
+                      </p>
                     )}
-                    {perf.info?.members?.length > 0 && (
-                      <div className="text-slate-400">Members: <span className="text-white">{perf.info.members.length}</span></div>
-                    )}
-                    <div className="text-slate-400">Cues: <span className="text-white">{perf.directions?.length || 0}</span></div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          )}
+                  </button>
+                ))}
+              </div>
+            )}
+          </section>
         </div>
       </div>
     )
   }
 
-  // ── Editor view ────────────────────────────────────────────────────────────
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col overflow-hidden">
-
-      {/* Header */}
-      <div className="flex-shrink-0 px-4 py-3 border-b border-slate-700/50 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <button onClick={() => { setSelectedPerformance(null); setIsPlaying(false) }} className="text-slate-400 hover:text-white">
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <h1 className="text-xl font-black">{selectedPerformance.name}</h1>
-          <span className="text-sm text-slate-500">{selectedPerformance.performanceType}</span>
-        </div>
-        <div className="flex gap-2">
-          <Button onClick={handleSave} disabled={isSaving} className="bg-green-600 hover:bg-green-700 h-8 text-sm px-3">
-            <Save className="w-3 h-3 mr-1.5" />
-            {isSaving ? "Saving…" : "Save"}
-          </Button>
-          <Button onClick={handleDelete} variant="outline" className="text-red-400 border-red-500/30 h-8 text-sm px-3">
-            <Trash2 className="w-3 h-3 mr-1.5" />
-            Delete
-          </Button>
-          <EditLogout />
-        </div>
-      </div>
-
-      {/* Body: edit form on left, timeline on right */}
-      <div className="flex-1 min-h-0 flex gap-0 overflow-hidden">
-
-        {/* Edit details panel — always visible */}
-        {editingPerformance && (
-          <div className="flex-shrink-0 w-64 border-r border-slate-700/50 overflow-y-auto p-4 flex flex-col gap-4 bg-slate-900/40">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Performance Details</p>
-
-            <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-300">Name</label>
-              <input type="text" value={editingPerformance.name}
-                onChange={e => setEditingPerformance({ ...editingPerformance, name: e.target.value })}
-                className="w-full px-2 py-1.5 text-sm border border-slate-600/50 rounded bg-slate-900/50 text-white focus:outline-none focus:border-blue-500/50"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-300">Type</label>
-              <select value={editingPerformance.performanceType}
-                onChange={e => setEditingPerformance({ ...editingPerformance, performanceType: e.target.value as any })}
-                className="w-full px-2 py-1.5 text-sm border border-slate-600/50 rounded bg-slate-900/50 text-white focus:outline-none focus:border-blue-500/50"
+    <div className="page-shell">
+      <div className="page-content page-content-wide flex min-h-screen flex-col">
+        <section className="soft-card-strong p-5 sm:p-6">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+            <div className="flex items-start gap-3">
+              <button
+                onClick={() => {
+                  setSelectedPerformance(null)
+                  setIsPlaying(false)
+                }}
+                className="summary-pill mt-1"
               >
-                <option value="dance">Dance</option>
-                <option value="music">Music</option>
-                <option value="singing">Singing</option>
-                <option value="other">Other</option>
-              </select>
+                <ChevronLeft className="h-4 w-4" />
+                Back
+              </button>
+              <div>
+                <h1 className="text-3xl font-semibold tracking-tight text-stone-900">{selectedPerformance.name}</h1>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {selectedPerformance.performanceType && <div className="summary-pill">{selectedPerformance.performanceType}</div>}
+                </div>
+              </div>
             </div>
 
-            <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-300">Leaders</label>
-              <textarea value={editingPerformance.info?.leaders?.join(", ") || ""}
-                onChange={e => setEditingPerformance({ ...editingPerformance, info: { ...editingPerformance.info, leaders: e.target.value.split(",").map(s => s.trim()).filter(Boolean) } })}
-                placeholder="Comma separated" rows={2}
-                className="w-full px-2 py-1.5 text-sm border border-slate-600/50 rounded bg-slate-900/50 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-300">Members</label>
-              <textarea value={editingPerformance.info?.members?.join(", ") || ""}
-                onChange={e => setEditingPerformance({ ...editingPerformance, info: { ...editingPerformance.info, members: e.target.value.split(",").map(s => s.trim()).filter(Boolean) } })}
-                placeholder="Comma separated" rows={2}
-                className="w-full px-2 py-1.5 text-sm border border-slate-600/50 rounded bg-slate-900/50 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none"
-              />
-            </div>
-
-            <div className="space-y-1">
-              <label className="block text-xs font-semibold text-slate-300">Notes</label>
-              <textarea value={editingPerformance.info?.notes || ""}
-                onChange={e => setEditingPerformance({ ...editingPerformance, info: { ...editingPerformance.info, notes: e.target.value } })}
-                rows={3}
-                className="w-full px-2 py-1.5 text-sm border border-slate-600/50 rounded bg-slate-900/50 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500/50 resize-none"
-              />
-            </div>
-
-            <div className="mt-auto pt-2 border-t border-slate-700/50 text-xs text-slate-500">
-              Changes apply on Save
+            <div className="flex flex-wrap gap-2">
+              <Button onClick={handleSave} disabled={isSaving}>
+                <Save className="h-4 w-4" />
+                {isSaving ? "Saving..." : "Save changes"}
+              </Button>
             </div>
           </div>
-        )}
+        </section>
 
-        {/* Timeline — fills remaining space */}
-        <div className="flex-1 min-w-0 p-3">
-          <audio ref={audioRef} src={selectedPerformance.audioUrl} crossOrigin="anonymous" />
-          <LightingTimeline
-            duration={selectedPerformance.duration}
-            directions={selectedPerformance.directions}
-            onDirectionsChange={handleDirectionsChange}
-            currentTime={currentTime}
-            isPlaying={isPlaying}
-            onPlayPause={() => setIsPlaying(p => !p)}
-            onSeek={handleSeek}
-          />
+        <div className="mt-5 grid flex-1 min-h-0 gap-5 xl:grid-cols-[280px_minmax(0,1fr)]">
+          {editingPerformance && (
+            <section className="soft-card-strong flex min-h-0 flex-col p-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Performance details</p>
+
+              <div className="mt-5 space-y-4">
+                <div>
+                  <label className="field-label">Name</label>
+                  <input
+                    type="text"
+                    value={editingPerformance.name}
+                    onChange={(event) => setEditingPerformance({ ...editingPerformance, name: event.target.value })}
+                    className="field-input"
+                  />
+                </div>
+
+                <div>
+                  <label className="field-label">Type</label>
+                  <select
+                    value={editingPerformance.performanceType}
+                    onChange={(event) => setEditingPerformance({ ...editingPerformance, performanceType: event.target.value as any })}
+                    className="field-select"
+                  >
+                    <option value="dance">Dance</option>
+                    <option value="music">Music</option>
+                    <option value="singing">Singing</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="field-label">Leaders</label>
+                  <textarea
+                    value={editingPerformance.info?.leaders?.join(", ") || ""}
+                    onChange={(event) =>
+                      setEditingPerformance({
+                        ...editingPerformance,
+                        info: {
+                          ...editingPerformance.info,
+                          leaders: event.target.value.split(",").map((value) => value.trim()).filter(Boolean),
+                        },
+                      })
+                    }
+                    placeholder="Comma separated"
+                    rows={3}
+                    className="field-textarea min-h-[96px]"
+                  />
+                </div>
+
+                <div>
+                  <label className="field-label">Members</label>
+                  <textarea
+                    value={editingPerformance.info?.members?.join(", ") || ""}
+                    onChange={(event) =>
+                      setEditingPerformance({
+                        ...editingPerformance,
+                        info: {
+                          ...editingPerformance.info,
+                          members: event.target.value.split(",").map((value) => value.trim()).filter(Boolean),
+                        },
+                      })
+                    }
+                    placeholder="Comma separated"
+                    rows={3}
+                    className="field-textarea min-h-[96px]"
+                  />
+                </div>
+
+                <div>
+                  <label className="field-label">Notes</label>
+                  <textarea
+                    value={editingPerformance.info?.notes || ""}
+                    onChange={(event) =>
+                      setEditingPerformance({
+                        ...editingPerformance,
+                        info: { ...editingPerformance.info, notes: event.target.value },
+                      })
+                    }
+                    rows={5}
+                    className="field-textarea"
+                  />
+                </div>
+              </div>
+
+            </section>
+          )}
+
+          <section className="soft-card min-h-0 p-2 sm:p-3">
+            <audio ref={audioRef} src={selectedPerformance.audioUrl} crossOrigin="anonymous" />
+            <div className="h-[calc(100vh-12rem)] min-h-[760px] overflow-hidden rounded-[30px]">
+              <LightingTimeline
+                duration={selectedPerformance.duration}
+                directions={selectedPerformance.directions}
+                onDirectionsChange={handleDirectionsChange}
+                currentTime={currentTime}
+                isPlaying={isPlaying}
+                onPlayPause={() => setIsPlaying((playing) => !playing)}
+                onSeek={handleSeek}
+              />
+            </div>
+          </section>
         </div>
-
       </div>
     </div>
   )
 }
 
 export default function EditPage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isChecking, setIsChecking] = useState(true)
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await fetch("/api/edit/verify", {
-          method: "GET",
-        }).catch(() => null)
-        
-        // If GET fails (expected), we need to check with a server action
-        const { isEditAuthenticated } = await import("@/lib/edit-auth")
-        const authenticated = await isEditAuthenticated()
-        setIsAuthenticated(authenticated)
-      } catch (err) {
-        setIsAuthenticated(false)
-      } finally {
-        setIsChecking(false)
-      }
-    }
-
-    checkAuth()
-  }, [])
-
-  if (isChecking) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
-        <div className="text-white">Loading...</div>
-      </div>
-    )
-  }
-
-  if (!isAuthenticated) {
-    return <EditAuth onAuthSuccess={() => setIsAuthenticated(true)} />
-  }
-
   return <EditPageContent />
 }

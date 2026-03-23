@@ -73,11 +73,22 @@ function resolveAfterDrag(cues) {
 // Place a new cue at `start`, clamping end to the next cue's start (never pushing)
 function placeNewCue(existing, newCue, duration) {
   const sorted = [...existing].sort((a, b) => a.start - b.start);
+  if (sorted.some((cue) => newCue.start >= cue.start && newCue.start < cue.end)) return null;
   const next   = sorted.find(c => c.start >= newCue.start);
   const maxEnd = next ? next.start : duration;
   const end    = Math.min(newCue.end, maxEnd);
   if (end - newCue.start < MIN_DUR) return null; // no room
   return { ...newCue, end };
+}
+
+function getNeighbors(cues, cueId) {
+  const sorted = [...cues].sort((a, b) => a.start - b.start);
+  const index = sorted.findIndex((cue) => cue.id === cueId);
+  return {
+    current: index >= 0 ? sorted[index] : null,
+    prev: index > 0 ? sorted[index - 1] : null,
+    next: index >= 0 && index < sorted.length - 1 ? sorted[index + 1] : null,
+  };
 }
 
 export function LightingTimeline({
@@ -145,23 +156,32 @@ export function LightingTimeline({
       }
 
       const dms = (e.clientX - d.startClientX) / px;
-      setCues((prev) => resolveAfterDrag(prev.map((c) => {
-        if (c.id !== d.cueId) return c;
+      setCues((prev) => {
+        const { current, prev: prevCue, next: nextCue } = getNeighbors(prev, d.cueId);
+        if (!current) return prev;
         const cDur = d.origEnd - d.origStart;
-        if (d.kind === "move") {
-          const s = clamp(d.origStart + dms, 0, dur - cDur);
-          return { ...c, start: Math.round(s), end: Math.round(s + cDur) };
-        }
-        if (d.kind === "left") {
-          const s = clamp(d.origStart + dms, 0, d.origEnd - MIN_DUR);
-          return { ...c, start: Math.round(s) };
-        }
-        if (d.kind === "right") {
-          const e2 = clamp(d.origEnd + dms, d.origStart + MIN_DUR, dur);
-          return { ...c, end: Math.round(e2) };
-        }
-        return c;
-      })));
+
+        return prev.map((c) => {
+          if (c.id !== d.cueId) return c;
+          if (d.kind === "move") {
+            const minStart = prevCue ? prevCue.end : 0;
+            const maxStart = nextCue ? nextCue.start - cDur : dur - cDur;
+            const s = clamp(d.origStart + dms, minStart, Math.max(minStart, maxStart));
+            return { ...c, start: Math.round(s), end: Math.round(s + cDur) };
+          }
+          if (d.kind === "left") {
+            const minStart = prevCue ? prevCue.end : 0;
+            const s = clamp(d.origStart + dms, minStart, d.origEnd - MIN_DUR);
+            return { ...c, start: Math.round(s) };
+          }
+          if (d.kind === "right") {
+            const maxEnd = nextCue ? nextCue.start : dur;
+            const e2 = clamp(d.origEnd + dms, d.origStart + MIN_DUR, maxEnd);
+            return { ...c, end: Math.round(e2) };
+          }
+          return c;
+        });
+      });
     };
 
     const onUp = () => {
@@ -280,16 +300,26 @@ export function LightingTimeline({
 
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "#0a0a0c", color: "#e2e8f0", fontFamily: "'DM Mono','Fira Mono','Courier New',monospace", userSelect: "none", borderRadius: 10, overflow: "hidden", border: "1px solid #1e1e2a" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%", background: "#0a0a0c", color: "#f8fafc", fontFamily: "inherit", userSelect: "none", borderRadius: 10, overflow: "hidden", border: "1px solid #1e1e2a" }}>
 
       {/* ── PREVIEW ────────────────────────────────────────────────────────── */}
       <div style={{ position: "relative", flexShrink: 0, height: 148, background: "#050507", overflow: "hidden", borderBottom: "1px solid #1e1e2a" }}>
         {/* Overhead ambient — top-down wash */}
-        <div style={{ position: "absolute", inset: 0, background: `rgba(148,178,255,${(overAlpha * 0.4).toFixed(2)})`, transition: "background 0.3s" }} />
-        {/* Floodlight — single upward cone from bottom centre */}
+        <div style={{ position: "absolute", inset: 0, background: [
+          `radial-gradient(circle at 0% 0%, rgba(148,178,255,${(overAlpha * 0.26).toFixed(2)}) 0%, transparent 36%)`,
+          `radial-gradient(circle at 100% 0%, rgba(148,178,255,${(overAlpha * 0.26).toFixed(2)}) 0%, transparent 36%)`,
+          `radial-gradient(circle at 0% 100%, rgba(148,178,255,${(overAlpha * 0.26).toFixed(2)}) 0%, transparent 36%)`,
+          `radial-gradient(circle at 100% 100%, rgba(148,178,255,${(overAlpha * 0.26).toFixed(2)}) 0%, transparent 36%)`,
+        ].join(", "), transition: "background 0.3s" }} />
+        {/* Floodlight from all four corners */}
         <div style={{
           position: "absolute", inset: 0,
-          background: `radial-gradient(ellipse 70% 90% at 50% 110%, rgba(${floodRgb.r},${floodRgb.g},${floodRgb.b},${floodAlpha.toFixed(2)}) 0%, rgba(${floodRgb.r},${floodRgb.g},${floodRgb.b},0) 70%)`,
+          background: [
+            `radial-gradient(circle at 0% 0%, rgba(${floodRgb.r},${floodRgb.g},${floodRgb.b},${(floodAlpha * 0.82).toFixed(2)}) 0%, rgba(${floodRgb.r},${floodRgb.g},${floodRgb.b},0) 34%)`,
+            `radial-gradient(circle at 100% 0%, rgba(${floodRgb.r},${floodRgb.g},${floodRgb.b},${(floodAlpha * 0.82).toFixed(2)}) 0%, rgba(${floodRgb.r},${floodRgb.g},${floodRgb.b},0) 34%)`,
+            `radial-gradient(circle at 0% 100%, rgba(${floodRgb.r},${floodRgb.g},${floodRgb.b},${(floodAlpha * 0.82).toFixed(2)}) 0%, rgba(${floodRgb.r},${floodRgb.g},${floodRgb.b},0) 34%)`,
+            `radial-gradient(circle at 100% 100%, rgba(${floodRgb.r},${floodRgb.g},${floodRgb.b},${(floodAlpha * 0.82).toFixed(2)}) 0%, rgba(${floodRgb.r},${floodRgb.g},${floodRgb.b},0) 34%)`,
+          ].join(", "),
           transition: "background 0.3s",
         }} />
         {/* Scanlines */}
@@ -303,7 +333,7 @@ export function LightingTimeline({
           <VUMeter label="FLOODLIGHT" value={activeCue?.flood.pct ?? 0} color={activeCue?.flood.color ?? "#f97316"} />
           {activeCue && (
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.15em" }}>COLOR</span>
+              <span style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.78)", letterSpacing: "0.15em" }}>COLOR</span>
               <div style={{ width: 30, height: 22, borderRadius: 3, background: activeCue.flood.color, border: "1px solid rgba(255,255,255,0.15)", boxShadow: `0 0 10px ${activeCue.flood.color}` }} />
             </div>
           )}
@@ -312,11 +342,11 @@ export function LightingTimeline({
         {/* Time */}
         <div style={{ position: "absolute", bottom: 12, right: 18, textAlign: "right" }}>
           <div style={{ fontSize: 26, fontWeight: 700, color: "#f1f5f9", letterSpacing: "-0.02em", lineHeight: 1 }}>{fmt(currentTime)}</div>
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", marginTop: 2 }}>/ {fmt(duration)}</div>
+          <div style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.62)", marginTop: 2 }}>/ {fmt(duration)}</div>
         </div>
 
         {activeCue?.notes && (
-          <div style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)", background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 4, padding: "2px 10px", fontSize: 10, color: "rgba(255,255,255,0.5)", letterSpacing: "0.1em", whiteSpace: "nowrap" }}>
+          <div style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)", background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 4, padding: "3px 10px", fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.88)", letterSpacing: "0.06em", whiteSpace: "nowrap" }}>
             {activeCue.notes}
           </div>
         )}
@@ -351,11 +381,11 @@ export function LightingTimeline({
           a.click(); URL.revokeObjectURL(url);
         }} style={ghostBtnStyle}>↓ EXPORT JSON</button>
         <div style={{ width: 1, height: 18, background: "#2a2a3a", margin: "0 6px" }} />
-        <span style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", marginRight: 2 }}>{Math.round(zoom * 100)}%</span>
+        <span style={{ fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.75)", marginRight: 2 }}>{Math.round(zoom * 100)}%</span>
         <button onClick={() => setZoom(z => clamp(z * 0.75, 0.2, 20))} style={zoomBtnStyle}>−</button>
         <input type="range" min={20} max={2000} value={zoom * 100} onChange={e => setZoom(Number(e.target.value) / 100)} style={{ width: 72, accentColor: "#4f46e5", cursor: "pointer" }} />
         <button onClick={() => setZoom(z => clamp(z * 1.33, 0.2, 20))} style={zoomBtnStyle}>+</button>
-        <span style={{ fontSize: 9, color: "rgba(255,255,255,0.15)", marginLeft: 4 }}>CTRL+SCROLL</span>
+        <span style={{ fontSize: 10, fontWeight: 500, color: "rgba(255,255,255,0.55)", marginLeft: 4 }}>CTRL+SCROLL</span>
       </div>
 
       {/* ── TIMELINE ───────────────────────────────────────────────────────── */}
@@ -367,7 +397,7 @@ export function LightingTimeline({
           {TRACKS.map(t => (
             <div key={t.id} style={{ height: TRACK_H, display: "flex", alignItems: "center", gap: 6, padding: "0 12px", borderBottom: "1px solid #1e1e2a" }}>
               <span style={{ fontSize: 13 }}>{t.icon}</span>
-              <span style={{ fontSize: 9, letterSpacing: "0.15em", color: "rgba(255,255,255,0.35)" }}>{t.label}</span>
+              <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.14em", color: "rgba(255,255,255,0.82)" }}>{t.label}</span>
             </div>
           ))}
         </div>
@@ -394,7 +424,7 @@ export function LightingTimeline({
               {rulerMarks.marks.map(t => (
                 <div key={t} style={{ position: "absolute", left: toX(t), top: 0 }}>
                   <div style={{ width: 1, height: "100%", background: "rgba(255,255,255,0.15)" }} />
-                  <span style={{ position: "absolute", top: 6, left: 3, fontSize: 9, color: "rgba(255,255,255,0.3)", whiteSpace: "nowrap" }}>{fmt(t)}</span>
+                  <span style={{ position: "absolute", top: 6, left: 3, fontSize: 11, fontWeight: 500, color: "rgba(255,255,255,0.72)", whiteSpace: "nowrap" }}>{fmt(t)}</span>
                 </div>
               ))}
               {/* Playhead marker on ruler */}
@@ -448,11 +478,11 @@ export function LightingTimeline({
                         style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 7, cursor: "ew-resize", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2 }}
                         onMouseDown={e => startDrag(e, cue, "left")}
                       >
-                        <div style={{ width: 2, height: 14, borderRadius: 2, background: "rgba(255,255,255,0.45)" }} />
+                        <div style={{ width: 2, height: 14, borderRadius: 2, background: "rgba(255,255,255,0.8)" }} />
                       </div>
 
                       {w > 36 && (
-                        <span style={{ position: "absolute", left: 10, right: 10, fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.85)", letterSpacing: "0.08em", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", pointerEvents: "none" }}>
+                        <span style={{ position: "absolute", left: 10, right: 10, fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.97)", letterSpacing: "0.06em", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", pointerEvents: "none" }}>
                           {pct}%{cue.notes ? ` · ${cue.notes}` : ""}
                         </span>
                       )}
@@ -462,7 +492,7 @@ export function LightingTimeline({
                         style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 7, cursor: "ew-resize", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 2 }}
                         onMouseDown={e => startDrag(e, cue, "right")}
                       >
-                        <div style={{ width: 2, height: 14, borderRadius: 2, background: "rgba(255,255,255,0.45)" }} />
+                        <div style={{ width: 2, height: 14, borderRadius: 2, background: "rgba(255,255,255,0.8)" }} />
                       </div>
                     </div>
                   );
@@ -481,8 +511,8 @@ export function LightingTimeline({
       {selectedCue ? (
         <div style={{ flexShrink: 0, background: "#0f0f14", borderTop: "1px solid #1e1e2a", padding: "10px 16px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em" }}>CUE INSPECTOR</span>
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", fontFamily: "monospace" }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.84)", letterSpacing: "0.12em" }}>CUE INSPECTOR</span>
+            <span style={{ fontSize: 11, fontWeight: 500, color: "rgba(255,255,255,0.7)" }}>
               {fmt(selectedCue.start)} → {fmt(selectedCue.end)} ({fmt(selectedCue.end - selectedCue.start)})
             </span>
             <div style={{ flex: 1 }} />
@@ -523,7 +553,7 @@ export function LightingTimeline({
           </div>
         </div>
       ) : (
-        <div style={{ flexShrink: 0, background: "#0f0f14", borderTop: "1px solid #1e1e2a", padding: "12px 16px", textAlign: "center", fontSize: 11, color: "rgba(255,255,255,0.15)", letterSpacing: "0.1em" }}>
+        <div style={{ flexShrink: 0, background: "#0f0f14", borderTop: "1px solid #1e1e2a", padding: "12px 16px", textAlign: "center", fontSize: 12, fontWeight: 600, color: "rgba(255,255,255,0.58)", letterSpacing: "0.08em" }}>
           CLICK A CUE TO INSPECT · CLICK EMPTY TRACK TO ADD
         </div>
       )}
@@ -535,13 +565,13 @@ export function LightingTimeline({
 function VUMeter({ label, value, color }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-      <span style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", letterSpacing: "0.15em" }}>{label}</span>
+      <span style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.78)", letterSpacing: "0.15em" }}>{label}</span>
       <div style={{ display: "flex", alignItems: "flex-end", gap: 2 }}>
         {Array.from({ length: 12 }, (_, i) => {
           const on = value >= ((i + 1) / 12) * 100;
           return <div key={i} style={{ width: 5, height: 4 + i * 2, borderRadius: 1, background: on ? color : "rgba(255,255,255,0.07)", boxShadow: on ? `0 0 4px ${color}` : "none", transition: "background 0.05s" }} />;
         })}
-        <span style={{ marginLeft: 5, fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.8)", fontFamily: "monospace" }}>
+        <span style={{ marginLeft: 5, fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.95)" }}>
           {value}<span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>%</span>
         </span>
       </div>
@@ -553,27 +583,27 @@ function VUMeter({ label, value, color }) {
 function InspectorBlock({ label, accent, showColor, colorVal, onColorChange, pct, onPctChange }) {
   return (
     <div style={{ background: "#0a0a0c", border: "1px solid #1e1e2a", borderRadius: 6, padding: "9px 11px" }}>
-      <div style={{ fontSize: 9, letterSpacing: "0.12em", color: accent, marginBottom: 7 }}>{label}</div>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: accent, marginBottom: 9 }}>{label}</div>
       {showColor && (
         <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 7 }}>
-          <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", width: 30 }}>COLOR</span>
+          <span style={{ fontSize: 10, fontWeight: 600, color: "rgba(255,255,255,0.75)", width: 38 }}>COLOR</span>
           <input type="color" value={colorVal} onChange={e => onColorChange(e.target.value)}
             style={{ width: 28, height: 20, border: "none", borderRadius: 3, cursor: "pointer", background: "transparent" }} />
-          <code style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>{colorVal}</code>
+          <code style={{ fontSize: 11, color: "rgba(255,255,255,0.82)" }}>{colorVal}</code>
         </div>
       )}
       <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-        <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", width: 30 }}>LEVEL</span>
+        <span style={{ fontSize: 10, fontWeight: 600, color: "rgba(255,255,255,0.75)", width: 38 }}>LEVEL</span>
         <input type="range" min={0} max={100} value={pct} onChange={e => onPctChange(Number(e.target.value))}
           style={{ flex: 1, accentColor: accent, cursor: "pointer" }} />
-        <span style={{ fontSize: 11, fontWeight: 700, width: 32, textAlign: "right", color: accent, fontFamily: "monospace" }}>{pct}%</span>
+        <span style={{ fontSize: 14, fontWeight: 700, width: 40, textAlign: "right", color: accent }}>{pct}%</span>
       </div>
     </div>
   );
 }
 
 // ── Styles ────────────────────────────────────────────────────────────────────
-const ghostBtnStyle   = { padding: "4px 10px", borderRadius: 5, border: "1px solid #2a2a3a", background: "transparent", color: "rgba(255,255,255,0.45)", cursor: "pointer", fontSize: 11, fontFamily: "inherit" };
-const zoomBtnStyle    = { width: 22, height: 22, borderRadius: 4, border: "1px solid #2a2a3a", background: "transparent", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 14, lineHeight: 1, padding: 0, fontFamily: "inherit" };
-const iconBtnStyle    = { width: 24, height: 24, borderRadius: 4, border: "1px solid #2a2a3a", background: "transparent", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 13, lineHeight: 1, padding: 0, fontFamily: "inherit" };
-const notesInputStyle = { width: "100%", background: "#0a0a0c", border: "1px solid #2a2a3a", borderRadius: 5, color: "rgba(255,255,255,0.55)", fontSize: 11, padding: "5px 9px", fontFamily: "inherit", outline: "none", boxSizing: "border-box" };
+const ghostBtnStyle   = { padding: "4px 10px", borderRadius: 5, border: "1px solid #2a2a3a", background: "transparent", color: "rgba(255,255,255,0.85)", cursor: "pointer", fontSize: 12, fontWeight: 600, fontFamily: "inherit" };
+const zoomBtnStyle    = { width: 22, height: 22, borderRadius: 4, border: "1px solid #2a2a3a", background: "transparent", color: "rgba(255,255,255,0.82)", cursor: "pointer", fontSize: 14, lineHeight: 1, padding: 0, fontFamily: "inherit" };
+const iconBtnStyle    = { width: 24, height: 24, borderRadius: 4, border: "1px solid #2a2a3a", background: "transparent", color: "rgba(255,255,255,0.82)", cursor: "pointer", fontSize: 13, lineHeight: 1, padding: 0, fontFamily: "inherit" };
+const notesInputStyle = { width: "100%", background: "#0a0a0c", border: "1px solid #2a2a3a", borderRadius: 5, color: "rgba(255,255,255,0.95)", fontSize: 13, fontWeight: 500, padding: "7px 10px", fontFamily: "inherit", outline: "none", boxSizing: "border-box" };

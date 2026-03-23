@@ -26,8 +26,8 @@ export function CountdownTimer({
 
   if (timeToNext === null) {
     return (
-      <div className="text-center p-8 rounded-lg border-2 border-border bg-card">
-        <p className="text-muted-foreground mb-2">No more changes</p>
+      <div className="rounded-lg border-2 border-white/15 bg-black p-8 text-center text-white">
+        <p className="mb-2 text-white/60">No more changes</p>
         <div className="text-6xl font-bold">--:--</div>
       </div>
     )
@@ -41,15 +41,15 @@ export function CountdownTimer({
 
   return (
     <div className="flex gap-4">
-      <div className="flex-1 text-center p-8 rounded-lg border-2 border-border bg-card">
-        <p className="text-muted-foreground mb-4 font-medium">Current Time</p>
+      <div className="flex-1 rounded-lg border-2 border-white/15 bg-black p-8 text-center text-white">
+        <p className="mb-4 font-medium text-white/60">Current Time</p>
         <div className="text-7xl font-bold font-mono tracking-tight">
           {minsCurrent}:{secondsCurrent.toString().padStart(2, "0")}
         </div>
       </div>
 
-      <div className="flex-1 text-center p-8 rounded-lg border-2 border-border bg-card">
-        <p className="text-muted-foreground mb-4 font-medium">Time to next change</p>
+      <div className="flex-1 rounded-lg border-2 border-white/15 bg-black p-8 text-center text-white">
+        <p className="mb-4 font-medium text-white/60">Time to next change</p>
         <div className="text-7xl font-bold font-mono tracking-tight">
           {minutes}:{seconds.toString().padStart(2, "0")}
         </div>

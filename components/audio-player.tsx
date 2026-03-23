@@ -114,15 +114,15 @@ export function AudioPlayer({
 
       <div className="space-y-2">
         <div
-          className="h-2 bg-muted rounded-full overflow-hidden cursor-pointer"
+          className="h-2 bg-white/15 rounded-full overflow-hidden cursor-pointer"
           onClick={handleSeek}
         >
           <div
-            className="h-full bg-foreground transition-all"
+            className="h-full bg-white transition-all"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
-        <div className="flex justify-between text-xs text-muted-foreground font-mono">
+        <div className="flex justify-between text-xs text-white/60 font-mono">
           <span>
             {minutes}:{seconds.toString().padStart(2, "0")}
           </span>
@@ -132,7 +132,7 @@ export function AudioPlayer({
         </div>
       </div>
 
-      <Button onClick={togglePlayPause} size="lg" className="w-full">
+      <Button onClick={togglePlayPause} size="lg" className="w-full border-white/15 bg-white text-black hover:bg-black hover:text-white">
         {isPlaying ? (
           <>
             <Pause className="w-4 h-4 mr-2" />

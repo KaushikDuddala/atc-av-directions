@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
+import { AlertTriangle, CheckCircle2, ChevronLeft, Download, Eye, Music4 } from "lucide-react"
 import { PerformanceForm, type PerformanceFormData } from "@/components/performance-form"
 import { AudioUpload, type AudioUploadResult } from "@/components/audio-upload"
 import { VideoTimelineEditor } from "@/components/video-timeline-editor"
@@ -10,7 +11,6 @@ import { LightingPreviewModal } from "@/components/lighting-preview-modal"
 import { Button } from "@/components/ui/button"
 import { usePerformanceDatabase } from "@/lib/hooks/usePerformanceDatabase"
 import type { AudioGroup, Direction } from "@/lib/types"
-import { Download, ChevronLeft, AlertTriangle, Eye } from "lucide-react"
 
 type EditorStep = "form" | "warning" | "editor"
 
@@ -41,12 +41,15 @@ export default function EditorPage() {
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
+
     const handleTimeUpdate = () => {
       setCurrentTime(audio.currentTime * 1000)
     }
+
     const handleEnded = () => {
       setIsPlaying(false)
     }
+
     audio.addEventListener("timeupdate", handleTimeUpdate)
     audio.addEventListener("ended", handleEnded)
     return () => {
@@ -57,6 +60,7 @@ export default function EditorPage() {
 
   const handlePerformanceSubmit = (data: PerformanceFormData, audio?: AudioUploadResult) => {
     if (!audio) return
+
     const newPerformance: AudioGroup = {
       id: `perf-${Date.now()}`,
       name: data.name,
@@ -76,6 +80,7 @@ export default function EditorPage() {
         notes: data.notes,
       },
     }
+
     setPerformance(newPerformance)
     setAudioResult(audio)
     setCurrentTime(0)
@@ -83,82 +88,9 @@ export default function EditorPage() {
     setStep("warning")
   }
 
-  const handleAddCue = (timestamp: number) => {
-    if (!performance) return
-    const existingCue = performance.directions.find((d) => d.startTime === timestamp)
-    if (existingCue) {
-      setSelectedTimestamp(timestamp)
-      return
-    }
-    const newCue: Direction = {
-      startTime: timestamp,
-      endTime: Math.min(timestamp + 2000, performance.duration),
-      floodlight: {
-        percent: 50,
-        color: "#ffaa00",
-        notes: "",
-      },
-      overhead: {
-        percent: 50,
-        notes: "",
-      },
-    }
-    const updatedDirections = [...performance.directions, newCue].sort((a, b) => a.startTime - b.startTime)
-    setPerformance({
-      ...performance,
-      directions: updatedDirections,
-    })
-    setSelectedTimestamp(timestamp)
-    setHasViewedPreview(false)
-  }
-
-  const handleUpdateCue = (updatedCue: Direction) => {
-    if (!performance) return
-    const updatedDirections = performance.directions.map((d) =>
-      d.startTime === updatedCue.startTime ? updatedCue : d
-    )
-    setPerformance({
-      ...performance,
-      directions: updatedDirections,
-    })
-    setHasViewedPreview(false)
-  }
-
-  const handleDeleteCue = (startTime: number) => {
-    if (!performance) return
-    const updatedDirections = performance.directions.filter((d) => d.startTime !== startTime)
-    setPerformance({
-      ...performance,
-      directions: updatedDirections,
-    })
-    setSelectedTimestamp(undefined)
-    setHasViewedPreview(false)
-  }
-
-  const handleDuplicateCue = (cue: Direction) => {
-    if (!performance) return
-    const newStartTime = cue.endTime + 2000
-    const newEndTime = Math.min(newStartTime + (cue.endTime - cue.startTime), performance.duration)
-    const newCue: Direction = {
-      ...cue,
-      startTime: newStartTime,
-      endTime: newEndTime,
-    }
-    const updatedDirections = [...performance.directions, newCue].sort((a, b) => a.startTime - b.startTime)
-    setPerformance({
-      ...performance,
-      directions: updatedDirections,
-    })
-    setSelectedTimestamp(newStartTime)
-    setHasViewedPreview(false)
-  }
-
   const handleExport = () => {
     if (!performance) return
-    const exportData = {
-      ...performance,
-      audioUrl: "",
-    }
+    const exportData = { ...performance, audioUrl: "" }
     const dataStr = JSON.stringify(exportData, null, 2)
     const dataBlob = new Blob([dataStr], { type: "application/json" })
     const url = URL.createObjectURL(dataBlob)
@@ -173,10 +105,12 @@ export default function EditorPage() {
 
   const handleSavePerformance = async () => {
     if (!performance || !audioResult) return
+
     if (!hasViewedPreview) {
       setShowPreview(true)
       return
     }
+
     setIsSaving(true)
     try {
       const result = await savePerformance(performance, audioResult.file)
@@ -199,84 +133,127 @@ export default function EditorPage() {
   }
 
   const handleSeek = (time: number) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = time / 1000
-      setCurrentTime(time)
-    }
+    if (!audioRef.current) return
+    audioRef.current.currentTime = time / 1000
+    setCurrentTime(time)
   }
 
-  // Step 1: Performance Form
+  const handleAudioReplace = (audio: AudioUploadResult) => {
+    if (!performance) return
+
+    const nextDuration = audio.duration
+    const nextDirections = performance.directions
+      .map((direction) => {
+        const startTime = Math.min(direction.startTime, nextDuration)
+        const endTime = Math.min(direction.endTime, nextDuration)
+        if (startTime >= nextDuration || endTime <= startTime) return null
+        return { ...direction, startTime, endTime }
+      })
+      .filter(Boolean) as Direction[]
+
+    setAudioResult(audio)
+    setPerformance({
+      ...performance,
+      audioUrl: URL.createObjectURL(audio.file),
+      duration: nextDuration,
+      directions: nextDirections,
+    })
+    setCurrentTime(0)
+    setIsPlaying(false)
+    setSelectedTimestamp(undefined)
+    setHasViewedPreview(false)
+    if (audioRef.current) audioRef.current.currentTime = 0
+  }
+
   if (step === "form") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4">
-        <div className="mx-auto max-w-2xl">
-          <Link href="/">
-            <Button variant="ghost" className="mb-12 text-slate-400 hover:text-white">
-              <ChevronLeft className="w-4 h-4 mr-2" />
-              Back to Home
-            </Button>
-          </Link>
-          <div className="mb-10">
-            <h1 className="text-5xl font-black mb-3 tracking-tight">Create Performance</h1>
-            <p className="text-lg text-slate-400">Upload audio, add details, and set up lighting cues</p>
+      <div className="page-shell">
+        <div className="page-content page-content-wide">
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/">
+              <ChevronLeft className="h-4 w-4" />
+              Back home
+            </Link>
+          </Button>
+
+          <div className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+            <section className="soft-card-strong p-8 sm:p-10">
+              <p className="section-kicker border-none bg-amber-100/70 text-amber-800 shadow-none">Step 1 of 3</p>
+              <h1 className="mt-5 text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">Create a performance</h1>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-stone-600 sm:text-lg">
+                Start with the basics, then move into the cue editor once the audio and performer details are ready.
+              </p>
+
+              <div className="mt-8">
+                <PerformanceForm onSubmit={handlePerformanceSubmit} />
+              </div>
+            </section>
+
+            <aside className="space-y-5">
+              <div className="soft-card p-6">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">What happens next</p>
+                <div className="mt-4 space-y-4 text-sm leading-6 text-stone-600">
+                  <div className="summary-pill w-full justify-start">1. Add the track and performer info</div>
+                  <div className="summary-pill w-full justify-start">2. Review the cue timing reminder</div>
+                  <div className="summary-pill w-full justify-start">3. Build cues and preview before saving</div>
+                </div>
+              </div>
+            </aside>
           </div>
-          <PerformanceForm onSubmit={handlePerformanceSubmit} />
         </div>
       </div>
     )
   }
 
-  // Step 2: Warning Dialog
   if (step === "warning" && performance) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4 flex items-center justify-center">
-        <div className="mx-auto max-w-lg">
-          <div className="p-8 bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/50 rounded-xl backdrop-blur space-y-6">
-            <div className="flex items-center gap-3 text-amber-400">
-              <AlertTriangle className="w-8 h-8" />
-              <h1 className="text-2xl font-black tracking-tight">Before You Continue</h1>
-            </div>
+      <div className="page-shell">
+        <div className="page-content flex min-h-screen items-center justify-center">
+          <div className="w-full max-w-2xl">
+            <div className="soft-card-strong p-8 sm:p-10">
+              <div className="flex items-start gap-4">
+                <div className="rounded-full bg-amber-100 p-3 text-amber-700">
+                  <AlertTriangle className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Step 2 of 3</p>
+                  <h1 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">Cue timing reminder</h1>
+                  <p className="mt-3 text-base leading-7 text-stone-600">
+                    Lighting shifts need a little lead time. Keep these points in mind before you start placing cues.
+                  </p>
+                </div>
+              </div>
 
-            <div className="space-y-3 text-slate-300">
-              <p>Please note the following when setting up lighting cues:</p>
-              <ul className="space-y-2 text-sm">
-                <li className="flex gap-2">
-                  <span className="text-amber-400">•</span>
-                  <span>Quick lighting changes (less than 2 seconds) may be unseen by the audience</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-amber-400">•</span>
-                  <span>Light transitions need time to physically occur</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-amber-400">•</span>
-                  <span>Set cues slightly before the moment you want the change</span>
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-amber-400">•</span>
-                  <span>Test your cues with the preview before saving</span>
-                </li>
-              </ul>
-            </div>
+              <div className="mt-8 grid gap-3">
+                {[
+                  "Very fast changes can be missed by the audience.",
+                  "Transitions need time to physically happen.",
+                  "Place the cue slightly before the exact moment you want the effect.",
+                  "Use the preview before saving so the timing feels right.",
+                ].map((tip) => (
+                  <div key={tip} className="summary-pill w-full justify-start rounded-2xl px-4 py-3">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-700" />
+                    <span>{tip}</span>
+                  </div>
+                ))}
+              </div>
 
-            <div className="flex gap-3">
-              <Button
-                onClick={() => {
-                  setPerformance(null)
-                  setAudioResult(null)
-                  setStep("form")
-                }}
-                variant="outline"
-                className="flex-1"
-              >
-                Go Back
-              </Button>
-              <Button
-                onClick={() => setStep("editor")}
-                className="flex-1 bg-blue-600 hover:bg-blue-700"
-              >
-                I Understand - Continue
-              </Button>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setPerformance(null)
+                    setAudioResult(null)
+                    setStep("form")
+                  }}
+                >
+                  Go back
+                </Button>
+                <Button type="button" onClick={() => setStep("editor")}>
+                  I understand, continue
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -284,114 +261,129 @@ export default function EditorPage() {
     )
   }
 
-  // Step 3: Video Timeline Editor
   if (step === "editor" && performance) {
+    const performanceTypeLabel = performance.performanceType === "other"
+      ? performance.performanceTypeOther
+      : performance.performanceType
+
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col">
-        <div className="px-4 py-4">
-          <div className="mb-4 flex items-start justify-between">
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setStep("warning")}
-                className="text-slate-400 hover:text-white"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <div>
-                <h1 className="text-2xl font-black">{performance.name}</h1>
-                <p className="text-sm text-slate-400">
-                  {performance.performanceType && (
-                    <>
-                      {performance.performanceType === "other"
-                        ? performance.performanceTypeOther
-                        : performance.performanceType.charAt(0).toUpperCase() + performance.performanceType.slice(1)}
-                      {" • "}
-                    </>
-                  )}
-                  {performance.info.leaders.length > 0 && `Led by ${performance.info.leaders.join(", ")}`}
-                </p>
+      <div className="page-shell">
+        <div className="page-content page-content-wide">
+          <section className="soft-card-strong p-6 sm:p-7">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+              <div className="flex items-start gap-4">
+                <button type="button" onClick={() => setStep("warning")} className="summary-pill mt-1">
+                  <ChevronLeft className="h-4 w-4" />
+                  Back
+                </button>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Step 3 of 3</p>
+                  <h1 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">{performance.name}</h1>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {performanceTypeLabel && <div className="summary-pill">{performanceTypeLabel}</div>}
+                    {performance.info.leaders.length > 0 && (
+                      <div className="summary-pill">Led by {performance.info.leaders.join(", ")}</div>
+                    )}
+                    <div className="summary-pill">{performance.directions.length} cue{performance.directions.length === 1 ? "" : "s"}</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-start gap-3">
+                <div className="soft-card min-w-[260px] p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Audio</p>
+                      <p className="mt-2 text-sm font-semibold text-stone-900">{audioResult?.name}</p>
+                      <p className="mt-1 text-xs text-stone-500">{Math.round(performance.duration / 1000)} seconds</p>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-slate-200">
+                      <Music4 className="h-4 w-4" />
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <AudioUpload onUpload={handleAudioReplace} label="Change audio" />
+                  </div>
+                </div>
+                <Button type="button" variant="outline" onClick={() => setShowPreview(true)}>
+                  <Eye className="h-4 w-4" />
+                  Preview
+                </Button>
+                <Button type="button" variant="outline" onClick={handleExport}>
+                  <Download className="h-4 w-4" />
+                  Export
+                </Button>
               </div>
             </div>
-            <div className="flex gap-2">
-              <Button
-                onClick={() => setShowPreview(true)}
-                variant="outline"
-              >
-                <Eye className="w-4 h-4 mr-2" />
-                Preview
-              </Button>
-              <Button
-                onClick={handleExport}
-                variant="outline"
-              >
-                <Download className="w-4 h-4 mr-2" />
-                Export
-              </Button>
-            </div>
-          </div>
-        </div>
+          </section>
 
-        <div className="flex-1 px-4 pb-4">
-          <audio ref={audioRef} src={performance.audioUrl} crossOrigin="anonymous" />
-          <VideoTimelineEditor
-            duration={performance.duration}
-            directions={performance.directions}
-            onAddCue={handleAddCue}
-            onUpdateCue={handleUpdateCue}
-            onDeleteCue={handleDeleteCue}
-            onDuplicateCue={handleDuplicateCue}
-            currentTime={currentTime}
-            onSeek={handleSeek}
-            isPlaying={isPlaying}
-            onPlayPause={() => setIsPlaying(!isPlaying)}
-            selectedTimestamp={selectedTimestamp}
-            onSelectCue={(ts) => setSelectedTimestamp(ts)}
-          />
-        </div>
-
-        <div className="p-4 border-t border-slate-700">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-slate-400">
-              {performance.directions.length} cue{performance.directions.length !== 1 ? "s" : ""} created
-              {!hasViewedPreview && performance.directions.length > 0 && (
-                <span className="text-amber-400 ml-2">• Preview required before saving</span>
-              )}
-            </p>
-            <div className="flex gap-3">
-              <Button
-                onClick={() => {
-                  setPerformance(null)
-                  setAudioResult(null)
-                  setStep("form")
-                  setSelectedTimestamp(undefined)
+          <section className="soft-card mt-5 p-2 sm:p-3">
+            <audio ref={audioRef} src={performance.audioUrl} crossOrigin="anonymous" />
+            <div className="h-[calc(100vh-12rem)] min-h-[760px] overflow-hidden rounded-[30px]">
+              <VideoTimelineEditor
+                duration={performance.duration}
+                directions={performance.directions}
+                onDirectionsChange={(directions) => {
+                  setPerformance((previous) => (previous ? { ...previous, directions } : previous))
                   setHasViewedPreview(false)
                 }}
-                variant="outline"
-              >
-                Start Over
-              </Button>
-              <Button
-                onClick={handleSavePerformance}
-                disabled={isSaving || (!hasViewedPreview && performance.directions.length > 0)}
-                className={`${hasViewedPreview || performance.directions.length === 0 ? 'bg-green-600 hover:bg-green-700' : 'bg-slate-600'}`}
-              >
-                {isSaving ? "Saving..." : hasViewedPreview || performance.directions.length === 0 ? "Save Performance" : "Preview Required"}
-              </Button>
+                currentTime={currentTime}
+                onSeek={handleSeek}
+                isPlaying={isPlaying}
+                onPlayPause={() => setIsPlaying(!isPlaying)}
+                selectedTimestamp={selectedTimestamp}
+                onSelectCue={(timestamp) => setSelectedTimestamp(timestamp)}
+              />
             </div>
-          </div>
-        </div>
+          </section>
 
-        {/* Preview Modal */}
-        {showPreview && performance && (
-          <LightingPreviewModal
-            group={performance}
-            onClose={() => setShowPreview(false)}
-            onConfirm={() => {
-              setHasViewedPreview(true)
-              setShowPreview(false)
-            }}
-          />
-        )}
+          <section className="soft-card mt-5 p-5 sm:p-6">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <p className="text-sm font-semibold text-stone-800">
+                {performance.directions.length} cue{performance.directions.length === 1 ? "" : "s"} created
+              </p>
+
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setPerformance(null)
+                    setAudioResult(null)
+                    setStep("form")
+                    setSelectedTimestamp(undefined)
+                    setHasViewedPreview(false)
+                  }}
+                >
+                  Start over
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleSavePerformance}
+                  disabled={isSaving || (!hasViewedPreview && performance.directions.length > 0)}
+                  className={!hasViewedPreview && performance.directions.length > 0 ? "bg-stone-400 border-stone-400 hover:translate-y-0 hover:bg-stone-400 hover:shadow-none" : undefined}
+                >
+                  {isSaving
+                    ? "Saving..."
+                    : hasViewedPreview || performance.directions.length === 0
+                      ? "Save performance"
+                      : "Preview required"}
+                </Button>
+              </div>
+            </div>
+          </section>
+
+          {showPreview && performance && (
+            <LightingPreviewModal
+              group={performance}
+              onClose={() => setShowPreview(false)}
+              onConfirm={() => {
+                setHasViewedPreview(true)
+                setShowPreview(false)
+              }}
+            />
+          )}
+        </div>
       </div>
     )
   }

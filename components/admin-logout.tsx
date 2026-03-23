@@ -19,6 +19,7 @@ export function AdminLogout({ onLogout }: AdminLogoutProps) {
       })
 
       if (response.ok) {
+        onLogout?.()
         // Refresh page to redirect to login
         window.location.href = "/admin"
       }
@@ -35,10 +36,10 @@ export function AdminLogout({ onLogout }: AdminLogoutProps) {
       size="sm"
       onClick={handleLogout}
       disabled={isLoading}
-      className="text-slate-400 hover:text-red-400 border-slate-600/50"
+      className="text-stone-600 hover:text-red-600"
     >
       <LogOut className="w-4 h-4 mr-2" />
-      {isLoading ? "Logging out..." : "Logout"}
+      {isLoading ? "Logging out..." : "Log out"}
     </Button>
   )
 }

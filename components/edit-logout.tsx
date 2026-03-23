@@ -26,10 +26,11 @@ export function EditLogout() {
       onClick={handleLogout}
       disabled={isLoading}
       variant="outline"
-      className="text-slate-400 border-slate-600/50 hover:text-slate-300 h-8 text-sm px-3"
+      size="sm"
+      className="text-stone-600 hover:text-stone-900"
     >
-      <LogOut className="w-3 h-3 mr-1.5" />
-      {isLoading ? "Logging out..." : "Logout"}
+      <LogOut className="w-4 h-4" />
+      {isLoading ? "Logging out..." : "Log out"}
     </Button>
   )
 }

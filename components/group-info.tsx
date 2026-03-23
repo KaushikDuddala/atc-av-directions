@@ -24,30 +24,30 @@ function calculateEndTime(startTime: string, durationMs: number): string {
 export function GroupInfo({ info, duration = 0 }: GroupInfoProps) {
   const endTime = info.startTime ? calculateEndTime(info.startTime, duration) : ""
   return (
-    <div className="bg-card border border-border rounded-lg p-6 space-y-6 h-full overflow-y-auto">
+    <div className="h-full overflow-y-auto space-y-6 border-l-0 border border-white/15 bg-black p-6 text-white">
       <div>
-        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">Group Details</h3>
+        <h3 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white/55">Group Details</h3>
       </div>
 
       {/* Time Section */}
       <div className="space-y-2">
         <div className="flex justify-between items-start">
-          <span className="text-sm font-medium text-muted-foreground">Start Time</span>
+          <span className="text-sm font-medium text-white/55">Start Time</span>
           <span className="font-semibold">{info.startTime || "—"}</span>
         </div>
         {endTime && (
           <div className="flex justify-between items-start">
-            <span className="text-sm font-medium text-muted-foreground">End Time</span>
+            <span className="text-sm font-medium text-white/55">End Time</span>
             <span className="font-semibold">{endTime}</span>
           </div>
         )}
       </div>
 
-      <div className="border-t border-border" />
+      <div className="border-t border-white/15" />
 
       {/* Leaders Section */}
       <div className="space-y-2">
-        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Leaders</h4>
+        <h4 className="text-xs font-semibold uppercase tracking-wide text-white/55">Leaders</h4>
         <ul className="space-y-1">
           {info.leaders.map((leader) => (
             <li key={leader} className="text-sm">
@@ -57,11 +57,11 @@ export function GroupInfo({ info, duration = 0 }: GroupInfoProps) {
         </ul>
       </div>
 
-      <div className="border-t border-border" />
+      <div className="border-t border-white/15" />
 
       {/* Members Section */}
       <div className="space-y-2">
-        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Members</h4>
+        <h4 className="text-xs font-semibold uppercase tracking-wide text-white/55">Members</h4>
         <ul className="space-y-1">
           {info.members.map((member) => (
             <li key={member} className="text-sm">
@@ -71,22 +71,22 @@ export function GroupInfo({ info, duration = 0 }: GroupInfoProps) {
         </ul>
       </div>
 
-      <div className="border-t border-border" />
+      <div className="border-t border-white/15" />
 
       {/* Duration Section */}
       <div className="space-y-2">
-        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Duration</h4>
+        <h4 className="text-xs font-semibold uppercase tracking-wide text-white/55">Duration</h4>
         <p className="text-sm">
           {formatDuration(duration)}
           {endTime && ` (${info.startTime} - ${endTime})`}
         </p>
       </div>
 
-      <div className="border-t border-border" />
+      <div className="border-t border-white/15" />
 
       {/* Equipment Section */}
       <div className="space-y-2">
-        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Equipment</h4>
+        <h4 className="text-xs font-semibold uppercase tracking-wide text-white/55">Equipment</h4>
         <ul className="space-y-1">
           {info.equipment.map((item) => (
             <li key={item} className="text-sm">
@@ -96,17 +96,17 @@ export function GroupInfo({ info, duration = 0 }: GroupInfoProps) {
         </ul>
       </div>
 
-      <div className="border-t border-border" />
+      <div className="border-t border-white/15" />
 
       {/* Links Section */}
       <div className="space-y-2">
-        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Links</h4>
+        <h4 className="text-xs font-semibold uppercase tracking-wide text-white/55">Links</h4>
         <div className="space-y-2">
           <a
             href={info.directionsLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 hover:underline"
+            className="flex items-center gap-2 text-sm text-white hover:underline"
           >
             Directions
             <ExternalLink className="w-4 h-4" />
@@ -115,7 +115,7 @@ export function GroupInfo({ info, duration = 0 }: GroupInfoProps) {
             href={info.audioLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 hover:underline"
+            className="flex items-center gap-2 text-sm text-white hover:underline"
           >
             Audio File
             <ExternalLink className="w-4 h-4" />
@@ -123,11 +123,11 @@ export function GroupInfo({ info, duration = 0 }: GroupInfoProps) {
         </div>
       </div>
 
-      <div className="border-t border-border" />
+      <div className="border-t border-white/15" />
 
       {/* Notes Section */}
       <div className="space-y-2">
-        <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Notes</h4>
+        <h4 className="text-xs font-semibold uppercase tracking-wide text-white/55">Notes</h4>
         <p className="text-sm leading-relaxed">{info.notes}</p>
       </div>
     </div>

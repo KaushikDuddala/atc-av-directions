@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "./ui/button"
 import { Lock } from "lucide-react"
+import { Button } from "./ui/button"
 
 interface AdminAuthProps {
   onAuthSuccess: () => void
@@ -13,8 +13,8 @@ export function AdminAuth({ onAuthSuccess }: AdminAuthProps) {
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault()
     setError("")
     setIsLoading(true)
 
@@ -33,9 +33,8 @@ export function AdminAuth({ onAuthSuccess }: AdminAuthProps) {
         return
       }
 
-      // Success - server set secure HTTP-only cookie
       onAuthSuccess()
-    } catch (err) {
+    } catch {
       setError("Network error during authentication")
       setPassword("")
       setIsLoading(false)
@@ -43,42 +42,44 @@ export function AdminAuth({ onAuthSuccess }: AdminAuthProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <form onSubmit={handleSubmit} className="space-y-6 p-8 bg-slate-800/50 border border-slate-700/50 rounded-xl backdrop-blur">
-          <div className="flex flex-col items-center justify-center mb-8">
-            <div className="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20 mb-4">
-              <Lock className="w-6 h-6 text-purple-400" />
+    <div className="page-shell">
+      <div className="page-content flex min-h-screen items-center justify-center">
+        <div className="w-full max-w-md">
+          <form onSubmit={handleSubmit} className="soft-card-strong p-8 sm:p-10">
+            <div className="flex flex-col items-center text-center">
+              <div className="rounded-full bg-stone-900 p-4 text-white shadow-sm">
+                <Lock className="h-6 w-6" />
+              </div>
+              <p className="mt-5 text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Admin access</p>
+              <h1 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">Enter the admin password</h1>
+              <p className="mt-3 text-sm leading-6 text-stone-600">
+                This area is for approvals, publishing, and schedule management.
+              </p>
             </div>
-            <h1 className="text-2xl font-black tracking-tight text-white">Admin Access</h1>
-            <p className="text-sm text-slate-400 mt-2">Enter password to continue</p>
-          </div>
 
-          <div className="space-y-2">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              className="w-full px-4 py-2.5 border border-slate-600/50 rounded-lg bg-slate-900/50 text-white placeholder-slate-500 disabled:opacity-50 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/20 transition-colors"
-              disabled={isLoading}
-            />
-          </div>
-
-          {error && (
-            <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-200 text-sm">
-              {error}
+            <div className="mt-8">
+              <label className="field-label">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Password"
+                className="field-input"
+                disabled={isLoading}
+              />
             </div>
-          )}
 
-          <Button
-            type="submit"
-            disabled={isLoading || !password.trim()}
-            className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-2.5"
-          >
-            {isLoading ? "Authenticating..." : "Unlock Admin"}
-          </Button>
-        </form>
+            {error && (
+              <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {error}
+              </div>
+            )}
+
+            <Button type="submit" disabled={isLoading || !password.trim()} className="mt-6 w-full">
+              {isLoading ? "Checking access..." : "Unlock admin"}
+            </Button>
+          </form>
+        </div>
       </div>
     </div>
   )

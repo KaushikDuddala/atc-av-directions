@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
-import { Calendar, Clock, Music, Coffee } from "lucide-react"
-
-// ─── Types (mirror admin page) ────────────────────────────────────────────────
+import { CalendarDays, Clock3, Coffee, Home, Music4 } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 interface SavedRow {
   id: string
@@ -26,8 +26,6 @@ interface DisplayRow {
   leaders?: string[]
   performanceType?: string | null
 }
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function parseHHMM(hhmm: string): number {
   if (!hhmm) return 0
@@ -62,34 +60,39 @@ const msToMin = (ms: number) => Math.round(ms / 60000)
 function cascade(rows: SavedRow[]): Array<SavedRow & { endTime: string }> {
   const out: Array<SavedRow & { endTime: string; derivedStart: string }> = []
   for (let i = 0; i < rows.length; i++) {
-    const r = { ...rows[i], endTime: "", derivedStart: rows[i].startTime ?? "" }
+    const row = { ...rows[i], endTime: "", derivedStart: rows[i].startTime ?? "" }
     if (i === 0) {
-      r.derivedStart = r.startTime ?? ""
-      r.endTime = r.derivedStart ? addMins(r.derivedStart, r.durationMs / 60000) : ""
+      row.derivedStart = row.startTime ?? ""
+      row.endTime = row.derivedStart ? addMins(row.derivedStart, row.durationMs / 60000) : ""
     } else {
       const prev = out[i - 1]
       if (prev.endTime) {
         const gap = prev.type === "performance" ? msToMin(prev.gapAfterMs) : 0
-        r.derivedStart = addMins(prev.endTime, gap)
-        r.endTime = addMins(r.derivedStart, r.durationMs / 60000)
+        row.derivedStart = addMins(prev.endTime, gap)
+        row.endTime = addMins(row.derivedStart, row.durationMs / 60000)
       }
     }
-    r.startTime = r.derivedStart
-    out.push(r)
+    row.startTime = row.derivedStart
+    out.push(row)
   }
   return out
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
-
 export default function SchedulePage() {
-  const [rows, setRows]         = useState<DisplayRow[]>([])
-  const [loading, setLoading]   = useState(true)
-  const [error, setError]       = useState<string | null>(null)
-  const [eventName, setEventName] = useState("Event Schedule")
+  const [rows, setRows] = useState<DisplayRow[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [nowMinutes, setNowMinutes] = useState(() => new Date().getHours() * 60 + new Date().getMinutes())
 
   useEffect(() => {
     loadSchedule()
+  }, [])
+
+  useEffect(() => {
+    const syncTime = () => setNowMinutes(new Date().getHours() * 60 + new Date().getMinutes())
+    syncTime()
+    const timer = window.setInterval(syncTime, 30000)
+    return () => window.clearInterval(timer)
   }, [])
 
   const loadSchedule = async () => {
@@ -97,25 +100,23 @@ export default function SchedulePage() {
     setError(null)
 
     try {
-      // Load saved schedule config
       const { data: cfg, error: cfgErr } = await supabase
         .from("schedule_config")
         .select("value")
         .eq("key", "main")
         .single()
 
-      if (cfgErr || !cfg?.value) {
-        setError("No schedule has been published yet.")
+      if (cfgErr || !cfg?.value || !cfg.value.confirmed) {
+        setError("The schedule has not been confirmed yet.")
         setLoading(false)
         return
       }
 
-      const saved = cfg.value as { defaultGapMins: number; rows: SavedRow[] }
+      const saved = cfg.value as { defaultGapMins: number; confirmed?: boolean; rows: SavedRow[] }
 
-      // Load performance details for leader/type info
       const perfIds = saved.rows
-        .filter(r => r.type === "performance" && r.performanceId)
-        .map(r => r.performanceId!)
+        .filter((row) => row.type === "performance" && row.performanceId)
+        .map((row) => row.performanceId!)
 
       const { data: perfs } = perfIds.length > 0
         ? await supabase
@@ -124,203 +125,208 @@ export default function SchedulePage() {
             .in("id", perfIds)
         : { data: [] }
 
-      const perfMap = new Map((perfs ?? []).map((p: any) => [p.id, p]))
-
-      // Cascade times
+      const perfMap = new Map((perfs ?? []).map((perf: any) => [perf.id, perf]))
       const cascaded = cascade(saved.rows)
 
-      const display: DisplayRow[] = cascaded.map(r => {
-        if (r.type === "performance") {
-          const perf = perfMap.get(r.performanceId)
+      const display: DisplayRow[] = cascaded.map((row) => {
+        if (row.type === "performance") {
+          const perf = perfMap.get(row.performanceId)
           return {
-            id: r.id,
+            id: row.id,
             type: "performance",
-            name: r.name,
-            durationMs: r.durationMs,
-            startTime: r.startTime ?? "",
-            endTime: r.endTime,
+            name: row.name,
+            durationMs: row.durationMs,
+            startTime: row.startTime ?? "",
+            endTime: row.endTime,
             leaders: perf?.info?.leaders ?? [],
             performanceType: perf?.performance_type ?? null,
           }
         }
+
         return {
-          id: r.id,
+          id: row.id,
           type: "break",
-          name: r.name,
-          durationMs: r.durationMs,
-          startTime: r.startTime ?? "",
-          endTime: r.endTime,
+          name: row.name,
+          durationMs: row.durationMs,
+          startTime: row.startTime ?? "",
+          endTime: row.endTime,
         }
       })
 
       setRows(display)
-    } catch (e) {
+    } catch {
       setError("Failed to load schedule.")
     } finally {
       setLoading(false)
     }
   }
 
-  const performanceRows = rows.filter(r => r.type === "performance")
-  const totalMs = performanceRows.reduce((s, r) => s + r.durationMs, 0)
-  const firstTime = rows.find(r => r.startTime)?.startTime
-  const lastEnd   = rows.length > 0 ? rows[rows.length - 1].endTime : ""
+  const performanceRows = rows.filter((row) => row.type === "performance")
+  const totalMs = performanceRows.reduce((sum, row) => sum + row.durationMs, 0)
+  const firstTime = rows.find((row) => row.startTime)?.startTime
+  const lastEnd = rows.length > 0 ? rows[rows.length - 1].endTime : ""
+  const upcomingPerformanceIndex = performanceRows.findIndex((row) => parseHHMM(row.endTime) > nowMinutes)
+  const readyPerformanceId = upcomingPerformanceIndex >= 0 ? performanceRows[upcomingPerformanceIndex].id : null
+  const onCallPerformanceId = upcomingPerformanceIndex >= 0 ? performanceRows[upcomingPerformanceIndex + 1]?.id ?? null : null
 
-  // ── Render ──────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
-
-      {/* Hero header */}
-      <div className="relative overflow-hidden border-b border-slate-800">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-950/40 via-transparent to-purple-950/30 pointer-events-none" />
-        <div className="relative max-w-2xl mx-auto px-6 py-12 text-center">
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-1.5 text-blue-300 text-xs font-medium tracking-widest uppercase mb-6">
-            <Calendar className="w-3.5 h-3.5" />
-            Program
+    <div className="page-shell">
+      <div className="page-content">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="section-kicker">
+            <CalendarDays className="h-3.5 w-3.5" />
+            Confirmed Schedule
           </div>
-          <h1 className="text-4xl sm:text-5xl font-black tracking-tight mb-4">{eventName}</h1>
-
-          {!loading && !error && firstTime && (
-            <div className="flex items-center justify-center gap-4 text-slate-400 text-sm mt-3 flex-wrap">
-              <span className="flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5" />
-                {to12h(firstTime)}
-                {lastEnd && <> – {to12h(lastEnd)}</>}
-              </span>
-              <span className="w-1 h-1 rounded-full bg-slate-600 hidden sm:block" />
-              <span>{performanceRows.length} performance{performanceRows.length !== 1 ? "s" : ""}</span>
-              <span className="w-1 h-1 rounded-full bg-slate-600 hidden sm:block" />
-              <span>{msToDuration(totalMs)} total</span>
-            </div>
-          )}
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/">
+              <Home className="h-4 w-4" />
+              Home
+            </Link>
+          </Button>
         </div>
-      </div>
 
-      {/* Body */}
-      <div className="max-w-2xl mx-auto px-4 py-10">
-
-        {loading ? (
-          <div className="flex flex-col items-center gap-4 py-20 text-slate-500">
-            <div className="w-8 h-8 border-2 border-slate-700 border-t-blue-500 rounded-full animate-spin" />
-            <p className="text-sm">Loading schedule…</p>
-          </div>
-
-        ) : error ? (
-          <div className="text-center py-20">
-            <Calendar className="w-12 h-12 mx-auto mb-4 text-slate-700" />
-            <p className="text-slate-400 text-lg">{error}</p>
-            <p className="text-slate-600 text-sm mt-2">Check back soon.</p>
-          </div>
-
-        ) : rows.length === 0 ? (
-          <div className="text-center py-20">
-            <Calendar className="w-12 h-12 mx-auto mb-4 text-slate-700" />
-            <p className="text-slate-400">No schedule items yet.</p>
-          </div>
-
-        ) : (
-          <div className="relative">
-            {/* Vertical timeline spine */}
-            <div className="absolute left-[22px] top-3 bottom-3 w-px bg-gradient-to-b from-blue-500/40 via-slate-700/50 to-purple-500/30" />
-
-            <div className="space-y-1">
-              {rows.map((row, idx) => {
-                const isBreak = row.type === "break"
-                const isLast  = idx === rows.length - 1
-                const perfIdx = rows.slice(0, idx + 1).filter(r => r.type === "performance").length
-
-                return (
-                  <div key={row.id} className="relative flex gap-5 group">
-
-                    {/* Timeline dot */}
-                    <div className="relative flex-shrink-0 flex flex-col items-center" style={{ width: 44 }}>
-                      <div className={`
-                        w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-4 z-10
-                        ${isBreak
-                          ? "bg-amber-950 border-amber-600/70"
-                          : "bg-slate-900 border-blue-500 group-hover:bg-blue-500/20 transition-colors"
-                        }
-                      `}>
-                        {isBreak
-                          ? <Coffee className="w-2.5 h-2.5 text-amber-400" />
-                          : <Music className="w-2.5 h-2.5 text-blue-400" />
-                        }
-                      </div>
-                    </div>
-
-                    {/* Card */}
-                    <div className={`
-                      flex-1 mb-3 rounded-xl border transition-all
-                      ${isBreak
-                        ? "bg-amber-950/10 border-amber-800/30 px-5 py-3.5"
-                        : "bg-slate-900/70 border-slate-800 hover:border-slate-700 px-5 py-4"
-                      }
-                    `}>
-                      {isBreak ? (
-                        /* Break row */
-                        <div className="flex items-center justify-between gap-4 flex-wrap">
-                          <div className="flex items-center gap-2">
-                            <span className="text-amber-400/80 font-medium text-sm">{row.name}</span>
-                            <span className="text-amber-800/70 text-xs">· {msToMin(row.durationMs)} min</span>
-                          </div>
-                          {row.startTime && (
-                            <span className="text-amber-700/80 text-xs font-mono tabular-nums">
-                              {to12h(row.startTime)} – {to12h(row.endTime)}
-                            </span>
-                          )}
-                        </div>
-
-                      ) : (
-                        /* Performance row */
-                        <div className="flex items-start justify-between gap-4 flex-wrap">
-                          <div className="min-w-0">
-                            <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                              <span className="text-slate-500 text-xs font-mono tabular-nums w-5">{perfIdx}.</span>
-                              <h3 className="font-bold text-base leading-tight">{row.name}</h3>
-                              {row.performanceType && (
-                                <span className="text-xs bg-slate-800 border border-slate-700 rounded-full px-2 py-0.5 text-slate-400 capitalize">
-                                  {row.performanceType}
-                                </span>
-                              )}
-                            </div>
-                            {row.leaders && row.leaders.length > 0 && (
-                              <p className="text-sm text-slate-400 ml-7">
-                                {row.leaders.join(", ")}
-                              </p>
-                            )}
-                            <p className="text-xs text-slate-600 mt-1 ml-7">{msToDuration(row.durationMs)}</p>
-                          </div>
-
-                          {row.startTime && (
-                            <div className="text-right flex-shrink-0">
-                              <p className="text-white font-semibold tabular-nums text-sm">{to12h(row.startTime)}</p>
-                              <p className="text-slate-500 text-xs tabular-nums">ends {to12h(row.endTime)}</p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )
-              })}
+        <section className="soft-card-strong mt-6 p-8 sm:p-10">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-stone-500">Run of show</p>
+              <h1 className="display-title mt-3 text-4xl leading-tight sm:text-5xl">Tonight&apos;s lineup, in order.</h1>
+              <p className="mt-3 text-sm font-medium text-stone-500">Teams should be on site two performances before their own slot.</p>
             </div>
 
-            {/* Footer summary */}
-            {lastEnd && (
-              <div className="mt-8 ml-[52px] flex items-center gap-3 text-slate-500 text-sm border-t border-slate-800 pt-6">
-                <Clock className="w-4 h-4 flex-shrink-0" />
-                <span>
-                  Show ends at <span className="text-slate-300 font-semibold">{to12h(lastEnd)}</span>
-                </span>
+            {!loading && !error && firstTime && (
+              <div className="flex flex-wrap gap-2 lg:justify-end">
+                <div className="summary-pill">
+                  <Clock3 className="h-4 w-4 text-amber-700" />
+                  {to12h(firstTime)}
+                  {lastEnd && <span className="text-stone-400">to {to12h(lastEnd)}</span>}
+                </div>
+                <div className="summary-pill">
+                  <Music4 className="h-4 w-4 text-sky-700" />
+                  {performanceRows.length} performance{performanceRows.length === 1 ? "" : "s"}
+                </div>
+                <div className="summary-pill">{msToDuration(totalMs)}</div>
               </div>
             )}
           </div>
-        )}
-      </div>
+        </section>
 
-      {/* Footer */}
-      <div className="border-t border-slate-800/50 mt-10 py-6 text-center text-slate-700 text-xs">
-        Schedule subject to change
+        <section className="mt-6">
+          {loading ? (
+            <div className="soft-card p-12 text-center">
+              <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-stone-200 border-t-amber-500" />
+              <p className="mt-4 text-sm text-stone-500">Loading the latest schedule…</p>
+            </div>
+          ) : error ? (
+            <div className="soft-card p-12 text-center">
+              <CalendarDays className="mx-auto h-12 w-12 text-stone-300" />
+              <p className="mt-4 text-lg font-semibold text-stone-800">{error}</p>
+              <p className="mt-2 text-sm text-stone-500">Check back again after an admin confirms the final schedule.</p>
+            </div>
+          ) : rows.length === 0 ? (
+            <div className="soft-card p-12 text-center">
+              <CalendarDays className="mx-auto h-12 w-12 text-stone-300" />
+              <p className="mt-4 text-lg font-semibold text-stone-800">No schedule items yet.</p>
+            </div>
+          ) : (
+            <div className="relative pl-4 sm:pl-6">
+              <div className="absolute left-[1.35rem] top-5 bottom-5 hidden w-px bg-gradient-to-b from-amber-300 via-stone-200 to-emerald-300 sm:block" />
+              <div className="space-y-4">
+                {rows.map((row, index) => {
+                  const isBreak = row.type === "break"
+                  const performanceNumber = rows.slice(0, index + 1).filter((entry) => entry.type === "performance").length
+                  const statusLabel = !isBreak
+                    ? row.id === readyPerformanceId
+                      ? "Ready to perform"
+                      : row.id === onCallPerformanceId
+                        ? "On call"
+                        : null
+                    : null
+
+                  return (
+                    <article
+                      key={row.id}
+                      className={`relative grid gap-3 sm:grid-cols-[72px_minmax(0,1fr)] ${
+                        isBreak ? "items-center" : "items-start"
+                      }`}
+                    >
+                      <div className="relative z-10 hidden sm:flex sm:justify-center">
+                        <div
+                          className={`flex h-12 w-12 items-center justify-center rounded-full border shadow-sm ${
+                            isBreak
+                              ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                              : "border-amber-200 bg-white text-amber-700"
+                          }`}
+                        >
+                          {isBreak ? <Coffee className="h-5 w-5" /> : <span className="text-sm font-semibold">{performanceNumber}</span>}
+                        </div>
+                      </div>
+
+                      <div className={isBreak ? "muted-card p-5" : "soft-card p-5 sm:p-6"}>
+                        <div className="flex flex-wrap items-start justify-between gap-3">
+                          <div className="min-w-0">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span
+                                className={`chip text-xs font-semibold uppercase tracking-[0.18em] ${
+                                  isBreak
+                                    ? "border-emerald-200 bg-emerald-100/70 text-emerald-800"
+                                    : "border-amber-200 bg-amber-100/70 text-amber-800"
+                                }`}
+                              >
+                                {isBreak ? "Break" : row.performanceType ?? "Performance"}
+                              </span>
+                              {!isBreak && (
+                                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-400">
+                                  Performance {performanceNumber}
+                                </span>
+                              )}
+                              {statusLabel && (
+                                <span
+                                  className={`chip text-xs font-semibold uppercase tracking-[0.18em] ${
+                                    statusLabel === "Ready to perform"
+                                      ? "border-rose-200 bg-rose-100/80 text-rose-800"
+                                      : "border-sky-200 bg-sky-100/80 text-sky-800"
+                                  }`}
+                                >
+                                  {statusLabel}
+                                </span>
+                              )}
+                            </div>
+                            <h2 className="mt-3 text-xl font-semibold tracking-tight text-stone-900 sm:text-2xl">{row.name}</h2>
+                            {row.leaders && row.leaders.length > 0 && (
+                              <p className="mt-2 text-sm leading-6 text-stone-600">{row.leaders.join(", ")}</p>
+                            )}
+                          </div>
+
+                          <div className="min-w-[150px] rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-right shadow-sm">
+                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-stone-300">Start</p>
+                            <p className="mt-1 text-lg font-semibold text-stone-100">{to12h(row.startTime)}</p>
+                            <p className="mt-1 text-sm text-stone-400">
+                              Ends {to12h(row.endTime)}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="mt-4 flex flex-wrap gap-2 text-sm">
+                          <div className="summary-pill">
+                            <Clock3 className="h-4 w-4 text-stone-500" />
+                            {msToDuration(row.durationMs)}
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+        </section>
+
+        {lastEnd && !loading && !error && (
+          <section className="soft-card mt-6 p-5 sm:p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Estimated finish</p>
+            <p className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">{to12h(lastEnd)}</p>
+          </section>
+        )}
       </div>
     </div>
   )

@@ -1,10 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { X } from "lucide-react"
+import { Music4, Users, X } from "lucide-react"
 import { Button } from "./ui/button"
-import { Select } from "./ui/select"
-import type { AudioGroup, PerformanceType } from "@/lib/types"
+import type { PerformanceType } from "@/lib/types"
 import { AudioUpload, type AudioUploadResult } from "./audio-upload"
 
 export interface PerformanceFormData {
@@ -35,34 +34,34 @@ export function PerformanceForm({ onSubmit, disabled = false }: PerformanceFormP
   const [audioResult, setAudioResult] = useState<AudioUploadResult | undefined>()
 
   const addLeader = () => {
-    if (leaderInput.trim()) {
-      setLeaders([...leaders, leaderInput.trim()])
-      setLeaderInput("")
-    }
+    if (!leaderInput.trim()) return
+    setLeaders([...leaders, leaderInput.trim()])
+    setLeaderInput("")
+  }
+
+  const addMember = () => {
+    if (!memberInput.trim()) return
+    setMembers([...members, memberInput.trim()])
+    setMemberInput("")
   }
 
   const removeLeader = (index: number) => {
     setLeaders(leaders.filter((_, i) => i !== index))
   }
 
-  const addMember = () => {
-    if (memberInput.trim()) {
-      setMembers([...members, memberInput.trim()])
-      setMemberInput("")
-    }
-  }
-
   const removeMember = (index: number) => {
     setMembers(members.filter((_, i) => i !== index))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+
     if (!name.trim()) {
       alert("Please enter a performance name")
       return
     }
-    if (audioResult === undefined) {
+
+    if (!audioResult) {
       alert("Please upload an audio file")
       return
     }
@@ -77,168 +76,202 @@ export function PerformanceForm({ onSubmit, disabled = false }: PerformanceFormP
         performanceType,
         performanceTypeOther: performanceType === "other" ? performanceTypeOther : undefined,
       },
-      audioResult
+      audioResult,
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 p-8 bg-slate-800/50 border border-slate-700/50 rounded-xl backdrop-blur">
-      <div className="space-y-2">
-        <label className="block text-sm font-semibold text-white">Performance Name *</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          disabled={disabled}
-          placeholder="e.g., Sam & Saha Dance Performance"
-          className="w-full px-4 py-2.5 border border-slate-600/50 rounded-lg bg-slate-900/50 text-white placeholder-slate-500 disabled:opacity-50 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-colors"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="block text-sm font-semibold text-white">Audio File *</label>
-        <div className="flex items-center justify-between p-4 border border-slate-600/50 rounded-lg bg-slate-900/50">
-          <div className="flex-1">
-            {audioResult ? (
-              <div className="text-sm">
-                <span className="font-medium text-white">{audioResult.name}</span>
-                <span className="text-slate-400 ml-2">
-                  ({(audioResult.duration / 1000).toFixed(1)}s)
-                </span>
-              </div>
-            ) : (
-              <span className="text-slate-500">No audio file selected</span>
-            )}
+    <form onSubmit={handleSubmit} className="grid gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+      <section className="soft-card-strong p-6 sm:p-8">
+        <div className="flex items-center gap-3">
+          <div className="rounded-full bg-amber-100 p-3 text-amber-700">
+            <Music4 className="h-5 w-5" />
           </div>
-          <AudioUpload onUpload={setAudioResult} disabled={disabled} />
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Performance basics</p>
+            <h2 className="mt-1 text-2xl font-semibold tracking-tight text-stone-900">What is this act?</h2>
+          </div>
         </div>
-      </div>
 
-      <div className="space-y-2">
-        <label className="block text-sm font-semibold text-white">Performance Type</label>
-        <select
-          value={performanceType}
-          onChange={(e) => setPerformanceType(e.target.value as PerformanceType)}
-          disabled={disabled}
-          className="w-full px-4 py-2.5 pr-10 border border-slate-600/50 rounded-lg bg-slate-900/50 text-white disabled:opacity-50 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-colors appearance-none cursor-pointer"
-          style={{
-            backgroundImage: `url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2220%22 height=%2220%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%2294a3b8%22 stroke-width=%222%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E')`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'right 8px center',
-            backgroundSize: '20px',
-            paddingRight: '32px'
-          }}
-        >
-          <option value="dance">Dance</option>
-          <option value="music">Music</option>
-          <option value="singing">Singing</option>
-          <option value="other">Other (Specify)</option>
-        </select>
-        {performanceType === "other" && (
-          <input
-            type="text"
-            value={performanceTypeOther}
-            onChange={(e) => setPerformanceTypeOther(e.target.value)}
-            disabled={disabled}
-            placeholder="Specify performance type"
-            className="w-full px-4 py-2.5 border border-slate-600/50 rounded-lg bg-slate-900/50 text-white placeholder-slate-500 disabled:opacity-50 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-colors mt-2"
-          />
-        )}
-      </div>
+        <div className="mt-6 space-y-5">
+          <div>
+            <label className="field-label">Performance name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              disabled={disabled}
+              placeholder="Example: Sam & Saha dance performance"
+              className="field-input"
+            />
+          </div>
 
-      <div className="space-y-2">
-        <label className="block text-sm font-semibold text-white">Leaders</label>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={leaderInput}
-            onChange={(e) => setLeaderInput(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addLeader())}
-            disabled={disabled}
-            placeholder="Enter leader name and press Enter"
-            className="flex-1 px-4 py-2.5 border border-slate-600/50 rounded-lg bg-slate-900/50 text-white placeholder-slate-500 disabled:opacity-50 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-colors"
-          />
-          <Button onClick={addLeader} disabled={disabled} variant="outline" size="sm" type="button" className="h-10">
-            Add
-          </Button>
-        </div>
-        <div className="flex flex-wrap gap-2 mt-2">
-          {leaders.map((leader, idx) => (
-            <div key={idx} className="flex items-center gap-1 bg-blue-500/20 border border-blue-500/30 text-blue-200 px-3 py-1 rounded-full text-sm">
-              {leader}
-              <button
-                type="button"
-                onClick={() => removeLeader(idx)}
-                disabled={disabled}
-                className="ml-1 hover:opacity-70"
-              >
-                <X className="w-3 h-3" />
-              </button>
+          <div>
+            <label className="field-label">Audio file</label>
+            <div className="muted-card flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-stone-800">
+                  {audioResult ? audioResult.name : "No file selected yet"}
+                </p>
+                <p className="mt-1 text-sm text-stone-500">
+                  {audioResult ? `${(audioResult.duration / 1000).toFixed(1)} seconds detected` : "Upload the track used during the performance."}
+                </p>
+              </div>
+              <AudioUpload onUpload={setAudioResult} disabled={disabled} />
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      <div className="space-y-2">
-        <label className="block text-sm font-semibold text-white">Members</label>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={memberInput}
-            onChange={(e) => setMemberInput(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addMember())}
-            disabled={disabled}
-            placeholder="Enter member name and press Enter"
-            className="flex-1 px-4 py-2.5 border border-slate-600/50 rounded-lg bg-slate-900/50 text-white placeholder-slate-500 disabled:opacity-50 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-colors"
-          />
-          <Button onClick={addMember} disabled={disabled} variant="outline" size="sm" type="button" className="h-10">
-            Add
-          </Button>
-        </div>
-        <div className="flex flex-wrap gap-2 mt-2">
-          {members.map((member, idx) => (
-            <div key={idx} className="flex items-center gap-1 bg-purple-500/20 border border-purple-500/30 text-purple-200 px-3 py-1 rounded-full text-sm">
-              {member}
-              <button
-                type="button"
-                onClick={() => removeMember(idx)}
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label className="field-label">Performance type</label>
+              <select
+                value={performanceType}
+                onChange={(event) => setPerformanceType(event.target.value as PerformanceType)}
                 disabled={disabled}
-                className="ml-1 hover:opacity-70"
+                className="field-select"
               >
-                <X className="w-3 h-3" />
-              </button>
+                <option value="dance">Dance</option>
+                <option value="music">Music</option>
+                <option value="singing">Singing</option>
+                <option value="other">Other</option>
+              </select>
             </div>
-          ))}
+
+            <div>
+              <label className="field-label">Announced length</label>
+              <input
+                type="text"
+                value={time}
+                onChange={(event) => setTime(event.target.value)}
+                disabled={disabled}
+                placeholder="Example: 3:45"
+                className="field-input"
+              />
+            </div>
+          </div>
+
+          {performanceType === "other" && (
+            <div>
+              <label className="field-label">Describe the performance type</label>
+              <input
+                type="text"
+                value={performanceTypeOther}
+                onChange={(event) => setPerformanceTypeOther(event.target.value)}
+                disabled={disabled}
+                placeholder="Example: spoken word"
+                className="field-input"
+              />
+            </div>
+          )}
+
+          <div>
+            <label className="field-label">Notes for the team</label>
+            <textarea
+              value={notes}
+              onChange={(event) => setNotes(event.target.value)}
+              disabled={disabled}
+              placeholder="Anything the lighting or stage team should know."
+              rows={5}
+              className="field-textarea"
+            />
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="space-y-2">
-        <label className="block text-sm font-semibold text-white">Length</label>
-        <input
-          type="text"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-          disabled={disabled}
-          placeholder="e.g., 3:45 or 3 min 45 sec"
-          className="w-full px-4 py-2.5 border border-slate-600/50 rounded-lg bg-slate-900/50 text-white placeholder-slate-500 disabled:opacity-50 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-colors"
-        />
-      </div>
+      <section className="space-y-5">
+        <div className="soft-card p-6 sm:p-7">
+          <div className="flex items-center gap-3">
+            <div className="rounded-full bg-emerald-100 p-3 text-emerald-700">
+              <Users className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">People</p>
+              <h2 className="mt-1 text-xl font-semibold tracking-tight text-stone-900">Who should be listed?</h2>
+            </div>
+          </div>
 
-      <div className="space-y-2">
-        <label className="block text-sm font-semibold text-white">Notes</label>
-        <textarea
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          disabled={disabled}
-          placeholder="Any additional notes about the performance"
-          rows={3}
-          className="w-full px-4 py-2.5 border border-slate-600/50 rounded-lg bg-slate-900/50 text-white placeholder-slate-500 disabled:opacity-50 resize-none focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-colors"
-        />
-      </div>
+          <div className="mt-6 space-y-5">
+            <div>
+              <label className="field-label">Leaders</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={leaderInput}
+                  onChange={(event) => setLeaderInput(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault()
+                      addLeader()
+                    }
+                  }}
+                  disabled={disabled}
+                  placeholder="Add a leader name"
+                  className="field-input"
+                />
+                <Button type="button" variant="outline" onClick={addLeader} disabled={disabled}>
+                  Add
+                </Button>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {leaders.map((leader, index) => (
+                  <span key={`${leader}-${index}`} className="chip border-amber-200 bg-amber-100/70 text-amber-800">
+                    {leader}
+                    <button type="button" onClick={() => removeLeader(index)} disabled={disabled} className="text-amber-700/70 transition hover:text-amber-900">
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
 
-      <Button type="submit" disabled={disabled} className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-2.5">
-        Continue to Lighting Editor
-      </Button>
+            <div>
+              <label className="field-label">Members</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={memberInput}
+                  onChange={(event) => setMemberInput(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault()
+                      addMember()
+                    }
+                  }}
+                  disabled={disabled}
+                  placeholder="Add a member name"
+                  className="field-input"
+                />
+                <Button type="button" variant="outline" onClick={addMember} disabled={disabled}>
+                  Add
+                </Button>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {members.map((member, index) => (
+                  <span key={`${member}-${index}`} className="chip border-emerald-200 bg-emerald-100/70 text-emerald-800">
+                    {member}
+                    <button type="button" onClick={() => removeMember(index)} disabled={disabled} className="text-emerald-700/70 transition hover:text-emerald-900">
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="muted-card p-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Before you continue</p>
+          <ul className="mt-4 space-y-3 text-sm leading-6 text-stone-600">
+            <li>Upload the exact audio file used at rehearsal or showtime.</li>
+            <li>Add leaders so the schedule page is easier for performers to scan.</li>
+            <li>Notes can be brief. The cue editor is where timing gets precise.</li>
+          </ul>
+        </div>
+
+        <Button type="submit" disabled={disabled} size="lg" className="w-full">
+          Continue to Cue Editing
+        </Button>
+      </section>
     </form>
   )
 }
