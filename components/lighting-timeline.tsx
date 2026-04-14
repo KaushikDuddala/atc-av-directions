@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { useState, useRef, useEffect, useLayoutEffect, useCallback, useMemo } from "react";
 
 const RULER_H    = 32;
 const TRACK_H    = 52;
 const LABEL_W    = 88;
-const MIN_DUR    = 300;
+const MIN_DUR    = 1000;
+const SNAP_INTERVAL = 250;  // 0.25 seconds
 const BASE_PX_MS = 0.08;
 const TRACKS = [
   { id: "flood", label: "FLOOD", icon: "⚡" },
@@ -38,12 +39,12 @@ const hexRgba = (hex, a) => {
 function dirToInternal(d) {
   return {
     id:        d._id ?? uid(),
-    start:     d.startTime,
-    end:       d.endTime,
-    flood:     { pct: d.floodlight.percent, color: d.floodlight.color },
-    over:      { pct: d.overhead.percent },
-    notes:     d.floodlight.notes ?? "",
-    overNotes: d.overhead.notes   ?? "",
+    start:     typeof d.startTime === 'number' ? d.startTime : 0,
+    end:       typeof d.endTime === 'number' ? d.endTime : 0,
+    flood:     { pct: d.floodlight?.percent ?? 0, color: d.floodlight?.color ?? "#ffaa00" },
+    over:      { pct: d.overhead?.percent ?? 0 },
+    notes:     d.floodlight?.notes ?? "",
+    overNotes: d.overhead?.notes   ?? "",
   };
 }
 
@@ -91,6 +92,11 @@ function getNeighbors(cues, cueId) {
   };
 }
 
+// Snap time to nearest SNAP_INTERVAL (0.25 seconds)
+function snapToGrid(ms) {
+  return Math.round(ms / SNAP_INTERVAL) * SNAP_INTERVAL;
+}
+
 export function LightingTimeline({
   duration,
   directions       = [],
@@ -114,6 +120,7 @@ export function LightingTimeline({
   const onDirectionsRef   = useRef(onDirectionsChange);
   const durationRef       = useRef(duration);
   const cuesRef           = useRef(cues);
+  const pendingSyncRef    = useRef(false);
 
   // Update refs every render
   const pxPerMs = BASE_PX_MS * zoom;
@@ -166,18 +173,18 @@ export function LightingTimeline({
           if (d.kind === "move") {
             const minStart = prevCue ? prevCue.end : 0;
             const maxStart = nextCue ? nextCue.start - cDur : dur - cDur;
-            const s = clamp(d.origStart + dms, minStart, Math.max(minStart, maxStart));
-            return { ...c, start: Math.round(s), end: Math.round(s + cDur) };
+            const s = snapToGrid(clamp(d.origStart + dms, minStart, Math.max(minStart, maxStart)));
+            return { ...c, start: s, end: snapToGrid(s + cDur) };
           }
           if (d.kind === "left") {
             const minStart = prevCue ? prevCue.end : 0;
-            const s = clamp(d.origStart + dms, minStart, d.origEnd - MIN_DUR);
-            return { ...c, start: Math.round(s) };
+            const s = snapToGrid(clamp(d.origStart + dms, minStart, d.origEnd - MIN_DUR));
+            return { ...c, start: s };
           }
           if (d.kind === "right") {
             const maxEnd = nextCue ? nextCue.start : dur;
-            const e2 = clamp(d.origEnd + dms, d.origStart + MIN_DUR, maxEnd);
-            return { ...c, end: Math.round(e2) };
+            const e2 = snapToGrid(clamp(d.origEnd + dms, d.origStart + MIN_DUR, maxEnd));
+            return { ...c, end: e2 };
           }
           return c;
         });
@@ -185,10 +192,14 @@ export function LightingTimeline({
     };
 
     const onUp = () => {
-      if (!dragRef.current) return;
-      dragRef.current       = null;
+      hasMovedRef.current   = false;
       isDraggingRef.current = false;
-      onDirectionsRef.current?.(cuesRef.current.map(internalToDir));
+      if (!dragRef.current) {
+        dragRef.current = null;
+        return;
+      }
+      dragRef.current = null;
+      pendingSyncRef.current = true;
     };
 
     window.addEventListener("mousemove", onMove);
@@ -221,6 +232,32 @@ export function LightingTimeline({
     return () => el.removeEventListener("wheel", handler);
   }, []);
 
+  // ── Delete key handler for selected cue ─────────────────────────────────────
+  useEffect(() => {
+    const handler = (e) => {
+      if ((e.key === "Delete" || e.key === "Backspace") && selected) {
+        e.preventDefault();
+        setCues(prev => {
+          const next = prev.filter(c => c.id !== selected);
+          cuesRef.current = next;
+          pendingSyncRef.current = true;
+          return next;
+        });
+        setSelected(null);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [selected]);
+
+  // ── Sync cues to parent after render to avoid setState-during-render errors ──
+  useLayoutEffect(() => {
+    if (pendingSyncRef.current) {
+      pendingSyncRef.current = false;
+      onDirectionsRef.current?.(cuesRef.current.map(internalToDir));
+    }
+  });
+
   // ── Auto-scroll to keep playhead visible (only during playback, not cue drag) ─
   useEffect(() => {
     if (!scrollEl.current) return;
@@ -238,19 +275,27 @@ export function LightingTimeline({
     if (!scrollEl.current) return;
     const rect  = scrollEl.current.getBoundingClientRect();
     const rawX  = e.clientX - rect.left + scrollEl.current.scrollLeft;
-    const start = clamp(Math.round(rawX / pxPerMsRef.current), 0, durationRef.current - MIN_DUR);
+    const start = snapToGrid(clamp(Math.round(rawX / pxPerMsRef.current), 0, durationRef.current - MIN_DUR));
+    
+    // Get the last cue before this position for default values
+    const prevCues = cuesRef.current.filter(c => c.start < start).sort((a, b) => b.start - a.start);
+    const lastCue = prevCues[0];
+    const defaultFlood = lastCue ? { pct: lastCue.flood.pct, color: lastCue.flood.color } : { pct: 0, color: "#ffaa00" };
+    const defaultOver = lastCue ? { pct: lastCue.over.pct } : { pct: 0 };
+    
     const candidate = {
       id: uid(), start,
-      end: Math.min(start + 5000, durationRef.current),
-      flood: { pct: 70, color: "#f97316" },
-      over:  { pct: 60 },
+      end: snapToGrid(Math.min(start + 5000, durationRef.current)),
+      flood: defaultFlood,
+      over:  defaultOver,
       notes: "", overNotes: "",
     };
     setCues((prev) => {
       const placed = placeNewCue(prev, candidate, durationRef.current);
       if (!placed) return prev; // no room — do nothing
       const next = [...prev, placed].sort((a, b) => a.start - b.start);
-      onDirectionsRef.current?.(next.map(internalToDir));
+      cuesRef.current = next;
+      pendingSyncRef.current = true;
       return next;
     });
     setSelected(candidate.id);
@@ -269,7 +314,8 @@ export function LightingTimeline({
   const updateCue = useCallback((id, patch) => {
     setCues(prev => {
       const next = prev.map(c => c.id === id ? { ...c, ...patch } : c);
-      onDirectionsRef.current?.(next.map(internalToDir));
+      cuesRef.current = next;
+      pendingSyncRef.current = true;
       return next;
     });
   }, []);
@@ -360,13 +406,19 @@ export function LightingTimeline({
         <button onClick={() => onSeekRef.current?.(0)} style={ghostBtnStyle}>↩ RTZ</button>
         <div style={{ width: 1, height: 18, background: "#2a2a3a", margin: "0 2px" }} />
         <button onClick={() => {
-          const start     = currentTime;
-          const candidate = { id: uid(), start, end: Math.min(start + 5000, duration), flood: { pct: 70, color: "#f97316" }, over: { pct: 60 }, notes: "", overNotes: "" };
+          const start = snapToGrid(currentTime);
+          // Get the last cue before this position for default values
+          const prevCues = cues.filter(c => c.start < start).sort((a, b) => b.start - a.start);
+          const lastCue = prevCues[0];
+          const defaultFlood = lastCue ? { pct: lastCue.flood.pct, color: lastCue.flood.color } : { pct: 0, color: "#ffaa00" };
+          const defaultOver = lastCue ? { pct: lastCue.over.pct } : { pct: 0 };
+          const candidate = { id: uid(), start, end: snapToGrid(Math.min(start + 5000, duration)), flood: defaultFlood, over: defaultOver, notes: "", overNotes: "" };
           setCues(prev => {
             const placed = placeNewCue(prev, candidate, duration);
             if (!placed) return prev;
             const next = [...prev, placed].sort((a, b) => a.start - b.start);
-            onDirectionsRef.current?.(next.map(internalToDir));
+            cuesRef.current = next;
+            pendingSyncRef.current = true;
             return next;
           });
           setSelected(candidate.id);
@@ -447,6 +499,9 @@ export function LightingTimeline({
 
                 {/* Cue blocks */}
                 {cues.map(cue => {
+                  // Skip cues with invalid times
+                  if (typeof cue.start !== 'number' || typeof cue.end !== 'number') return null;
+                  
                   const isSel  = cue.id === selected;
                   const isFlood = track.id === "flood";
                   const color  = isFlood ? cue.flood.color : "#7aa2f7";
@@ -471,6 +526,7 @@ export function LightingTimeline({
                         overflow: "hidden", display: "flex", alignItems: "center",
                         transition: "box-shadow 0.1s",
                       }}
+                      onClick={(e) => { e.stopPropagation(); setSelected(cue.id); }}
                       onMouseDown={e => startDrag(e, cue, "move")}
                     >
                       {/* Left handle */}
@@ -518,12 +574,13 @@ export function LightingTimeline({
             <div style={{ flex: 1 }} />
             <button title="Duplicate" style={iconBtnStyle} onClick={() => {
               const dur      = selectedCue.end - selectedCue.start;
-              const candidate = { ...selectedCue, id: uid(), start: selectedCue.end, end: selectedCue.end + dur };
+              const candidate = { ...selectedCue, id: uid(), start: snapToGrid(selectedCue.end), end: snapToGrid(selectedCue.end + dur) };
               setCues(prev => {
                 const placed = placeNewCue(prev, candidate, duration);
                 if (!placed) return prev;
                 const next = [...prev, placed].sort((a, b) => a.start - b.start);
-                onDirectionsRef.current?.(next.map(internalToDir));
+                cuesRef.current = next;
+                pendingSyncRef.current = true;
                 return next;
               });
               setSelected(candidate.id);

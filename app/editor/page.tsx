@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { AlertTriangle, CheckCircle2, ChevronLeft, Download, Eye, Music4 } from "lucide-react"
 import { PerformanceForm, type PerformanceFormData } from "@/components/performance-form"
 import { AudioUpload, type AudioUploadResult } from "@/components/audio-upload"
-import { VideoTimelineEditor } from "@/components/video-timeline-editor"
+import { LightingTimeline } from "@/components/lighting-timeline"
 import { LightingPreviewModal } from "@/components/lighting-preview-modal"
 import { Button } from "@/components/ui/button"
 import { usePerformanceDatabase } from "@/lib/hooks/usePerformanceDatabase"
@@ -320,7 +320,7 @@ export default function EditorPage() {
           <section className="soft-card mt-5 p-2 sm:p-3">
             <audio ref={audioRef} src={performance.audioUrl} crossOrigin="anonymous" />
             <div className="h-[calc(100vh-12rem)] min-h-[760px] overflow-hidden rounded-[30px]">
-              <VideoTimelineEditor
+              <LightingTimeline
                 duration={performance.duration}
                 directions={performance.directions}
                 onDirectionsChange={(directions) => {

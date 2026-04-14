@@ -94,7 +94,80 @@ export function LightingPreviewModal({ group, onClose, onConfirm }: LightingPrev
             />
           </div>
 
-          <div className="mt-6 grid gap-4 lg:grid-cols-2">
+          <div className="mt-6 grid gap-4 lg:grid-cols-3">
+            {/* Stage Preview */}
+            <div className="soft-card p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500 mb-4">Stage preview</p>
+              <div className="relative h-64 rounded-lg overflow-hidden border border-stone-300 bg-stone-950" style={{
+                background: "#000"
+              }}>
+                {/* Overhead lighting - white light from top center */}
+                {currentDirection && currentDirection.overhead?.percent !== undefined ? (
+                  <div className="absolute inset-0 pointer-events-none" style={{
+                    background: `radial-gradient(ellipse 60% 40% at 50% 20%, rgba(255,255,255,${(currentDirection.overhead.percent / 100) * 0.4}) 0%, transparent 70%)`
+                  }} />
+                ) : null}
+                
+                {/* Floodlight from all four corners */}
+                {currentDirection && currentDirection.floodlight?.percent !== undefined ? (
+                  <div className="absolute inset-0 pointer-events-none">
+                    {/* Top-left corner */}
+                    <div style={{
+                      position: "absolute",
+                      top: "-20%",
+                      left: "-20%",
+                      width: "60%",
+                      height: "60%",
+                      borderRadius: "50%",
+                      background: `radial-gradient(circle, ${currentDirection.floodlight.color}${Math.round((currentDirection.floodlight.percent / 100) * 255).toString(16).padStart(2, '0')} 0%, transparent 60%)`,
+                      filter: "blur(4px)"
+                    }} />
+                    {/* Top-right corner */}
+                    <div style={{
+                      position: "absolute",
+                      top: "-20%",
+                      right: "-20%",
+                      width: "60%",
+                      height: "60%",
+                      borderRadius: "50%",
+                      background: `radial-gradient(circle, ${currentDirection.floodlight.color}${Math.round((currentDirection.floodlight.percent / 100) * 255).toString(16).padStart(2, '0')} 0%, transparent 60%)`,
+                      filter: "blur(4px)"
+                    }} />
+                    {/* Bottom-left corner */}
+                    <div style={{
+                      position: "absolute",
+                      bottom: "-20%",
+                      left: "-20%",
+                      width: "60%",
+                      height: "60%",
+                      borderRadius: "50%",
+                      background: `radial-gradient(circle, ${currentDirection.floodlight.color}${Math.round((currentDirection.floodlight.percent / 100) * 255).toString(16).padStart(2, '0')} 0%, transparent 60%)`,
+                      filter: "blur(4px)"
+                    }} />
+                    {/* Bottom-right corner */}
+                    <div style={{
+                      position: "absolute",
+                      bottom: "-20%",
+                      right: "-20%",
+                      width: "60%",
+                      height: "60%",
+                      borderRadius: "50%",
+                      background: `radial-gradient(circle, ${currentDirection.floodlight.color}${Math.round((currentDirection.floodlight.percent / 100) * 255).toString(16).padStart(2, '0')} 0%, transparent 60%)`,
+                      filter: "blur(4px)"
+                    }} />
+                  </div>
+                ) : null}
+                
+                {/* Stage floor */}
+                <div className="absolute inset-0 flex items-end justify-center text-stone-600 text-xs font-semibold pb-2" style={{
+                  pointerEvents: "none"
+                }}>
+                  STAGE
+                </div>
+              </div>
+            </div>
+
+            {/* Current Cue Info */}
             <div className="soft-card p-5">
               <p className="text-xs font-semibold uppercase tracking-[0.24em] text-stone-500">Current cue</p>
               {currentDirection ? (
