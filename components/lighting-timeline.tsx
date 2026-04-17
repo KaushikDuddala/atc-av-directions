@@ -4,7 +4,6 @@ const RULER_H    = 32;
 const TRACK_H    = 52;
 const LABEL_W    = 88;
 const MIN_DUR    = 1000;
-const SNAP_INTERVAL = 250;  // 0.25 seconds
 const BASE_PX_MS = 0.08;
 const TRACKS = [
   { id: "flood", label: "FLOOD", icon: "⚡" },
@@ -92,10 +91,7 @@ function getNeighbors(cues, cueId) {
   };
 }
 
-// Snap time to nearest SNAP_INTERVAL (0.25 seconds)
-function snapToGrid(ms) {
-  return Math.round(ms / SNAP_INTERVAL) * SNAP_INTERVAL;
-}
+
 
 export function LightingTimeline({
   duration,
@@ -173,17 +169,17 @@ export function LightingTimeline({
           if (d.kind === "move") {
             const minStart = prevCue ? prevCue.end : 0;
             const maxStart = nextCue ? nextCue.start - cDur : dur - cDur;
-            const s = snapToGrid(clamp(d.origStart + dms, minStart, Math.max(minStart, maxStart)));
-            return { ...c, start: s, end: snapToGrid(s + cDur) };
+            const s = clamp(d.origStart + dms, minStart, Math.max(minStart, maxStart));
+            return { ...c, start: s, end: s + cDur };
           }
           if (d.kind === "left") {
             const minStart = prevCue ? prevCue.end : 0;
-            const s = snapToGrid(clamp(d.origStart + dms, minStart, d.origEnd - MIN_DUR));
+            const s = clamp(d.origStart + dms, minStart, d.origEnd - MIN_DUR);
             return { ...c, start: s };
           }
           if (d.kind === "right") {
             const maxEnd = nextCue ? nextCue.start : dur;
-            const e2 = snapToGrid(clamp(d.origEnd + dms, d.origStart + MIN_DUR, maxEnd));
+            const e2 = clamp(d.origEnd + dms, d.origStart + MIN_DUR, maxEnd);
             return { ...c, end: e2 };
           }
           return c;
@@ -275,7 +271,7 @@ export function LightingTimeline({
     if (!scrollEl.current) return;
     const rect  = scrollEl.current.getBoundingClientRect();
     const rawX  = e.clientX - rect.left + scrollEl.current.scrollLeft;
-    const start = snapToGrid(clamp(Math.round(rawX / pxPerMsRef.current), 0, durationRef.current - MIN_DUR));
+    const start = clamp(Math.round(rawX / pxPerMsRef.current), 0, durationRef.current - MIN_DUR);
     
     // Get the last cue before this position for default values
     const prevCues = cuesRef.current.filter(c => c.start < start).sort((a, b) => b.start - a.start);
@@ -285,7 +281,7 @@ export function LightingTimeline({
     
     const candidate = {
       id: uid(), start,
-      end: snapToGrid(Math.min(start + 5000, durationRef.current)),
+      end: Math.min(start + 5000, durationRef.current),
       flood: defaultFlood,
       over:  defaultOver,
       notes: "", overNotes: "",
@@ -406,13 +402,13 @@ export function LightingTimeline({
         <button onClick={() => onSeekRef.current?.(0)} style={ghostBtnStyle}>↩ RTZ</button>
         <div style={{ width: 1, height: 18, background: "#2a2a3a", margin: "0 2px" }} />
         <button onClick={() => {
-          const start = snapToGrid(currentTime);
+          const start = currentTime;
           // Get the last cue before this position for default values
           const prevCues = cues.filter(c => c.start < start).sort((a, b) => b.start - a.start);
           const lastCue = prevCues[0];
           const defaultFlood = lastCue ? { pct: lastCue.flood.pct, color: lastCue.flood.color } : { pct: 0, color: "#ffaa00" };
           const defaultOver = lastCue ? { pct: lastCue.over.pct } : { pct: 0 };
-          const candidate = { id: uid(), start, end: snapToGrid(Math.min(start + 5000, duration)), flood: defaultFlood, over: defaultOver, notes: "", overNotes: "" };
+          const candidate = { id: uid(), start, end: Math.min(start + 5000, duration), flood: defaultFlood, over: defaultOver, notes: "", overNotes: "" };
           setCues(prev => {
             const placed = placeNewCue(prev, candidate, duration);
             if (!placed) return prev;
@@ -574,7 +570,7 @@ export function LightingTimeline({
             <div style={{ flex: 1 }} />
             <button title="Duplicate" style={iconBtnStyle} onClick={() => {
               const dur      = selectedCue.end - selectedCue.start;
-              const candidate = { ...selectedCue, id: uid(), start: snapToGrid(selectedCue.end), end: snapToGrid(selectedCue.end + dur) };
+              const candidate = { ...selectedCue, id: uid(), start: selectedCue.end, end: selectedCue.end + dur };
               setCues(prev => {
                 const placed = placeNewCue(prev, candidate, duration);
                 if (!placed) return prev;
